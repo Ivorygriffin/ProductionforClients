@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,9 +16,8 @@ public class PlayerController : MonoBehaviour
 
     //Crouching
     //Sliding
-    //Rolling
 
-    //Leaning
+    //Vaulting
 
     //Mouse Lock
 
@@ -58,9 +58,10 @@ public class PlayerController : MonoBehaviour
 
     private float _mouseX, _rotation, _yForce, _lean, _savedMaxSpeed;
 
-    private bool _sliding, _crouching, _canSprint, _canJump, _rolling;
+    private bool _sliding, _crouching, _canSprint, _canJump, _rolling, _animationPlaying;
     private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov;
     private Quaternion _savedPlayerRotation;
+    private Animator _animator;
 
     //Timers
     private float _rollDuration, _rollCooldown, _fovEaseIn;
@@ -69,6 +70,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     [HideInInspector]
     public GameObject _playerCamera;
+
+    private CapsuleCollider[] _colliders;
 
 
 
@@ -86,6 +89,9 @@ public class PlayerController : MonoBehaviour
         _canSprint = true;
         _canJump = true;
         _respawn = transform.position;
+        _animator = GetComponent<Animator>();
+        _animator.enabled = false;
+
     }
 
     void Update()
@@ -101,15 +107,24 @@ public class PlayerController : MonoBehaviour
 
         _rotation += _mouseY;
 
+        if ((_rotation > 80 && _mouseY > 0) || (_rotation < -80 && _mouseY < 0))
+        {
+            _rotation -= _mouseY;
+        }
+        else
+        {
+            _playerCamera.transform.Rotate(-_mouseY, 0, 0);
+        }
+        _rigidbody.transform.Rotate(0, _mouseX, 0);
 
-        //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------
 
 
-        //----------------------
-        // Player Speed Limiter
-        //----------------------
+    //----------------------
+    // Player Speed Limiter
+    //----------------------
 
-        _yForce = _rigidbody.velocity.y;
+    _yForce = _rigidbody.velocity.y;
 
         if (_rigidbody.velocity.magnitude > maxSpeed)
         {
@@ -160,11 +175,10 @@ public class PlayerController : MonoBehaviour
             if (_rigidbody.velocity.magnitude > _savedMaxSpeed + 0.01 && _sliding == false)
             {
                 maxSpeed = _savedMaxSpeed * sprintMultiplier;
-                transform.localScale = new Vector3(1, 0.3f, 1);
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 0.3f, transform.localPosition.z);
-                _crouchDistance = 0.3f;
+                transform.localScale = new Vector3(1, 0.2f, 1);
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 0.2f, transform.localPosition.z);
+                _crouchDistance = 0.15f;
                 _sliding = true;
-
 
             }
             else if (_rigidbody.velocity.magnitude <= _savedMaxSpeed + 0.01)
@@ -175,6 +189,7 @@ public class PlayerController : MonoBehaviour
                 _crouchDistance = 0.5f;
             }
         }
+
 
 
         if(Input.GetButtonUp("Crouch") && !Physics.Raycast(transform.position, Vector3.up, _distanceToGround - 0.1f))
@@ -247,9 +262,15 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && _canJump)
         {
-            if (VaultCast() && IsGrounded())
+            if (VaultCast() && !ChestCast() && IsGrounded())
             {
-                Debug.Log("Vault!");
+                _animator = GetComponent<Animator>();
+                _animator.enabled = true;
+                _canJump = false;
+                _animator.Play("Vault");
+                _animationPlaying = true;
+                Debug.Log("A");
+
             }
             else if (IsGrounded())
             {
@@ -257,14 +278,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
-        if(transform.position.y < -100)
+        if(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && _animationPlaying)
         {
-            transform.position = _respawn;
+            _animationPlaying = false;
+            _animator.enabled = false;
+            transform.position += new Vector3(0, 1, 1.5f);
+            _canJump = true;
         }
 
 
-        Debug.DrawRay(transform.position + new Vector3(0, VaultHeight - 1, 0), Vector3.forward);
+        if (transform.position.y < -100)
+        {
+            transform.position = _respawn;
+        }
 
     }
 
@@ -283,6 +309,10 @@ public class PlayerController : MonoBehaviour
 
 
 
+    //-----------
+    // Functions
+    //-----------
+
     private bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, _distanceToGround + 0.1f);
@@ -290,9 +320,13 @@ public class PlayerController : MonoBehaviour
 
     private bool VaultCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, VaultHeight - 1, 0), Vector3.forward, 2f);
+        return Physics.Raycast(transform.position + new Vector3(0, VaultHeight - 1, 0), transform.forward, 2f);
     }
 
+    private bool ChestCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 2f);
+    }
 
 
     private void Stand()
