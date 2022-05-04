@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public GameObject _playerCamera;
 
-    private CapsuleCollider[] _colliders;
+    private IEnumerator _stopAnim;
+
 
 
 
@@ -91,7 +92,7 @@ public class PlayerController : MonoBehaviour
         _respawn = transform.position;
         _animator = GetComponent<Animator>();
         _animator.enabled = false;
-
+        _stopAnim = StopAnim();
     }
 
     void Update()
@@ -115,16 +116,16 @@ public class PlayerController : MonoBehaviour
         {
             _playerCamera.transform.Rotate(-_mouseY, 0, 0);
         }
-        _rigidbody.transform.Rotate(0, _mouseX, 0);
+        transform.parent.Rotate(0, _mouseX, 0);
 
-    //--------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------
 
 
-    //----------------------
-    // Player Speed Limiter
-    //----------------------
+        //----------------------
+        // Player Speed Limiter
+        //----------------------
 
-    _yForce = _rigidbody.velocity.y;
+        _yForce = _rigidbody.velocity.y;
 
         if (_rigidbody.velocity.magnitude > maxSpeed)
         {
@@ -150,7 +151,7 @@ public class PlayerController : MonoBehaviour
         {
             maxSpeed = _savedMaxSpeed;
             Camera.main.fieldOfView = _fov + _fovEaseIn;
-            if(_fovEaseIn > 0)
+            if (_fovEaseIn > 0)
             {
                 _fovEaseIn -= Time.deltaTime * 20;
             }
@@ -166,7 +167,7 @@ public class PlayerController : MonoBehaviour
             _canSprint = false;
             _canJump = false;
             _crouching = true;
-            
+
 
             //--------
             // Slide
@@ -192,7 +193,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if(Input.GetButtonUp("Crouch") && !Physics.Raycast(transform.position, Vector3.up, _distanceToGround - 0.1f))
+        if (Input.GetButtonUp("Crouch") && !Physics.Raycast(transform.position, Vector3.up, _distanceToGround - 0.1f))
         {
             Stand();
         }
@@ -228,7 +229,7 @@ public class PlayerController : MonoBehaviour
         //-------
         // Roll
         //-------
-        
+
         if (_crouching && Input.GetButtonDown("Jump") && _rollCooldown >= rollCooldownLength)
         {
             _rolling = true;
@@ -267,9 +268,9 @@ public class PlayerController : MonoBehaviour
                 _animator = GetComponent<Animator>();
                 _animator.enabled = true;
                 _canJump = false;
+
                 _animator.Play("Vault");
                 _animationPlaying = true;
-                Debug.Log("A");
 
             }
             else if (IsGrounded())
@@ -278,12 +279,16 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && _animationPlaying)
+        if (_animationPlaying)
         {
-            _animationPlaying = false;
-            _animator.enabled = false;
-            transform.position += new Vector3(0, 1, 1.5f);
-            _canJump = true;
+            _stopAnim = StopAnim();
+            StartCoroutine(_stopAnim);
+            Debug.Log("B");
+        }
+        else
+        {
+            transform.parent.position = transform.position;
+            transform.localPosition = Vector3.zero;
         }
 
 
@@ -291,6 +296,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = _respawn;
         }
+
 
     }
 
@@ -328,7 +334,21 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 2f);
     }
 
-
+    private IEnumerator StopAnim()
+    {
+        yield return new WaitForEndOfFrame();
+        Debug.Log("C");
+        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        {
+            Debug.Log("a");
+            _animationPlaying = false;
+            _animator.enabled = false;
+            transform.localPosition += new Vector3(0, 1, 1.5f);
+            transform.parent.position = gameObject.transform.position;
+            transform.localPosition = Vector3.zero;
+            _canJump = true;
+        }
+    }
     private void Stand()
     {
         transform.localScale = new Vector3(1, 1, 1);
