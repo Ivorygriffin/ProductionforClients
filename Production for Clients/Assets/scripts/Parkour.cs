@@ -11,7 +11,7 @@ public class Parkour : MonoBehaviour
     public float ClimbCap;
 
 
-    private bool _animationPlaying, _climbing, _canSwing;
+    private bool _animationPlaying, _climbing, _canSwing, _swingBoost;
     private Vector3 _animationEndPosition, _savedSpeed;
 
 
@@ -51,7 +51,7 @@ public class Parkour : MonoBehaviour
 
         if (_climbing)
         {
-            transform.position += new Vector3(0, 10 * Time.deltaTime, 0);
+            _rigidbody.AddForce(0, 30, 0);
             if (!HeadCast())
             {
                 _savedSpeed = _rigidbody.velocity;
@@ -92,9 +92,10 @@ public class Parkour : MonoBehaviour
             _animator.Play("Swing");
             _animationPlaying = true;
             _canSwing = false;
+            _swingBoost = true;
         }
 
-        if(other.tag == "SwingCheck")
+        if (other.tag == "SwingCheck")
         {
             _canSwing = true;
         }
@@ -148,6 +149,12 @@ public class Parkour : MonoBehaviour
             transform.parent.position = gameObject.transform.position;
             transform.localPosition = Vector3.zero;
             _rigidbody.AddRelativeForce(_savedSpeed);
+            if(_swingBoost)
+            {
+                Debug.Log("e");
+                _rigidbody.AddForce(new Vector3(0, 20, 0));
+            }
+            _swingBoost = false;
 
         }
     }
