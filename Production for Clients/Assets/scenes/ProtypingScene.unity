@@ -1436,6 +1436,7 @@ GameObject:
   - component: {fileID: 1500348370}
   - component: {fileID: 1500348369}
   - component: {fileID: 1500348368}
+  - component: {fileID: 1500348373}
   - component: {fileID: 1500348366}
   - component: {fileID: 1500348365}
   - component: {fileID: 1500348371}
@@ -1462,6 +1463,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorOpenSpeed: 0
   climbSpeed: 0
+  _rotation: 0
+  _lookSpeed: 0
+  _doorOpenedAmount: 0
+  _distanceToGround: 0
+  _openDoor: 0
+  _closeDoor: 0
+  _climbing: 0
+  _detectionAreas: []
+  _playerController: {fileID: 0}
+  _rigidbody: {fileID: 0}
+  _interactText: {fileID: 0}
+  _targetDoor: {fileID: 0}
+  _cameras: []
+  _interactables: []
+  _playerCamera: {fileID: 0}
 --- !u!114 &1500348366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,7 +1499,6 @@ MonoBehaviour:
   rollCooldownLength: 5
   jumpForce: 4
   SlideFriction: 3.5
-  VaultHeight: 0.5
   _mouseY: 0
   _playerCamera: {fileID: 0}
 --- !u!64 &1500348367
@@ -1599,6 +1614,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1500348373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500348364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5670cc433543d1f478b72cab0677de51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VaultHeight: 0.5
 --- !u!1 &1612065683
 GameObject:
   m_ObjectHideFlags: 0

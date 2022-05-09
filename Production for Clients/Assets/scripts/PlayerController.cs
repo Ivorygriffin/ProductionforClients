@@ -48,8 +48,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     [Tooltip("How quickly the player loses momentum while sliding")]
     public float SlideFriction;
-    [Header("Vault & Scramble")]
-    public float VaultHeight;
+
 
 
     [HideInInspector]
@@ -71,7 +70,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public GameObject _playerCamera;
 
-    private IEnumerator _stopAnim;
+
 
 
 
@@ -92,7 +91,6 @@ public class PlayerController : MonoBehaviour
         _respawn = transform.position;
         _animator = GetComponent<Animator>();
         _animator.enabled = false;
-        _stopAnim = StopAnim();
     }
 
     void Update()
@@ -261,34 +259,11 @@ public class PlayerController : MonoBehaviour
         // Jumping, Vaulting and Scrambling
         //----------------------------------
 
-        if (Input.GetButtonDown("Jump") && _canJump)
+        if (Input.GetButtonDown("Jump") && _canJump && IsGrounded())
         {
-            if (VaultCast() && !ChestCast() && IsGrounded())
-            {
-                _animator = GetComponent<Animator>();
-                _animator.enabled = true;
-                _canJump = false;
 
-                _animator.Play("Vault");
-                _animationPlaying = true;
-
-            }
-            else if (IsGrounded())
-            {
                 _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
-            }
-        }
 
-        if (_animationPlaying)
-        {
-            _stopAnim = StopAnim();
-            StartCoroutine(_stopAnim);
-            Debug.Log("B");
-        }
-        else
-        {
-            transform.parent.position = transform.position;
-            transform.localPosition = Vector3.zero;
         }
 
 
@@ -324,31 +299,7 @@ public class PlayerController : MonoBehaviour
         return Physics.Raycast(transform.position, -Vector3.up, _distanceToGround + 0.1f);
     }
 
-    private bool VaultCast()
-    {
-        return Physics.Raycast(transform.position + new Vector3(0, VaultHeight - 1, 0), transform.forward, 2f);
-    }
 
-    private bool ChestCast()
-    {
-        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 2f);
-    }
-
-    private IEnumerator StopAnim()
-    {
-        yield return new WaitForEndOfFrame();
-        Debug.Log("C");
-        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
-        {
-            Debug.Log("a");
-            _animationPlaying = false;
-            _animator.enabled = false;
-            transform.localPosition += new Vector3(0, 1, 1.5f);
-            transform.parent.position = gameObject.transform.position;
-            transform.localPosition = Vector3.zero;
-            _canJump = true;
-        }
-    }
     private void Stand()
     {
         transform.localScale = new Vector3(1, 1, 1);
