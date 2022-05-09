@@ -8,13 +8,17 @@ public class Parkour : MonoBehaviour
     public float VaultHeight;
 
     private bool _animationPlaying;
+    private Vector3 _animationEndPosition;
+
+
     private Animator _animator;
     private IEnumerator _stopAnim;
 
 
     void Start()
     {
-        
+        _animator = GetComponent<Animator>();
+
     }
 
 
@@ -27,20 +31,27 @@ public class Parkour : MonoBehaviour
         {
             if (VaultCast() && !ChestCast())
             {
-                _animator = GetComponent<Animator>();
                 _animator.enabled = true;
 
                 _animator.Play("Vault");
                 _animationPlaying = true;
 
             }
+            else if (ChestCast() && HeadCast())
+            {
+                _animator.enabled = true;
+                _animator.Play("Climb");
+                _animationPlaying = true;
+            }
 
         }
 
         if (_animationPlaying)
         {
+            _animationEndPosition = transform.position;
             _stopAnim = StopAnim();
             StartCoroutine(_stopAnim);
+
         }
         else
         {
@@ -59,6 +70,11 @@ public class Parkour : MonoBehaviour
         return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 2f);
     }
 
+    private bool HeadCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 0.99f);
+    }
+
     private IEnumerator StopAnim()
     {
         yield return new WaitForEndOfFrame();
@@ -66,7 +82,7 @@ public class Parkour : MonoBehaviour
         {
             _animationPlaying = false;
             _animator.enabled = false;
-            transform.localPosition += new Vector3(0, 1, 1.5f);
+            transform.position = _animationEndPosition;
             transform.parent.position = gameObject.transform.position;
             transform.localPosition = Vector3.zero;
         }
