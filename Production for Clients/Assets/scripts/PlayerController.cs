@@ -38,16 +38,14 @@ public class PlayerController : MonoBehaviour
     public float sprintMultiplier;
     [Tooltip("The speed the camera moves with the mouse (AKA sensitivity)")]
     public float lookSpeed;
-    [Tooltip("The speed the player rolls when crouching")]
-    public float rollForce;
-    [Tooltip("How long the roll lasts (Seconds)")]
-    public float rollLength;
     [Tooltip("How long before the player can roll again after rolling (Seconds)")]
     public float rollCooldownLength;
     [Tooltip("Defines the height and vertical speed of the player's jump")]
     public float jumpForce;
     [Tooltip("How quickly the player loses momentum while sliding")]
     public float SlideFriction;
+    [Tooltip("How quickly the player gains speed when running")]
+    public float SprintSpeedup;
 
 
 
@@ -55,15 +53,15 @@ public class PlayerController : MonoBehaviour
     public float _mouseY;
 
 
-    private float _mouseX, _rotation, _yForce, _lean, _savedMaxSpeed;
+    private float _mouseX, _rotation, _yForce, _savedMaxSpeed;
 
-    private bool _sliding, _crouching, _canSprint, _canJump, _rolling, _animationPlaying;
-    private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov;
+    private bool _sliding, _crouching, _canSprint, _canJump;
+    private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov, _playerSpeed;
     private Quaternion _savedPlayerRotation;
     private Animator _animator;
 
     //Timers
-    private float _rollDuration, _rollCooldown, _fovEaseIn;
+    private float _fovEaseIn;
 
     private Vector3 _respawn;
     private Rigidbody _rigidbody;
@@ -123,11 +121,25 @@ public class PlayerController : MonoBehaviour
         // Player Speed Limiter
         //----------------------
 
+        if(Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
+        {
+            _playerSpeed += Time.deltaTime * SprintSpeedup;
+        }
+        else
+        {
+            _playerSpeed = 0;
+        }
+
         _yForce = _rigidbody.velocity.y;
 
         if (_rigidbody.velocity.magnitude > maxSpeed)
         {
             _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
+        }
+        if(_rigidbody.velocity.magnitude > _playerSpeed)
+        {
+            _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
+
         }
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
 
@@ -224,40 +236,11 @@ public class PlayerController : MonoBehaviour
             _crouchDistance = 0.5f;
         }
 
-        //-------
-        // Roll
-        //-------
-
-        if (_crouching && Input.GetButtonDown("Jump") && _rollCooldown >= rollCooldownLength)
-        {
-            _rolling = true;
-        }
-
-        if (_rolling)
-        {
-            if (_rollDuration < rollLength)
-            {
-                maxSpeed = rollForce;
-                _rigidbody.AddRelativeForce(0, 0, rollForce);
-                _rollDuration += Time.deltaTime;
-                _rollCooldown = 0;
-            }
-            else
-            {
-                _rollDuration = 0;
-                _rolling = false;
-            }
-        }
-
-        if (!_rolling)
-        {
-            _rollCooldown += Time.deltaTime;
-        }
 
 
-        //----------------------------------
-        // Jumping, Vaulting and Scrambling
-        //----------------------------------
+        //----------
+        // Jumping
+        //----------
 
         if (Input.GetButtonDown("Jump") && _canJump && IsGrounded())
         {
