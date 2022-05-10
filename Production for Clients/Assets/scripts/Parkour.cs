@@ -14,7 +14,7 @@ public class Parkour : MonoBehaviour
     private bool _animationPlaying, _climbing, _canSwing, _swingBoost;
     private Vector3 _animationEndPosition, _savedSpeed;
 
-
+    private Swing _swingCheck;
     private Rigidbody _rigidbody;
     private Animator _animator;
     private IEnumerator _stopAnim;
@@ -24,6 +24,7 @@ public class Parkour : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+        _swingCheck = GetComponentInChildren<Swing>();
     }
 
 
@@ -34,6 +35,15 @@ public class Parkour : MonoBehaviour
         //---------------------------
         if (Input.GetButtonDown("Jump"))
         {
+            if (ChestCast())
+            {
+                _swingCheck.gameObject.SetActive(false);
+            }
+            else
+            {
+                _swingCheck.gameObject.SetActive(true);
+            }
+
             if (VaultCast() && !ChestCast())
             {
                 _savedSpeed = _rigidbody.velocity;
@@ -75,39 +85,19 @@ public class Parkour : MonoBehaviour
             transform.localPosition = Vector3.zero;
         }
 
-
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //-----------
-        // Swinging
-        //-----------
-
-        if (other.tag == "Swingable" && _canSwing)
+        if (_swingCheck._startSwing)
         {
+            _swingCheck._startSwing = false;
             _savedSpeed = _rigidbody.velocity;
             _animator.enabled = true;
             _animator.Play("Swing");
             _animationPlaying = true;
-            _canSwing = false;
             _swingBoost = true;
         }
 
-        if (other.tag == "SwingCheck")
-        {
-            _canSwing = true;
-        }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "SwingCheck")
-        {
-            _canSwing = false;
-        }
-    }
+
 
     //----------
     // Raycasts
@@ -151,8 +141,7 @@ public class Parkour : MonoBehaviour
             _rigidbody.AddRelativeForce(_savedSpeed);
             if(_swingBoost)
             {
-                Debug.Log("e");
-                _rigidbody.AddForce(new Vector3(0, 20, 0));
+                _rigidbody.AddForce(new Vector3(0, 2, 0), ForceMode.Impulse);
             }
             _swingBoost = false;
 
