@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov, _playerSpeed;
     private Quaternion _savedPlayerRotation;
     private Animator _animator;
+    private Parkour _parkour;
 
     //Timers
     private float _fovEaseIn;
@@ -89,6 +90,7 @@ public class PlayerController : MonoBehaviour
         _respawn = transform.position;
         _animator = GetComponent<Animator>();
         _animator.enabled = false;
+        _parkour = GetComponent<Parkour>();
     }
 
     void Update()
@@ -112,7 +114,16 @@ public class PlayerController : MonoBehaviour
         {
             _playerCamera.transform.Rotate(-_mouseY, 0, 0);
         }
-        transform.parent.Rotate(0, _mouseX, 0);
+        if (_parkour._wallRunning)
+        {
+            transform.Rotate(0, _mouseX, 0);
+
+        }
+        else
+        {
+            transform.parent.Rotate(0, _mouseX, 0);
+
+        }
 
         //--------------------------------------------------------------------------------
 
@@ -121,7 +132,7 @@ public class PlayerController : MonoBehaviour
         // Player Speed Limiter
         //----------------------
 
-        if(Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
+        if (Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
         {
             _playerSpeed += Time.deltaTime * SprintSpeedup;
         }
