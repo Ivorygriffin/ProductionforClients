@@ -12,7 +12,7 @@ public class Parkour : MonoBehaviour
     [Tooltip("How much animations are slowed when the player is moving slow (divides the players velocity by this number)")]
     public float AnimationSpeedDividor;
 
-    private bool _animationPlaying, _climbing,  _swingBoost;
+    private bool _animationPlaying, _climbing, _swingBoost;
     private Vector3 _animationEndPosition, _savedSpeed;
 
     private Quaternion _savedPlayerRotation;
@@ -66,7 +66,7 @@ public class Parkour : MonoBehaviour
 
                 if (VaultCast() && !ChestCast())
                 {
-                    //if (!VaultHopCast()) 
+                    //if (!VaultHopCast())
                     //{
 
                     //    _savedSpeed = _rigidbody.velocity;
@@ -74,6 +74,7 @@ public class Parkour : MonoBehaviour
                     //    _animator.Play("VaultHop");
                     //    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                     //    _animationPlaying = true;
+                    //    Debug.Log("A");
 
                     //}
                     //else if (!VaultSlideCast())
@@ -168,7 +169,7 @@ public class Parkour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "RunableWall")
+        if (other.tag == "RunableWall")
         {
             _swingCheck.gameObject.SetActive(false);
             Debug.Log("a");
@@ -181,7 +182,7 @@ public class Parkour : MonoBehaviour
         // Wall Run
         //-----------
 
-        if(other.tag == "RunableWall")
+        if (other.tag == "RunableWall")
         {
             if (!_wallRunning)
             {
@@ -195,7 +196,7 @@ public class Parkour : MonoBehaviour
                 Debug.Log(transform.localRotation.w);
                 Debug.Log(transform.parent.rotation);
 
-                if(transform.localRotation.w < 0)
+                if (transform.localRotation.w < 0)
                 {
                     transform.rotation = new Quaternion(transform.rotation.x, -transform.rotation.y, transform.rotation.z, -transform.rotation.w);
                     Debug.Log("a");
@@ -226,7 +227,7 @@ public class Parkour : MonoBehaviour
         {
             Debug.Log("c");
 
-            _swingCheck.gameObject.SetActive(false);
+            _swingCheck.gameObject.SetActive(true);
             _wallRunning = false;
             _savedPlayerRotation = transform.rotation;
             transform.rotation = transform.parent.rotation;
@@ -288,7 +289,7 @@ public class Parkour : MonoBehaviour
             transform.position = _animationEndPosition;
             transform.parent.position = gameObject.transform.position;
             transform.localPosition = Vector3.zero;
-            if(_swingBoost)
+            if (_swingBoost)
             {
                 Debug.Log(_rigidbody.velocity.magnitude);
                 _rigidbody.AddRelativeForce(new Vector3(_savedSpeed.x / 4, .25f, _savedSpeed.z / 4), ForceMode.Impulse);
