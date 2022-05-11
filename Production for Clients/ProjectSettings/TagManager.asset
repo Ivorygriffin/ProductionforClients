@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Swingable
   - SwingCheck
+  - RunableWall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Swing
   - Water
   - UI
   - 
