@@ -45,9 +45,9 @@ public class Parkour : MonoBehaviour
 
             if (_wallRunning)
             {
-                _wallRunning = false;
+                _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
-                _rigidbody.AddForce(new Vector3(-10, 3, 0), ForceMode.Impulse);
+                _rigidbody.AddForce(transform.forward * 5 + new Vector3(0, 4, 0), ForceMode.Impulse);
                 _savedPlayerRotation = transform.rotation;
                 transform.rotation = transform.parent.rotation;
                 transform.parent.rotation = _savedPlayerRotation;
@@ -152,8 +152,7 @@ public class Parkour : MonoBehaviour
         }
         if (_wallRunning)
         {
-            _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            transform.parent.position += transform.parent.TransformDirection(Vector3.forward) * Time.deltaTime * _savedSpeed.magnitude;
+            transform.parent.position += transform.parent.forward * Time.deltaTime * _savedSpeed.magnitude;
 
         }
         else
@@ -172,7 +171,6 @@ public class Parkour : MonoBehaviour
         if(other.tag == "RunableWall")
         {
             _swingCheck.gameObject.SetActive(false);
-            Debug.Log("A");
         }
     }
 
@@ -184,36 +182,41 @@ public class Parkour : MonoBehaviour
 
         if(other.tag == "RunableWall")
         {
-            Debug.Log("B");
-
-            _savedSpeed = _rigidbody.velocity;
-            _savedPlayerRotation = transform.rotation;
-            transform.parent.rotation = Quaternion.Euler(transform.rotation.x, other.transform.rotation.y, transform.rotation.z);
-            float numberRanger = Mathf.Round(other.transform.rotation.eulerAngles.y - 360 * Mathf.Floor(other.transform.rotation.eulerAngles.y / 360));
-            if(numberRanger == 360)
+            if (!_wallRunning)
             {
-                numberRanger = 0;
-            }
-            
 
-            if (_savedPlayerRotation.eulerAngles.y - 180 < numberRanger)
-            {
-                transform.parent.Rotate(0, 90, 0);
-            }
-            else
-            {
-                transform.parent.Rotate(0, -90, 0);
+                _savedSpeed = _rigidbody.velocity;
+                _savedPlayerRotation = transform.rotation;
+                transform.parent.rotation = Quaternion.Euler(transform.rotation.x, other.transform.rotation.eulerAngles.y, transform.rotation.z);
+                float numberRanger = Mathf.Round(other.transform.rotation.eulerAngles.y - 360 * Mathf.Floor(other.transform.rotation.eulerAngles.y / 360));
+                if (numberRanger == 360)
+                {
+                    numberRanger = 0;
+                }
+
+
+                if (_savedPlayerRotation.eulerAngles.y - 180 < numberRanger)
+                {
+                    transform.parent.Rotate(0, 90, 0);
+                    Debug.Log("right");
+                }
+                else
+                {
+                    transform.parent.Rotate(0, -90, 0);
+                    Debug.Log("left");
+
+                }
+                transform.rotation = _savedPlayerRotation;
+                _wallRunning = true;
+                _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 
             }
-            transform.rotation = _savedPlayerRotation;
-            _wallRunning = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "RunableWall")
         {
-            Debug.Log("C");
 
             _swingCheck.gameObject.SetActive(false);
             _wallRunning = false;
