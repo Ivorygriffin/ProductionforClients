@@ -47,7 +47,7 @@ public class Parkour : MonoBehaviour
             {
                 _wallRunning = false;
 
-                _rigidbody.AddForce(new Vector3(10, 3, 0), ForceMode.Impulse);
+                _rigidbody.AddForce(new Vector3(-10, 3, 0), ForceMode.Impulse);
                 _savedPlayerRotation = transform.rotation;
                 transform.rotation = transform.parent.rotation;
                 transform.parent.rotation = _savedPlayerRotation;
@@ -166,7 +166,17 @@ public class Parkour : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "RunableWall")
+        {
+            _swingCheck.gameObject.SetActive(false);
+            Debug.Log("A");
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
     {
         //-----------
         // Wall Run
@@ -174,6 +184,8 @@ public class Parkour : MonoBehaviour
 
         if(other.tag == "RunableWall")
         {
+            Debug.Log("B");
+
             _savedSpeed = _rigidbody.velocity;
             _savedPlayerRotation = transform.rotation;
             transform.parent.rotation = Quaternion.Euler(transform.rotation.x, other.transform.rotation.y, transform.rotation.z);
@@ -181,7 +193,6 @@ public class Parkour : MonoBehaviour
             if(numberRanger == 360)
             {
                 numberRanger = 0;
-                Debug.Log(numberRanger);
             }
             
 
@@ -202,6 +213,9 @@ public class Parkour : MonoBehaviour
     {
         if (other.tag == "RunableWall")
         {
+            Debug.Log("C");
+
+            _swingCheck.gameObject.SetActive(false);
             _wallRunning = false;
             _savedPlayerRotation = transform.rotation;
             transform.rotation = transform.parent.rotation;
