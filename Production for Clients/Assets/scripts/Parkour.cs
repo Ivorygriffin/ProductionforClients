@@ -88,12 +88,12 @@ public class Parkour : MonoBehaviour
                     //}
                     //else
                     //{
-                    //    _savedSpeed = _rigidbody.velocity;
-                    //    _animator.enabled = true;
-                    //    _animator.Play("Vault");
-                    //    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
-                    //    _animationPlaying = true;
-                    //    Debug.Log("C");
+                        _savedSpeed = _rigidbody.velocity;
+                        _animator.enabled = true;
+                        _animator.Play("Vault");
+                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
+                        _animationPlaying = true;
+                        Debug.Log("C");
 
                     //}
 
@@ -172,7 +172,6 @@ public class Parkour : MonoBehaviour
         if (other.tag == "RunableWall")
         {
             _swingCheck.gameObject.SetActive(false);
-            Debug.Log("a");
         }
     }
 
