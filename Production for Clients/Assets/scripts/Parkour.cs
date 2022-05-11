@@ -66,36 +66,35 @@ public class Parkour : MonoBehaviour
 
                 if (VaultCast() && !ChestCast())
                 {
-                    if (!VaultHopCast()) 
-                    {
+                    //if (!VaultHopCast()) 
+                    //{
 
-                        _savedSpeed = _rigidbody.velocity;
-                        _animator.enabled = true;
-                        _animator.Play("VaultHop");
-                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
-                        _animationPlaying = true;
-                        Debug.Log("A");
+                    //    _savedSpeed = _rigidbody.velocity;
+                    //    _animator.enabled = true;
+                    //    _animator.Play("VaultHop");
+                    //    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
+                    //    _animationPlaying = true;
 
-                    }
-                    else if (!VaultSlideCast())
-                    {
-                        _savedSpeed = _rigidbody.velocity;
-                        _animator.enabled = true;
-                        _animator.Play("VaultSlide");
-                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
-                        _animationPlaying = true;
-                        Debug.Log("B");
-                    }
-                    else
-                    {
-                        _savedSpeed = _rigidbody.velocity;
-                        _animator.enabled = true;
-                        _animator.Play("Vault");
-                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
-                        _animationPlaying = true;
-                        Debug.Log("C");
+                    //}
+                    //else if (!VaultSlideCast())
+                    //{
+                    //    _savedSpeed = _rigidbody.velocity;
+                    //    _animator.enabled = true;
+                    //    _animator.Play("VaultSlide");
+                    //    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
+                    //    _animationPlaying = true;
+                    //    Debug.Log("B");
+                    //}
+                    //else
+                    //{
+                    //    _savedSpeed = _rigidbody.velocity;
+                    //    _animator.enabled = true;
+                    //    _animator.Play("Vault");
+                    //    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
+                    //    _animationPlaying = true;
+                    //    Debug.Log("C");
 
-                    }
+                    //}
 
                 }
                 else if (ChestCast() && HeadCast() && !CapCast())
@@ -161,7 +160,8 @@ public class Parkour : MonoBehaviour
 
         }
 
-        Debug.DrawRay(transform.position + new Vector3(0, 0, 2f), -transform.up);
+
+
 
     }
 
@@ -171,6 +171,7 @@ public class Parkour : MonoBehaviour
         if(other.tag == "RunableWall")
         {
             _swingCheck.gameObject.SetActive(false);
+            Debug.Log("a");
         }
     }
 
@@ -184,26 +185,32 @@ public class Parkour : MonoBehaviour
         {
             if (!_wallRunning)
             {
+                Debug.Log("b");
 
                 _savedSpeed = _rigidbody.velocity;
                 _savedPlayerRotation = transform.rotation;
                 transform.parent.rotation = Quaternion.Euler(transform.rotation.x, other.transform.rotation.eulerAngles.y, transform.rotation.z);
-                float numberRanger = Mathf.Round(other.transform.rotation.eulerAngles.y - 360 * Mathf.Floor(other.transform.rotation.eulerAngles.y / 360));
-                if (numberRanger == 360)
+
+                transform.rotation = _savedPlayerRotation;
+                Debug.Log(transform.localRotation.w);
+                Debug.Log(transform.parent.rotation);
+
+                if(transform.localRotation.w < 0)
                 {
-                    numberRanger = 0;
+                    transform.rotation = new Quaternion(transform.rotation.x, -transform.rotation.y, transform.rotation.z, -transform.rotation.w);
+                    Debug.Log("a");
+                    Debug.Log(transform.localRotation.w);
+                    Debug.Log(transform.localRotation.y);
+
                 }
 
-
-                if (_savedPlayerRotation.eulerAngles.y - 180 < numberRanger)
+                if (transform.localRotation.y > 0)
                 {
                     transform.parent.Rotate(0, 90, 0);
-                    Debug.Log("right");
                 }
                 else
                 {
                     transform.parent.Rotate(0, -90, 0);
-                    Debug.Log("left");
 
                 }
                 transform.rotation = _savedPlayerRotation;
@@ -217,6 +224,7 @@ public class Parkour : MonoBehaviour
     {
         if (other.tag == "RunableWall")
         {
+            Debug.Log("c");
 
             _swingCheck.gameObject.SetActive(false);
             _wallRunning = false;
@@ -269,9 +277,12 @@ public class Parkour : MonoBehaviour
     //------------
     private IEnumerator StopAnim()
     {
+        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         yield return new WaitForEndOfFrame();
         if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
             _animationPlaying = false;
             _animator.enabled = false;
             transform.position = _animationEndPosition;
