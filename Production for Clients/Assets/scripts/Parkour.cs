@@ -35,12 +35,10 @@ public class Parkour : MonoBehaviour
     {
 
 
-
-
         //---------------------------
         // Mantling & Ledge Grabbing
         //---------------------------
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying)
         {
 
             if (_wallRunning)
@@ -143,6 +141,7 @@ public class Parkour : MonoBehaviour
         if (_swingCheck._startSwing)
         {
             _swingCheck._startSwing = false;
+            _swingCheck.gameObject.SetActive(false);
             _savedSpeed = _rigidbody.velocity;
             _animator.enabled = true;
             _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
@@ -256,12 +255,12 @@ public class Parkour : MonoBehaviour
 
     private bool ChestCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 1);
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 2);
     }
 
     private bool HeadCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 1);
+        return Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 1.5f);
     }
 
     private bool CapCast()
@@ -291,7 +290,7 @@ public class Parkour : MonoBehaviour
             if (_swingBoost)
             {
                 Debug.Log(_rigidbody.velocity.magnitude);
-                _rigidbody.AddRelativeForce(new Vector3(_savedSpeed.x / 4, .25f, _savedSpeed.z / 4), ForceMode.Impulse);
+                _rigidbody.AddRelativeForce(new Vector3(4, 1, 4), ForceMode.Impulse);
             }
             else
             {
@@ -299,6 +298,8 @@ public class Parkour : MonoBehaviour
 
             }
             _swingBoost = false;
+            _swingCheck.gameObject.SetActive(true);
+
 
         }
     }
