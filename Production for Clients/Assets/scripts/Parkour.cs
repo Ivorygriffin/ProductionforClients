@@ -51,7 +51,7 @@ public class Parkour : MonoBehaviour
                 transform.parent.rotation = _savedPlayerRotation;
 
             }
-            else
+            else if(gameObject.GetComponent<PlayerController>().IsGrounded())
             {
                 if (ChestCast())
                 {
