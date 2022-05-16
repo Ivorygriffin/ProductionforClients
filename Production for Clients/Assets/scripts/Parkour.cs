@@ -65,25 +65,41 @@ public class Parkour : MonoBehaviour
                     _swingCheck.gameObject.SetActive(true);
                 }
 
-                if (VaultCast() && !ChestCast() && gameObject.GetComponent<PlayerController>().IsGrounded())
+                if (VaultFarCast() && !ChestFarCast() && gameObject.GetComponent<PlayerController>().IsGrounded())
                 {
-                    Debug.Log(VaultHopCast());
-                    if (!VaultHopCast() && !VaultSlideCast())
-                    {
 
+                    if (!VaultHopFarCast() && !VaultSlideFarCast())
+                    {
                         _savedSpeed = _rigidbody.velocity;
                         _animator.enabled = true;
-                        _animator.Play("VaultHop");
+
+                        if (!VaultHopCast() && !VaultSlideCast())
+                        {
+                            _animator.Play("VaultHop");
+                        }
+                        else
+                        {
+                            _animator.Play("VaultHop_Far");
+                        }
+
                         _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
 
-
                     }
-                    else if (!VaultSlideCast())
+                    else if (!VaultSlideFarCast())
                     {
                         _savedSpeed = _rigidbody.velocity;
                         _animator.enabled = true;
-                        _animator.Play("VaultSlide");
+
+                        if (VaultSlideCast())
+                        {
+                            _animator.Play("VaultSlide");
+                        }
+                        else
+                        {
+                            _animator.Play("VaultSlide_Far");
+                        }
+
                         _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
 
@@ -92,7 +108,17 @@ public class Parkour : MonoBehaviour
                     {
                         _savedSpeed = _rigidbody.velocity;
                         _animator.enabled = true;
-                        _animator.Play("Vault");
+
+                        if (VaultCast())
+                        {
+                            _animator.Play("Vault");
+                        }
+                        else
+                        {
+                            _animator.Play("Vault_Far");
+
+                        }
+
                         _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
 
@@ -186,15 +212,12 @@ public class Parkour : MonoBehaviour
         {
             if (!_wallRunning)
             {
-                Debug.Log("b");
 
                 _savedSpeed = _rigidbody.velocity;
                 _savedPlayerRotation = transform.rotation;
                 transform.parent.rotation = Quaternion.Euler(transform.rotation.x, other.transform.rotation.eulerAngles.y, transform.rotation.z);
 
                 transform.rotation = _savedPlayerRotation;
-                Debug.Log(transform.localRotation.w);
-                Debug.Log(transform.parent.rotation);
 
                 if (transform.localRotation.w < 0)
                 {
@@ -225,7 +248,6 @@ public class Parkour : MonoBehaviour
     {
         if (other.tag == "RunableWall")
         {
-            Debug.Log("c");
 
             _swingCheck.gameObject.SetActive(true);
             _wallRunning = false;
@@ -245,19 +267,38 @@ public class Parkour : MonoBehaviour
     {
         return Physics.Raycast(transform.position + new Vector3(0, VaultHeight - 1.01f, 0), transform.forward, 1.5f);
     }
+    private bool VaultFarCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, VaultHeight - 1.01f, 0), transform.forward, 2.5f);
+    }
     private bool VaultHopCast()
     {
         return Physics.Raycast(transform.position + transform.forward * 2.5f + new Vector3(0, 0.1f, 0), -transform.up, .5f);
     }
 
+    private bool VaultHopFarCast()
+    {
+        return Physics.Raycast(transform.position + transform.forward * 3.5f + new Vector3(0, 0.1f, 0), -transform.up, .5f);
+    }
+
     private bool VaultSlideCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 5f);
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 4f);
     }
+
+    private bool VaultSlideFarCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 5.5f);
+    }
+
 
     private bool ChestCast()
     {
         return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 2);
+    }
+    private bool ChestFarCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 3);
     }
 
     private bool HeadCast()
