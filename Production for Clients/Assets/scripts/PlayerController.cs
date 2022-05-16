@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
     //Timers
     private float _fovEaseIn;
 
-    private Vector3 _respawn;
     private Rigidbody _rigidbody;
     [HideInInspector]
     public GameObject _playerCamera;
@@ -87,7 +86,6 @@ public class PlayerController : MonoBehaviour
         _fov = Camera.main.fieldOfView;
         _canSprint = true;
         _canJump = true;
-        _respawn = transform.position;
         _animator = GetComponent<Animator>();
         _animator.enabled = false;
         _parkour = GetComponent<Parkour>();
@@ -260,11 +258,6 @@ public class PlayerController : MonoBehaviour
 
         }
 
-
-        if (transform.position.y < -100)
-        {
-            transform.position = _respawn;
-        }
 
 
     }
