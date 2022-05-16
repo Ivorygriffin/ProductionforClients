@@ -51,7 +51,7 @@ public class Parkour : MonoBehaviour
                 transform.parent.rotation = _savedPlayerRotation;
 
             }
-            else if(gameObject.GetComponent<PlayerController>().IsGrounded())
+            else
             {
                 if (ChestCast())
                 {
@@ -62,39 +62,40 @@ public class Parkour : MonoBehaviour
                     _swingCheck.gameObject.SetActive(true);
                 }
 
-                if (VaultCast() && !ChestCast())
+                if (VaultCast() && !ChestCast() && gameObject.GetComponent<PlayerController>().IsGrounded())
                 {
-                    //if (!VaultHopCast())
-                    //{
+                    Debug.Log(VaultHopCast());
+                    if (!VaultHopCast() && !VaultSlideCast())
+                    {
 
-                    //    _savedSpeed = _rigidbody.velocity;
-                    //    _animator.enabled = true;
-                    //    _animator.Play("VaultHop");
-                    //    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
-                    //    _animationPlaying = true;
-                    //    Debug.Log("A");
+                        _savedSpeed = _rigidbody.velocity;
+                        _animator.enabled = true;
+                        _animator.Play("VaultHop");
+                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
+                        _animationPlaying = true;
 
-                    //}
-                    //else if (!VaultSlideCast())
-                    //{
-                    //    _savedSpeed = _rigidbody.velocity;
-                    //    _animator.enabled = true;
-                    //    _animator.Play("VaultSlide");
-                    //    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
-                    //    _animationPlaying = true;
-                    //    Debug.Log("B");
-                    //}
-                    //else
-                    //{
+
+                    }
+                    else if (!VaultSlideCast())
+                    {
+                        _savedSpeed = _rigidbody.velocity;
+                        _animator.enabled = true;
+                        _animator.Play("VaultSlide");
+                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
+                        _animationPlaying = true;
+
+                    }                
+                    else
+                    {
                         _savedSpeed = _rigidbody.velocity;
                         _animator.enabled = true;
                         _animator.Play("Vault");
                         _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
 
-                    //}
-
                 }
+
+            }
                 else if (ChestCast() && HeadCast() && !CapCast())
                 {
                     _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
@@ -243,12 +244,12 @@ public class Parkour : MonoBehaviour
     }
     private bool VaultHopCast()
     {
-        return Physics.Raycast(transform.position + transform.forward * 2, -transform.up, .5f);
+        return Physics.Raycast(transform.position + transform.forward * 2.5f + new Vector3(0, 0.1f, 0), -transform.up, .5f);
     }
 
     private bool VaultSlideCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 2.5f);
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 4.5f);
     }
 
     private bool ChestCast()
@@ -263,7 +264,7 @@ public class Parkour : MonoBehaviour
 
     private bool CapCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap + 1, 0), transform.forward, 1);
+        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap + 1, 0), transform.forward, 1.5f);
 
     }
 

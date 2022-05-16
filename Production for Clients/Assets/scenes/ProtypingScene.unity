@@ -7640,6 +7640,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerAnimationHost
       objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: SprintSpeedup
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 322361516936052281, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.24
@@ -7683,6 +7687,10 @@ PrefabInstance:
     - target: {fileID: 322361516936052286, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: VaultHeight
       value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052286, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: AnimationSpeedDividor
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 344393740582110521, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Layer
