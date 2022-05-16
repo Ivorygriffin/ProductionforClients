@@ -7,6 +7,9 @@ TagManager:
   - Swingable
   - SwingCheck
   - RunableWall
+  - FxTemporaire
+  - Checkpoint
+  - KillPlane
   layers:
   - Default
   - TransparentFX
