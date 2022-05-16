@@ -9,8 +9,11 @@ public class Parkour : MonoBehaviour
     public float VaultHeight;
     [Tooltip("Height above player head that a ledge grab can be triggered")]
     public float ClimbCap;
+
+    [Header("Player Speed")]
+    public float SwingBoostSpeed;
     [Tooltip("How much animations are slowed when the player is moving slow (divides the players velocity by this number)")]
-    public float AnimationSpeedDividor;
+    public float AnimationSpeedDivider;
 
     private bool _animationPlaying, _climbing, _swingBoost;
     private Vector3 _animationEndPosition, _savedSpeed;
@@ -249,7 +252,7 @@ public class Parkour : MonoBehaviour
 
     private bool VaultSlideCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 4.5f);
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 5f);
     }
 
     private bool ChestCast()
@@ -288,7 +291,7 @@ public class Parkour : MonoBehaviour
             transform.localPosition = Vector3.zero;
             if (_swingBoost)
             {
-                _rigidbody.AddRelativeForce(new Vector3(4, 1, 4), ForceMode.Impulse);
+                _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostSpeed / 2, SwingBoostSpeed), ForceMode.Impulse);
             }
             else
             {
@@ -297,6 +300,7 @@ public class Parkour : MonoBehaviour
             }
             _swingBoost = false;
             _swingCheck.gameObject.SetActive(true);
+            transform.rotation = new Quaternion(0, 0, 0, 0);
 
 
         }
