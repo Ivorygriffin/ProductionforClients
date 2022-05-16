@@ -91,7 +91,6 @@ public class Parkour : MonoBehaviour
                         _animator.Play("Vault");
                         _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
-                        Debug.Log("C");
 
                     //}
 
@@ -116,7 +115,6 @@ public class Parkour : MonoBehaviour
                 _climbing = false;
                 _animator.enabled = true;
                 _animator.Play("Climb");
-
                 _animationPlaying = true;
             }
         }
@@ -289,7 +287,6 @@ public class Parkour : MonoBehaviour
             transform.localPosition = Vector3.zero;
             if (_swingBoost)
             {
-                Debug.Log(_rigidbody.velocity.magnitude);
                 _rigidbody.AddRelativeForce(new Vector3(4, 1, 4), ForceMode.Impulse);
             }
             else
