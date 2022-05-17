@@ -38,6 +38,7 @@ public class SceneLoader : MonoBehaviour
     public void LoadOffice()
     {
         SceneManager.LoadScene(office);
+        Debug.Log("office loading");
     }  
     public void LoadEndOffice()
     {
