@@ -20,9 +20,12 @@ public class Parkour : MonoBehaviour
 
 
     private bool _animationPlaying, _climbing, _swingBoost;
-    private float _animationSpeed;
-    
-    
+    private float _animationSpeed, _bumpSpeed;
+
+
+    //Timers
+    private float _MomentumLossTimer;
+
     private Vector3 _animationEndPosition, _savedSpeed;    
     private Quaternion _savedPlayerRotation;
     private Swing _swingCheck;
@@ -41,14 +44,47 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
+        // Object Bump Protection
+
+
+        if (_bumpSpeed < _rigidbody.velocity.magnitude)
+        {
+            _bumpSpeed = _rigidbody.velocity.magnitude;
+        }
+
+        if (_rigidbody.velocity.magnitude < _bumpSpeed)
+        {
+            _MomentumLossTimer += Time.deltaTime;
+        }
+        else
+        {
+            _MomentumLossTimer = 0;
+        }
+
+        if (_MomentumLossTimer > .25f)
+        {
+            _bumpSpeed = _rigidbody.velocity.magnitude;
+        }
+
+
+
+
+
+
         if (_rigidbody.velocity.magnitude > .5f)
         {
-            _animationSpeed = AnimationSpeedMax;
+            _animationSpeed = _rigidbody.velocity.magnitude / GetComponent<PlayerController>().maxSpeed * AnimationSpeedMax;
         }
         else
         {
             _animationSpeed = .5f;
         }
+
+        if(_animationSpeed > AnimationSpeedMax)
+        {
+            _animationSpeed = AnimationSpeedMax;
+        }
+
         Debug.Log(_animationSpeed);
         if (!_animationPlaying)
         {
@@ -60,7 +96,7 @@ public class Parkour : MonoBehaviour
         //---------------------------
         if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying)
         {
-
+            _rigidbody.velocity = _rigidbody.velocity.normalized * _bumpSpeed;
             if (_wallRunning)
             {
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -141,6 +177,7 @@ public class Parkour : MonoBehaviour
             }
                 else if (ChestCast() && HeadCast() && !CapCast())
                 {
+                    _rigidbody.velocity = Vector3.zero;
                     _climbing = true;
 
                 }
@@ -318,13 +355,20 @@ public class Parkour : MonoBehaviour
         return Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 1.5f);
     }
 
+    private bool HeadFarCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 2.5f);
+    }
+
     private bool CapCast()
     {
         return Physics.Raycast(transform.position + new Vector3(0, ClimbCap + 1, 0), transform.forward, 1.5f);
-
     }
 
-
+    private bool CapFarCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap + 1, 0), transform.forward, 2.5f);
+    }
 
     //------------
     // Coroutines

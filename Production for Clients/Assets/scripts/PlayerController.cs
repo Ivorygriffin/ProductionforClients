@@ -97,6 +97,9 @@ public class PlayerController : MonoBehaviour
 
 
 
+        
+
+
         _savedPlayerRotation.y = _rigidbody.transform.rotation.y;
         _savedPlayerRotation.w = _rigidbody.transform.rotation.w;
 
@@ -188,7 +191,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Crouch") && !_crouching)
         {
-            _canSprint = false;
+
             _canJump = false;
             _crouching = true;
 
@@ -312,7 +315,6 @@ public class PlayerController : MonoBehaviour
     {
         transform.localScale = new Vector3(1, 1, 1);
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + _crouchDistance, transform.localPosition.z);
-        _canSprint = true;
         _crouching = false;
         _canJump = true;
         _sliding = false;
