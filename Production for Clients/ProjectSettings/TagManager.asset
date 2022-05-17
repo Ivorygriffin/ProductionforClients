@@ -6,11 +6,15 @@ TagManager:
   tags:
   - Swingable
   - SwingCheck
+  - RunableWall
+  - FxTemporaire
+  - Checkpoint
+  - KillPlane
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Swing
   - Water
   - UI
   - 
