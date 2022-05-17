@@ -13,18 +13,23 @@ public class Parkour : MonoBehaviour
     [Header("Player Speed")]
     public float SwingBoostSpeed;
     [Tooltip("How much animations are slowed when the player is moving slow (divides the players velocity by this number)")]
-    public float AnimationSpeedDivider;
+    public float AnimationSpeedMax;
+
+    [HideInInspector]
+    public bool _wallRunning;
+
 
     private bool _animationPlaying, _climbing, _swingBoost;
-    private Vector3 _animationEndPosition, _savedSpeed;
-
+    private float _animationSpeed;
+    
+    
+    private Vector3 _animationEndPosition, _savedSpeed;    
     private Quaternion _savedPlayerRotation;
     private Swing _swingCheck;
     private Rigidbody _rigidbody;
     private Animator _animator;
     private IEnumerator _stopAnim;
-    [HideInInspector]
-    public bool _wallRunning;
+
 
     void Start()
     {
@@ -36,7 +41,19 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
-
+        if (_rigidbody.velocity.magnitude > .5f)
+        {
+            _animationSpeed = AnimationSpeedMax;
+        }
+        else
+        {
+            _animationSpeed = .5f;
+        }
+        Debug.Log(_animationSpeed);
+        if (!_animationPlaying)
+        {
+            _animator.speed = _animationSpeed;
+        }
 
         //---------------------------
         // Mantling & Ledge Grabbing
@@ -82,7 +99,6 @@ public class Parkour : MonoBehaviour
                             _animator.Play("VaultHop_Far");
                         }
 
-                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
 
                     }
@@ -100,7 +116,6 @@ public class Parkour : MonoBehaviour
                             _animator.Play("VaultSlide_Far");
                         }
 
-                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
 
                     }                
@@ -119,7 +134,6 @@ public class Parkour : MonoBehaviour
 
                         }
 
-                        _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                         _animationPlaying = true;
 
                 }
@@ -127,7 +141,6 @@ public class Parkour : MonoBehaviour
             }
                 else if (ChestCast() && HeadCast() && !CapCast())
                 {
-                    _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
                     _climbing = true;
 
                 }
@@ -172,7 +185,6 @@ public class Parkour : MonoBehaviour
             _swingCheck.gameObject.SetActive(false);
             _savedSpeed = _rigidbody.velocity;
             _animator.enabled = true;
-            _animator.speed = _rigidbody.velocity.magnitude / 5 + 0.5f;
             _animator.Play("Swing");
             _animationPlaying = true;
             _swingBoost = true;
