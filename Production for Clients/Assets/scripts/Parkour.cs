@@ -19,7 +19,7 @@ public class Parkour : MonoBehaviour
     public bool _wallRunning;
 
 
-    private bool _animationPlaying, _climbing, _swingBoost;
+    private bool _animationPlaying, _climbing, _farClimb, _swingBoost;
     private float _animationSpeed, _bumpSpeed;
 
 
@@ -44,6 +44,11 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
+
+
+
+
+
         // Object Bump Protection
 
 
@@ -175,10 +180,19 @@ public class Parkour : MonoBehaviour
                 }
 
             }
-                else if (ChestCast() && HeadCast() && !CapCast())
+                else if (ChestFarCast() && HeadFarCast() && !CapCast())
                 {
-                    _rigidbody.velocity = Vector3.zero;
-                    _climbing = true;
+                    if(ChestCast() && HeadCast())
+                    {
+                        _rigidbody.velocity = Vector3.zero;
+                        _climbing = true;
+                    }
+                    else if (!CapFarCast())
+                    {
+                        _rigidbody.velocity = Vector3.zero;
+                        _farClimb = true;
+                    }
+
 
                 }
 
@@ -195,6 +209,18 @@ public class Parkour : MonoBehaviour
                 _climbing = false;
                 _animator.enabled = true;
                 _animator.Play("Climb");
+                _animationPlaying = true;
+            }
+        }
+        if (_farClimb)
+        {
+            _rigidbody.AddForce(0, 30, 0);
+            if (!HeadFarCast())
+            {
+                _savedSpeed = _rigidbody.velocity;
+                _climbing = false;
+                _animator.enabled = true;
+                _animator.Play("Climb_Far");
                 _animationPlaying = true;
             }
         }
@@ -367,7 +393,7 @@ public class Parkour : MonoBehaviour
 
     private bool CapFarCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap + 1, 0), transform.forward, 2.5f);
+        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap, 0), transform.forward, 2.5f);
     }
 
     //------------

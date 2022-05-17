@@ -96,7 +96,10 @@ public class PlayerController : MonoBehaviour
     {
 
 
-
+        if (IsGrounded() && !Input.GetButton("Jump"))
+        {
+            _rigidbody.AddForce(new Vector3(0, -5, 0));
+        }
         
 
 
