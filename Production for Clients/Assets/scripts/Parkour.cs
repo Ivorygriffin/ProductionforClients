@@ -19,7 +19,7 @@ public class Parkour : MonoBehaviour
     public bool _wallRunning;
 
 
-    private bool _animationPlaying, _animationStart, _climbing, _farClimb, _swingBoost;
+    private bool _animationPlaying, _animationStart, _climbing, _farClimb, _midVault, _swingBoost;
     private float _animationSpeed, _bumpSpeed;
 
 
@@ -193,6 +193,11 @@ public class Parkour : MonoBehaviour
 
 
                 }
+                else if (ChestFarCast() && !HeadFarCast() && VaultFarCast())
+                {
+                    _midVault = true;
+                    Debug.Log("e");
+                }
 
             }
 
@@ -223,6 +228,32 @@ public class Parkour : MonoBehaviour
                 _animator.Play("Climb_Far");
                 _animationStart = true;
 
+
+            }
+        }
+        if (_midVault)
+        {
+            _rigidbody.AddForce(0, 3, 0);
+            if (!ChestFarCast())
+            {
+                if (VaultCast())
+                {
+                    _savedSpeed = _rigidbody.velocity;
+                    _animator.enabled = true;
+                    _animator.Play("Vault");
+                    _animationStart = true;
+
+
+                }
+                else
+                {
+                    _savedSpeed = _rigidbody.velocity;
+                    _animator.enabled = true;
+                    _animator.Play("Vault_Far");
+                    _animationStart = true;
+
+                }
+                _midVault = false;
 
             }
         }
@@ -259,7 +290,6 @@ public class Parkour : MonoBehaviour
                 _swingBoost = false;
                 _swingCheck.gameObject.SetActive(true);
                 transform.rotation = new Quaternion(0, 0, 0, 0);
-                Debug.Log("A");
 
             }
             _animationEndPosition = transform.position;
@@ -436,7 +466,6 @@ public class Parkour : MonoBehaviour
         yield return new WaitForEndOfFrame();
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _animationPlaying = true;
-        Debug.Log("B");
        
     }
 }
