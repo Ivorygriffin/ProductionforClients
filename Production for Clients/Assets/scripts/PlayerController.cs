@@ -96,7 +96,10 @@ public class PlayerController : MonoBehaviour
     {
 
 
-
+        if (IsGrounded() && !Input.GetButton("Jump"))
+        {
+            _rigidbody.AddForce(new Vector3(0, -5, 0));
+        }
         
 
 
@@ -133,13 +136,18 @@ public class PlayerController : MonoBehaviour
         //--------------------------------------------------------------------------------
 
 
+
         //----------------------
         // Player Speed Limiter
         //----------------------
 
-        if (Input.GetButton("Vertical") || Input.GetButton("Horizontal"))
+        if (Input.GetAxis("Vertical") > 0)
         {
             _playerSpeed += Time.deltaTime * SprintSpeedup;
+        }
+        else if (Input.GetAxis("Vertical") < 0 || Input.GetButton("Horizontal"))
+        {
+            _playerSpeed = maxSpeed;
         }
         else
         {
@@ -152,7 +160,7 @@ public class PlayerController : MonoBehaviour
         {
             _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
         }
-        if(_rigidbody.velocity.magnitude > _playerSpeed)
+        if (_rigidbody.velocity.magnitude > _playerSpeed)
         {
             _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
 
@@ -160,30 +168,7 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
 
 
-        //--------
-        // Sprint
-        //--------
 
-        if (Input.GetAxis("Vertical") > 0 & AlwaysSprint == true)
-        {
-            maxSpeed = _savedMaxSpeed * sprintMultiplier;
-            Camera.main.fieldOfView = _fov + _fovEaseIn;
-
-        }
-        else
-        {
-            maxSpeed = _savedMaxSpeed;
-            Camera.main.fieldOfView = _fov + _fovEaseIn;
-            if (_fovEaseIn > 0)
-            {
-                _fovEaseIn -= Time.deltaTime * _fovEaseIn;
-            }
-        }
-
-        if(_playerSpeed > 0 && Input.GetAxis("Vertical") > 0)
-        {
-            _fovEaseIn = _playerSpeed / FovChangeDampness;
-        }
 
         //------------
         // Crouch
@@ -296,6 +281,33 @@ public class PlayerController : MonoBehaviour
         // Player Movement
         //----------------
         _rigidbody.AddRelativeForce(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"), ForceMode.Impulse);
+
+
+        //--------
+        // Sprint
+        //--------
+
+        if (Input.GetAxis("Vertical") > 0 & AlwaysSprint == true)
+        {
+            maxSpeed = _savedMaxSpeed * sprintMultiplier;
+            Camera.main.fieldOfView = _fov + _fovEaseIn;
+
+        }
+        else
+        {
+            maxSpeed = _savedMaxSpeed;
+            Camera.main.fieldOfView = _fov + _fovEaseIn;
+            if (_fovEaseIn > 0)
+            {
+                _fovEaseIn -= Time.deltaTime * _fovEaseIn;
+            }
+        }
+
+        if(_playerSpeed > 0 && Input.GetAxis("Vertical") > 0)
+        {
+            _fovEaseIn = _playerSpeed / FovChangeDampness;
+        }
+
 
     }
 

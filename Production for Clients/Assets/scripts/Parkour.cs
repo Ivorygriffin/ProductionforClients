@@ -19,7 +19,7 @@ public class Parkour : MonoBehaviour
     public bool _wallRunning;
 
 
-    private bool _animationPlaying, _climbing, _swingBoost;
+    private bool _animationPlaying, _animationStart, _climbing, _farClimb, _midVault, _swingBoost;
     private float _animationSpeed, _bumpSpeed;
 
 
@@ -44,6 +44,7 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
+
         // Object Bump Protection
 
 
@@ -85,7 +86,6 @@ public class Parkour : MonoBehaviour
             _animationSpeed = AnimationSpeedMax;
         }
 
-        Debug.Log(_animationSpeed);
         if (!_animationPlaying)
         {
             _animator.speed = _animationSpeed;
@@ -135,7 +135,8 @@ public class Parkour : MonoBehaviour
                             _animator.Play("VaultHop_Far");
                         }
 
-                        _animationPlaying = true;
+                        _animationStart = true;
+
 
                     }
                     else if (!VaultSlideFarCast())
@@ -152,9 +153,11 @@ public class Parkour : MonoBehaviour
                             _animator.Play("VaultSlide_Far");
                         }
 
-                        _animationPlaying = true;
 
-                    }                
+                        _animationStart = true;
+
+
+                    }
                     else
                     {
                         _savedSpeed = _rigidbody.velocity;
@@ -169,17 +172,31 @@ public class Parkour : MonoBehaviour
                             _animator.Play("Vault_Far");
 
                         }
+                        _animationStart = true;
 
-                        _animationPlaying = true;
+
+                    }
 
                 }
-
-            }
-                else if (ChestCast() && HeadCast() && !CapCast())
+                else if (ChestFarCast() && HeadFarCast() && !CapFarCast())
                 {
-                    _rigidbody.velocity = Vector3.zero;
-                    _climbing = true;
+                    if(ChestCast() && HeadCast() && !CapFarCast())
+                    {
+                        _rigidbody.velocity = Vector3.zero;
+                        _climbing = true;
+                    }
+                    else
+                    {
+                        _rigidbody.velocity = Vector3.zero;
+                        _farClimb = true;
+                    }
 
+
+                }
+                else if (ChestFarCast() && !HeadFarCast() && VaultFarCast())
+                {
+                    _midVault = true;
+                    Debug.Log("e");
                 }
 
             }
@@ -195,15 +212,89 @@ public class Parkour : MonoBehaviour
                 _climbing = false;
                 _animator.enabled = true;
                 _animator.Play("Climb");
-                _animationPlaying = true;
+                _animationStart = true;
+
+
             }
+        }
+        if (_farClimb)
+        {
+            _rigidbody.AddForce(0, 30, 0);
+            if (!HeadFarCast())
+            {
+                _savedSpeed = _rigidbody.velocity;
+                _climbing = false;
+                _animator.enabled = true;
+                _animator.Play("Climb_Far");
+                _animationStart = true;
+
+
+            }
+        }
+        if (_midVault)
+        {
+            _rigidbody.AddForce(0, 3, 0);
+            if (!ChestFarCast())
+            {
+                if (VaultCast())
+                {
+                    _savedSpeed = _rigidbody.velocity;
+                    _animator.enabled = true;
+                    _animator.Play("Vault");
+                    _animationStart = true;
+
+
+                }
+                else
+                {
+                    _savedSpeed = _rigidbody.velocity;
+                    _animator.enabled = true;
+                    _animator.Play("Vault_Far");
+                    _animationStart = true;
+
+                }
+                _midVault = false;
+
+            }
+        }
+
+        if (_animationStart)
+        {
+            _stopAnim = StopAnim();
+            StartCoroutine(_stopAnim);
+
         }
 
         if (_animationPlaying)
         {
+            _animationStart = false;
+            if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+                _animationPlaying = false;
+                _animator.enabled = false;
+                transform.position = _animationEndPosition;
+                transform.parent.position = gameObject.transform.position;
+                transform.localPosition = Vector3.zero;
+
+                if (_swingBoost)
+                {
+                    _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostSpeed / 2, SwingBoostSpeed), ForceMode.Impulse);
+                }
+                else
+                {
+                    _rigidbody.AddRelativeForce(new Vector3(_savedSpeed.x, 0, _savedSpeed.z));
+
+                }
+                _swingBoost = false;
+                _swingCheck.gameObject.SetActive(true);
+                transform.rotation = new Quaternion(0, 0, 0, 0);
+
+            }
             _animationEndPosition = transform.position;
-            _stopAnim = StopAnim();
-            StartCoroutine(_stopAnim);
+
+
 
         }
         else
@@ -223,7 +314,7 @@ public class Parkour : MonoBehaviour
             _savedSpeed = _rigidbody.velocity;
             _animator.enabled = true;
             _animator.Play("Swing");
-            _animationPlaying = true;
+            _animationStart = true;
             _swingBoost = true;
         }
         if (_wallRunning)
@@ -271,9 +362,6 @@ public class Parkour : MonoBehaviour
                 if (transform.localRotation.w < 0)
                 {
                     transform.rotation = new Quaternion(transform.rotation.x, -transform.rotation.y, transform.rotation.z, -transform.rotation.w);
-                    Debug.Log("a");
-                    Debug.Log(transform.localRotation.w);
-                    Debug.Log(transform.localRotation.y);
 
                 }
 
@@ -367,7 +455,7 @@ public class Parkour : MonoBehaviour
 
     private bool CapFarCast()
     {
-        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap + 1, 0), transform.forward, 2.5f);
+        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap, 0), transform.forward, 2.5f);
     }
 
     //------------
@@ -375,31 +463,9 @@ public class Parkour : MonoBehaviour
     //------------
     private IEnumerator StopAnim()
     {
-        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         yield return new WaitForEndOfFrame();
-        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
-        {
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-
-            _animationPlaying = false;
-            _animator.enabled = false;
-            transform.position = _animationEndPosition;
-            transform.parent.position = gameObject.transform.position;
-            transform.localPosition = Vector3.zero;
-            if (_swingBoost)
-            {
-                _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostSpeed / 2, SwingBoostSpeed), ForceMode.Impulse);
-            }
-            else
-            {
-                _rigidbody.AddRelativeForce(new Vector3(_savedSpeed.x, 0, _savedSpeed.z));
-
-            }
-            _swingBoost = false;
-            _swingCheck.gameObject.SetActive(true);
-            transform.rotation = new Quaternion(0, 0, 0, 0);
-
-
-        }
+        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        _animationPlaying = true;
+       
     }
 }
