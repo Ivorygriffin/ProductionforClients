@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
     public float SlideFriction;
     [Tooltip("How quickly the player gains speed when running")]
     public float SprintSpeedup;
+    [Tooltip("How strong the FOV change is when sprinting (The higher number, the less it changes)")]
+    public float FovChangeDampness;
 
 
 
@@ -55,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private float _mouseX, _rotation, _yForce, _savedMaxSpeed;
 
-    private bool _sliding, _crouching, _canSprint, _canJump;
+    private bool _sliding, _crouching, _canJump;
     private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov, _playerSpeed;
     private Quaternion _savedPlayerRotation;
     private Animator _animator;
@@ -84,7 +86,6 @@ public class PlayerController : MonoBehaviour
         _distanceToGround = GetComponent<Collider>().bounds.extents.y;
         Cursor.lockState = CursorLockMode.Locked;
         _fov = Camera.main.fieldOfView;
-        _canSprint = true;
         _canJump = true;
         _animator = GetComponent<Animator>();
         _animator.enabled = false;
@@ -93,6 +94,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+
+
+        
+
+
         _savedPlayerRotation.y = _rigidbody.transform.rotation.y;
         _savedPlayerRotation.w = _rigidbody.transform.rotation.w;
 
@@ -157,14 +164,11 @@ public class PlayerController : MonoBehaviour
         // Sprint
         //--------
 
-        if (Input.GetButton("Sprint") && _canSprint && Input.GetAxis("Vertical") == 1 || AlwaysSprint == true)
+        if (Input.GetAxis("Vertical") > 0 & AlwaysSprint == true)
         {
             maxSpeed = _savedMaxSpeed * sprintMultiplier;
             Camera.main.fieldOfView = _fov + _fovEaseIn;
-            if (_fovEaseIn < 2)
-            {
-                _fovEaseIn += Time.deltaTime * 10;
-            }
+
         }
         else
         {
@@ -172,10 +176,14 @@ public class PlayerController : MonoBehaviour
             Camera.main.fieldOfView = _fov + _fovEaseIn;
             if (_fovEaseIn > 0)
             {
-                _fovEaseIn -= Time.deltaTime * 20;
+                _fovEaseIn -= Time.deltaTime * _fovEaseIn;
             }
         }
 
+        if(_playerSpeed > 0 && Input.GetAxis("Vertical") > 0)
+        {
+            _fovEaseIn = _playerSpeed / FovChangeDampness;
+        }
 
         //------------
         // Crouch
@@ -183,7 +191,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Crouch") && !_crouching)
         {
-            _canSprint = false;
+
             _canJump = false;
             _crouching = true;
 
@@ -258,7 +266,26 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        if (!Input.GetButton("Horizontal") && !Input.GetButton("Vertical"))
+        {
+            _rigidbody.velocity = new Vector3(0, _yForce, 0);
+        }
 
+
+        if (Input.GetButtonDown("Horizontal"))
+        {
+            if (!Input.GetButton("Vertical"))
+            {
+                _rigidbody.velocity = new Vector3(0, _yForce, 0);
+            }
+        }
+        if (Input.GetButtonDown("Vertical"))
+        {
+            if (!Input.GetButton("Horizontal"))
+            {
+                _rigidbody.velocity = new Vector3(0, _yForce, 0);
+            }
+        }
 
     }
 
@@ -269,10 +296,7 @@ public class PlayerController : MonoBehaviour
         // Player Movement
         //----------------
         _rigidbody.AddRelativeForce(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"), ForceMode.Impulse);
-        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0 || Input.GetButton("Lean"))
-        {
-            _rigidbody.velocity = new Vector3(0, _yForce, 0);
-        }
+
     }
 
 
@@ -291,7 +315,6 @@ public class PlayerController : MonoBehaviour
     {
         transform.localScale = new Vector3(1, 1, 1);
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + _crouchDistance, transform.localPosition.z);
-        _canSprint = true;
         _crouching = false;
         _canJump = true;
         _sliding = false;
