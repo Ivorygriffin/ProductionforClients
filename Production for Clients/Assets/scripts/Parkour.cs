@@ -196,7 +196,6 @@ public class Parkour : MonoBehaviour
                 else if (ChestFarCast() && !HeadFarCast() && VaultFarCast())
                 {
                     _midVault = true;
-                    Debug.Log("e");
                 }
 
             }
