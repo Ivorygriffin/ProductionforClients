@@ -15,7 +15,7 @@ public class TimedMode : MonoBehaviour
     void Update()
     {
         TimeData.timeData += Time.deltaTime;
-        timerText.SetText("Time: " + TimeData.timeData.ToString("00"));
+        timerText.text = "Time: " + TimeData.timeData.ToString("F3");
     }
 
   

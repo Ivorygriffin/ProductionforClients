@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/scenes/Cave.unity
     guid: 70b13d38d276df04b862260f6ec4ba85
   - enabled: 1
+    path: Assets/scenes/OfficeTimed.unity
+    guid: be70296b85118c14580830d561094556
+  - enabled: 1
     path: Assets/scenes/Jungle Timed.unity
     guid: 307ceb6e5bf422b498af29b1b31e34e5
   - enabled: 1
