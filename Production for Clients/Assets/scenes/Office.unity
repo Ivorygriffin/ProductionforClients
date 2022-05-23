@@ -1775,7 +1775,9 @@ MonoBehaviour:
   desert: 
   office: 
   Endoffice: 
+  prototype: 
   pauseMenu: {fileID: 0}
+  levelSelect: {fileID: 0}
 --- !u!1001 &261588592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14560,6 +14562,14 @@ PrefabInstance:
     - target: {fileID: 4269708733395756, guid: 76e8d021eb5836e49bfcce87afdae867, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.46636
+      objectReference: {fileID: 0}
+    - target: {fileID: 64247845944639692, guid: 76e8d021eb5836e49bfcce87afdae867, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64460276603025166, guid: 76e8d021eb5836e49bfcce87afdae867, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76e8d021eb5836e49bfcce87afdae867, type: 3}
