@@ -327,7 +327,7 @@ public class Parkour : MonoBehaviour
         }
         else
         {
-            //_rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
         }
 
