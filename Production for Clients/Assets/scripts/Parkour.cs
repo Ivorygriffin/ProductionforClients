@@ -46,9 +46,9 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
-
+        // -----------------------
         // Object Bump Protection
-
+        // -----------------------
 
         if (_bumpSpeed < _rigidbody.velocity.magnitude)
         {
@@ -80,7 +80,7 @@ public class Parkour : MonoBehaviour
         }
         else
         {
-            _animationSpeed = .5f;
+            _animationSpeed = 1f;
         }
 
         if(_animationSpeed > AnimationSpeedMax)

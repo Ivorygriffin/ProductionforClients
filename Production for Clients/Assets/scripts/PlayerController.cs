@@ -169,10 +169,6 @@ public class PlayerController : MonoBehaviour
 
         _yForce = _rigidbody.velocity.y;
 
-        if (_rigidbody.velocity.magnitude > maxSpeed)
-        {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
-        }
         if (_rigidbody.velocity.magnitude > _playerSpeed)
         {
             _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
