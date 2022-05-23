@@ -2748,7 +2748,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1119009790}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadOffice
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5829,7 +5829,10 @@ MonoBehaviour:
   desert: 
   office: Office
   Endoffice: 
+  prototype: 
+  targetScene: Office
   pauseMenu: {fileID: 0}
+  levelSelect: {fileID: 0}
 --- !u!4 &1119009791
 Transform:
   m_ObjectHideFlags: 0
