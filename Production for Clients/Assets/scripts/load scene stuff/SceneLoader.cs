@@ -13,6 +13,7 @@ public class SceneLoader : MonoBehaviour
     public string Endoffice;
     public string prototype;   
     public string targetScene;
+    public string targetTimedScene;
 
     public GameObject pauseMenu;
     public GameObject levelSelect;
@@ -92,6 +93,11 @@ public class SceneLoader : MonoBehaviour
     public void LoadScene()
     {
         LoadingData.sceneToLoad = targetScene;
+        SceneManager.LoadScene("LoadingScene");
+    } 
+    public void LoadTimedScene()
+    {
+        LoadingData.sceneToLoad = targetTimedScene;
         SceneManager.LoadScene("LoadingScene");
     }
 
