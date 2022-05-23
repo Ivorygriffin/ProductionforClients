@@ -291,10 +291,10 @@ public class Parkour : MonoBehaviour
                 _swingBoost = false;
                 _swingCheck.gameObject.SetActive(true);
                 transform.rotation = new Quaternion(0, 0, 0, 0);
-
+                canMoveCamera = true;
             }
             _animationEndPosition = transform.position;
-            canMoveCamera = true;
+
 
 
 
