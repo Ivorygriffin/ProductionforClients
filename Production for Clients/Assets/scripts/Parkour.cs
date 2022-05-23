@@ -119,7 +119,7 @@ public class Parkour : MonoBehaviour
                     _swingCheck.gameObject.SetActive(true);
                 }
 
-                if (VaultFarCast() && !ChestFarCast() && gameObject.GetComponent<PlayerController>().IsGrounded())
+                if (VaultFarCast() && !ChestFarCast() && gameObject.GetComponent<PlayerController>()._grounded)
                 {
 
                     if (!VaultHopFarCast() && !VaultSlideFarCast())
