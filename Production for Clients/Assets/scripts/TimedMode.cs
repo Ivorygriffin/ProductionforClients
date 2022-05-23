@@ -5,17 +5,18 @@ using TMPro;
 
 public class TimedMode : MonoBehaviour
 {
-    private float currentTime;
+  
     public TMP_Text timerText;
 
+    public void Awake()
+    {
+        
+    }
     void Update()
     {
-        currentTime += Time.deltaTime;
-        timerText.SetText("Time: " + currentTime.ToString("00"));
+        TimeData.timeData += Time.deltaTime;
+        timerText.SetText("Time: " + TimeData.timeData.ToString("00"));
     }
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+  
 }

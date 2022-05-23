@@ -4447,7 +4447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &759113512
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15181,60 +15181,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64d3f3dec1896a24eae8715c893497b6, type: 3}
---- !u!1001 &7888059416394606247
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.45109138
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.83765507
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.06795049
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631017426178454026, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6328053386094272221, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
-      propertyPath: m_Name
-      value: Timer
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 201c3a949d3e38e46bfd280fefbe6859, type: 3}
