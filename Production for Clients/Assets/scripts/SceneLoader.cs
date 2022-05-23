@@ -11,7 +11,8 @@ public class SceneLoader : MonoBehaviour
     public string desert; 
     public string office; 
     public string Endoffice;
-    public string prototype;
+    public string prototype;   
+    public string targetScene;
 
     public GameObject pauseMenu;
     public GameObject levelSelect;
@@ -77,12 +78,22 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
     }
 
+    public void MouseOn()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void MouseOff()
+    {
+        Cursor.lockState= CursorLockMode.Confined;
+    }
 
 
-
-
-
-
+    public void LoadScene()
+    {
+        LoadingData.sceneToLoad = targetScene;
+        SceneManager.LoadScene("LoadingScene");
+    }
 
 
 }
