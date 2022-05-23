@@ -21,12 +21,15 @@ public class SceneLoader : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
             pauseMenu.SetActive(true);
         }
         if (Input.GetKey(KeyCode.P))
         {
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
             levelSelect.SetActive(true);
-            Cursor.lockState= CursorLockMode.Confined;
+            
         }
     }
 
@@ -61,6 +64,7 @@ public class SceneLoader : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
         levelSelect.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void Restart()
