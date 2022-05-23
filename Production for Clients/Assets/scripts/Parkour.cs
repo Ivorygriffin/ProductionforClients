@@ -17,6 +17,7 @@ public class Parkour : MonoBehaviour
 
     [HideInInspector]
     public bool _wallRunning;
+    public bool canMoveCamera;
 
 
     private bool _animationPlaying, _animationStart, _climbing, _farClimb, _midVault, _swingBoost;
@@ -39,6 +40,7 @@ public class Parkour : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
         _swingCheck = GetComponentInChildren<Swing>();
+        canMoveCamera = true;
     }
 
 
@@ -105,7 +107,6 @@ public class Parkour : MonoBehaviour
                 _savedPlayerRotation = transform.rotation;
                 transform.rotation = transform.parent.rotation;
                 transform.parent.rotation = _savedPlayerRotation;
-
             }
             else
             {
@@ -261,6 +262,7 @@ public class Parkour : MonoBehaviour
         {
             _stopAnim = StopAnim();
             StartCoroutine(_stopAnim);
+            canMoveCamera = false;
 
         }
 
@@ -292,6 +294,8 @@ public class Parkour : MonoBehaviour
 
             }
             _animationEndPosition = transform.position;
+            canMoveCamera = true;
+
 
 
 
@@ -323,7 +327,7 @@ public class Parkour : MonoBehaviour
         }
         else
         {
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            //_rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
         }
 

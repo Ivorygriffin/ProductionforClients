@@ -11,15 +11,26 @@ public class SceneLoader : MonoBehaviour
     public string desert; 
     public string office; 
     public string Endoffice;
+    public string prototype;   
+    public string targetScene;
 
     public GameObject pauseMenu;
+    public GameObject levelSelect;
 
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
             pauseMenu.SetActive(true);
+        }
+        if (Input.GetKey(KeyCode.P))
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Time.timeScale = 0;
+            levelSelect.SetActive(true);
+            
         }
     }
 
@@ -44,11 +55,17 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(Endoffice);
     }
+    public void LoadProtoype()
+    {
+        SceneManager.LoadScene(prototype);
+    }
 
     public void Resume()
     {
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
+        levelSelect.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void Restart()
@@ -61,12 +78,22 @@ public class SceneLoader : MonoBehaviour
         Application.Quit();
     }
 
+    public void MouseOn()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void MouseOff()
+    {
+        Cursor.lockState= CursorLockMode.Confined;
+    }
 
 
-
-
-
-
+    public void LoadScene()
+    {
+        LoadingData.sceneToLoad = targetScene;
+        SceneManager.LoadScene("LoadingScene");
+    }
 
 
 }
