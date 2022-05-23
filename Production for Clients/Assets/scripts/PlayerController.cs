@@ -96,11 +96,28 @@ public class PlayerController : MonoBehaviour
     {
 
 
-        if (IsGrounded() && !Input.GetButton("Jump"))
+        if (IsGrounded())
         {
-            _rigidbody.AddForce(new Vector3(0, -5, 0));
+            _rigidbody.useGravity = false;
+            if (!Input.GetButton("Jump"))
+            {
+                _rigidbody.AddForce(new Vector3(0, -5, 0));
+            }
+            if (!Input.GetButton("Vertical") && !Input.GetButton("Horizontal"))
+            {
+                _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            }
+            else
+            {
+                _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+
         }
-        
+        else
+        {
+            _rigidbody.useGravity = true;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
 
 
         _savedPlayerRotation.y = _rigidbody.transform.rotation.y;
@@ -109,8 +126,12 @@ public class PlayerController : MonoBehaviour
         //-----------------
         // Camera Movement
         //-----------------
-        _mouseX = Input.GetAxis("Mouse X") * lookSpeed;
-        _mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
+        if (_parkour.canMoveCamera)
+        {
+            _mouseX = Input.GetAxis("Mouse X") * lookSpeed;
+            _mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
+        }
+
 
         _rotation += _mouseY;
 
@@ -247,7 +268,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && _canJump && IsGrounded())
         {
 
-                _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+            _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
 
         }
 
@@ -303,7 +324,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(_playerSpeed > 0 && Input.GetAxis("Vertical") > 0)
+        if (_playerSpeed > 0 && Input.GetAxis("Vertical") > 0)
         {
             _fovEaseIn = _playerSpeed / FovChangeDampness;
         }
