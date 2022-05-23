@@ -63,12 +63,16 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private Parkour _parkour;
 
+    private ContactPoint[] _contactPoints;
+    private Vector3 playerGravity, groundAngle;
+
     //Timers
     private float _fovEaseIn;
 
     private Rigidbody _rigidbody;
     [HideInInspector]
     public GameObject _playerCamera;
+    public bool _grounded;
 
 
 
@@ -90,34 +94,22 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _animator.enabled = false;
         _parkour = GetComponent<Parkour>();
+        _rigidbody.useGravity = false;
     }
 
     void Update()
     {
 
 
-        if (IsGrounded())
+        if (_grounded)
         {
-            _rigidbody.useGravity = false;
             if (!Input.GetButton("Jump"))
             {
                 _rigidbody.AddForce(new Vector3(0, -5, 0));
             }
-            if (!Input.GetButton("Vertical") && !Input.GetButton("Horizontal"))
-            {
-                _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            }
-            else
-            {
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-            }
 
         }
-        else
-        {
-            _rigidbody.useGravity = true;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
+
 
 
         _savedPlayerRotation.y = _rigidbody.transform.rotation.y;
@@ -130,6 +122,11 @@ public class PlayerController : MonoBehaviour
         {
             _mouseX = Input.GetAxis("Mouse X") * lookSpeed;
             _mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
+        }
+        else
+        {
+            _mouseX = 0;
+            _mouseY = 0;
         }
 
 
@@ -176,17 +173,22 @@ public class PlayerController : MonoBehaviour
         }
 
         _yForce = _rigidbody.velocity.y;
-
-        if (_rigidbody.velocity.magnitude > maxSpeed)
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
-        }
-        if (_rigidbody.velocity.magnitude > _playerSpeed)
-        {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
 
+            if (_rigidbody.velocity.magnitude > maxSpeed)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
+
+            }
+
+            if (_rigidbody.velocity.magnitude > _playerSpeed)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
+
+            }
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
         }
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
 
 
 
@@ -265,7 +267,7 @@ public class PlayerController : MonoBehaviour
         // Jumping
         //----------
 
-        if (Input.GetButtonDown("Jump") && _canJump && IsGrounded())
+        if (Input.GetButtonDown("Jump") && _canJump && _grounded)
         {
 
             _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
@@ -329,18 +331,48 @@ public class PlayerController : MonoBehaviour
             _fovEaseIn = _playerSpeed / FovChangeDampness;
         }
 
+        if (!_grounded)
+        {
+            playerGravity = Physics.gravity;
+        }
+        else
+        {
+            playerGravity = -groundAngle * Physics.gravity.magnitude;
+        }
+        _rigidbody.AddForce(playerGravity, ForceMode.Force);
 
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.collider.tag != "Player")
+        {
+            _grounded = IsGrounded(collision);
+        }
+    }
 
-
+    private void OnCollisionExit(Collision collision)
+    {
+        _grounded = false;
+        groundAngle = Vector3.zero;
+    }
     //-----------
     // Functions
     //-----------
 
-    public bool IsGrounded()
+    public bool IsGrounded(Collision collision)
     {
-        return Physics.Raycast(transform.position, -Vector3.up, _distanceToGround + 0.1f);
+        _contactPoints = new ContactPoint[collision.contactCount];
+        collision.GetContacts(_contactPoints);
+        foreach (var ContactPoint in _contactPoints)
+        {
+            if(45 > Vector3.Angle(ContactPoint.normal, -Physics.gravity.normalized))
+            {
+                groundAngle = ContactPoint.normal;
+                return true;
+            }
+        }
+        return false;
     }
 
 

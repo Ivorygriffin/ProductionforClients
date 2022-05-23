@@ -46,9 +46,9 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
-
+        // -----------------------
         // Object Bump Protection
-
+        // -----------------------
 
         if (_bumpSpeed < _rigidbody.velocity.magnitude)
         {
@@ -80,7 +80,7 @@ public class Parkour : MonoBehaviour
         }
         else
         {
-            _animationSpeed = .5f;
+            _animationSpeed = 1f;
         }
 
         if(_animationSpeed > AnimationSpeedMax)
@@ -119,7 +119,7 @@ public class Parkour : MonoBehaviour
                     _swingCheck.gameObject.SetActive(true);
                 }
 
-                if (VaultFarCast() && !ChestFarCast() && gameObject.GetComponent<PlayerController>().IsGrounded())
+                if (VaultFarCast() && !ChestFarCast() && gameObject.GetComponent<PlayerController>()._grounded)
                 {
 
                     if (!VaultHopFarCast() && !VaultSlideFarCast())
@@ -291,10 +291,10 @@ public class Parkour : MonoBehaviour
                 _swingBoost = false;
                 _swingCheck.gameObject.SetActive(true);
                 transform.rotation = new Quaternion(0, 0, 0, 0);
-
+                canMoveCamera = true;
             }
             _animationEndPosition = transform.position;
-            canMoveCamera = true;
+
 
 
 
@@ -327,7 +327,7 @@ public class Parkour : MonoBehaviour
         }
         else
         {
-            //_rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
         }
 
