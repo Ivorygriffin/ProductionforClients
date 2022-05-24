@@ -4023,24 +4023,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2763734800263550037, guid: 80a7c30ae6781d04c934c2da5121f374, type: 3}
   m_PrefabInstance: {fileID: 192439766}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &192656959 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 344393740582110521, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-  m_PrefabInstance: {fileID: 1772925495}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &192656961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 192656959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccd9046b7dda92e4aae922fa722301e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startSwing: 0
 --- !u!1001 &195578535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26567,7 +26549,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 251677484}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: LoadEndOffice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -39080,42 +39062,6 @@ PrefabInstance:
     - target: {fileID: 322361515025143855, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361515025143855, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516665959189, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: far clip plane
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: jumpForce
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: SprintSpeedup
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052286, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: VaultHeight
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052286, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: SwingBoostSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3283183003208260224, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.0283512
-      objectReference: {fileID: 0}
-    - target: {fileID: 3283183003208260224, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5483825912010976915, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}

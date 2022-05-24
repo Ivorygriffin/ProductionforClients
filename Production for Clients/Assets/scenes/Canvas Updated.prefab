@@ -252,12 +252,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: Main Menu
   forest: Jungle New
+  forestTime: Jungle Timed
   desert: Desert
+  desertTime: Desert Timed
   office: Office
+  officeTime: OfficeTimed
   Endoffice: End Office
   prototype: ProtypingScene
-  targetScene: End Office
-  targetTimedScene: 
+  targetScene: Jungle new
+  targetTimedScene: Jungle Timed
   cave: Cave
   pauseMenu: {fileID: 7377621882164376665}
   levelSelect: {fileID: 8545799757846640772}
