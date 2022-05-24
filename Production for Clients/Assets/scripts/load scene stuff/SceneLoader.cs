@@ -14,6 +14,7 @@ public class SceneLoader : MonoBehaviour
     public string prototype;   
     public string targetScene;
     public string targetTimedScene;
+    public string cave;
 
     public GameObject pauseMenu;
     public GameObject levelSelect;
@@ -101,5 +102,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("LoadingScene");
     }
 
+    public void LoadCave()
+    {
+        SceneManager.LoadScene("cave");
+    }
+
+    
 
 }

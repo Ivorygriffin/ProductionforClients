@@ -12,6 +12,7 @@ public class TriggerBox : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            //yield return new WaitForSeconds(1);
             onTrigger.Invoke();
         }
     }
