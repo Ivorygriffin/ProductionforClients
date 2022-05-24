@@ -48,10 +48,13 @@ public class PlayerController : MonoBehaviour
     public float FovChangeDampness;
     [Tooltip("How much the players maximum speed cap is raised when sliding, affects how fast the player goes when sliding downhill")]
     public float slideBoost;
+    [Tooltip("How strong gravity is")]
+    public float gravityMultiplier;
 
     [HideInInspector]
     public float _mouseY;
-
+    [HideInInspector]
+    public Vector3 groundAngle;
 
     private float _mouseX, _rotation, _yForce, _savedMaxSpeed;
 
@@ -62,7 +65,7 @@ public class PlayerController : MonoBehaviour
     private Parkour _parkour;
 
     private ContactPoint[] _contactPoints;
-    private Vector3 playerGravity, groundAngle;
+    private Vector3 playerGravity;
 
     //Timers
     private float _fovEaseIn;
@@ -170,7 +173,7 @@ public class PlayerController : MonoBehaviour
                 _playerSpeed = maxSpeed;
             }
 
-            if (_rigidbody.velocity.magnitude > _playerSpeed && _rigidbody.velocity.magnitude > _savedMaxSpeed && !_sliding)
+            if (_rigidbody.velocity.magnitude > _playerSpeed && _rigidbody.velocity.magnitude > _savedMaxSpeed)
             {
                 _rigidbody.velocity = _rigidbody.velocity.normalized * _playerSpeed;
             }
@@ -349,7 +352,7 @@ public class PlayerController : MonoBehaviour
 
         if (!_grounded)
         {
-            playerGravity = Physics.gravity;
+            playerGravity = Physics.gravity * gravityMultiplier;
         }
         else
         {
@@ -360,13 +363,12 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                playerGravity = -groundAngle * Physics.gravity.magnitude;
+                playerGravity = -groundAngle * Physics.gravity.magnitude * gravityMultiplier;
 
             }
         }
 
         _rigidbody.AddForce(playerGravity, ForceMode.Force);
-
     }
 
     private void OnCollisionStay(Collision collision)
