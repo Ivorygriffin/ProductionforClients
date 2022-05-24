@@ -98,15 +98,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (_grounded)
-        {
-            if (!Input.GetButton("Jump"))
-            {
-                _rigidbody.AddForce(new Vector3(0, -5, 0));
-            }
-
-        }
-
 
         _savedPlayerRotation.y = _rigidbody.transform.rotation.y;
         _savedPlayerRotation.w = _rigidbody.transform.rotation.w;
