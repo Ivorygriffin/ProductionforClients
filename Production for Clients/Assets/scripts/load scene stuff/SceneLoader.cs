@@ -64,14 +64,17 @@ public class SceneLoader : MonoBehaviour
 
     public void Resume()
     {
+        Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         pauseMenu.SetActive(false);
         levelSelect.SetActive(false);
-        Time.timeScale = 1;
+     
     }
 
     public void Restart()
     {
+        Time.timeScale = 1;
+        TimeData.timeData = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
