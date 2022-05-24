@@ -123,6 +123,11 @@ public class PlayerController : MonoBehaviour
             _mouseX = Input.GetAxis("Mouse X") * lookSpeed;
             _mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
         }
+        else
+        {
+            _mouseX = 0;
+            _mouseY = 0;
+        }
 
 
         _rotation += _mouseY;
@@ -168,17 +173,22 @@ public class PlayerController : MonoBehaviour
         }
 
         _yForce = _rigidbody.velocity.y;
-
-        if (_rigidbody.velocity.magnitude > maxSpeed)
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
-        }
-        if (_rigidbody.velocity.magnitude > _playerSpeed)
-        {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
 
+            if (_rigidbody.velocity.magnitude > maxSpeed)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
+
+            }
+
+            if (_rigidbody.velocity.magnitude > _playerSpeed)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
+
+            }
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
         }
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
 
 
 
@@ -329,12 +339,16 @@ public class PlayerController : MonoBehaviour
         {
             playerGravity = -groundAngle * Physics.gravity.magnitude;
         }
-        _rigidbody.AddForce(playerGravity, ForceMode.Acceleration);
+        _rigidbody.AddForce(playerGravity, ForceMode.Force);
+
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        _grounded = IsGrounded(collision);
+        if(collision.collider.tag != "Player")
+        {
+            _grounded = IsGrounded(collision);
+        }
     }
 
     private void OnCollisionExit(Collision collision)

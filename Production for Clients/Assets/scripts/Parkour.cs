@@ -46,9 +46,9 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
-
+        // -----------------------
         // Object Bump Protection
-
+        // -----------------------
 
         if (_bumpSpeed < _rigidbody.velocity.magnitude)
         {
@@ -80,7 +80,7 @@ public class Parkour : MonoBehaviour
         }
         else
         {
-            _animationSpeed = .5f;
+            _animationSpeed = 1f;
         }
 
         if(_animationSpeed > AnimationSpeedMax)
@@ -96,7 +96,7 @@ public class Parkour : MonoBehaviour
         //---------------------------
         // Mantling & Ledge Grabbing
         //---------------------------
-        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying)
+        if (Input.GetButtonDown("Jump") && !_climbing && (!_animationPlaying || !_animationStart))
         {
             _rigidbody.velocity = _rigidbody.velocity.normalized * _bumpSpeed;
             if (_wallRunning)
@@ -220,10 +220,12 @@ public class Parkour : MonoBehaviour
         if (_farClimb)
         {
             _rigidbody.AddForce(0, 30, 0);
+            Debug.Log("E");
             if (!HeadFarCast())
             {
+                Debug.Log('O');
                 _savedSpeed = _rigidbody.velocity;
-                _climbing = false;
+                _farClimb = false;
                 _animator.enabled = true;
                 _animator.Play("Climb_Far");
                 _animationStart = true;
@@ -258,19 +260,21 @@ public class Parkour : MonoBehaviour
             }
         }
 
-        if (_animationStart)
+        if (_animationStart && !_animationPlaying)
         {
             _stopAnim = StopAnim();
             StartCoroutine(_stopAnim);
             canMoveCamera = false;
+            Debug.Log("e");
+            _animationStart = false;
 
         }
 
         if (_animationPlaying)
         {
-            _animationStart = false;
             if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
+                Debug.Log("B");
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
                 _animationPlaying = false;
@@ -291,10 +295,10 @@ public class Parkour : MonoBehaviour
                 _swingBoost = false;
                 _swingCheck.gameObject.SetActive(true);
                 transform.rotation = new Quaternion(0, 0, 0, 0);
-
+                canMoveCamera = true;
             }
             _animationEndPosition = transform.position;
-            canMoveCamera = true;
+
 
 
 
