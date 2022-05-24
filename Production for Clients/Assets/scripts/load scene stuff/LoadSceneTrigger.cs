@@ -15,7 +15,7 @@ public class LoadSceneTrigger : MonoBehaviour
 
     IEnumerator LoadSceneAsyc()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         AsyncOperation operation = SceneManager.LoadSceneAsync(LoadingData.sceneToLoad);
         operation.allowSceneActivation = false;
 

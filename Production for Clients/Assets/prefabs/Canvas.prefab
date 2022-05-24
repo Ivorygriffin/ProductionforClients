@@ -116,13 +116,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c60f7f7740a35241a73cffb54b31826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: 
-  forest: 
-  desert: 
-  office: 
-  Endoffice: 
-  prototype: 
+  mainMenu: Main Menu
+  forest: Jungle New
+  desert: Desert
+  office: Office
+  Endoffice: End Office
+  prototype: ProtypingScene
   targetScene: End Office
+  targetTimedScene: 
+  cave: Cave
   pauseMenu: {fileID: 7518029798740982529}
   levelSelect: {fileID: 8696235222919739356}
 --- !u!114 &6269806874923450982
