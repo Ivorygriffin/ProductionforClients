@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rigidbody;
     [HideInInspector]
     public GameObject _playerCamera;
+    [HideInInspector]
     public bool _grounded;
 
 
@@ -169,7 +170,7 @@ public class PlayerController : MonoBehaviour
                 _playerSpeed = maxSpeed;
             }
 
-            if (_rigidbody.velocity.magnitude > _playerSpeed && _rigidbody.velocity.magnitude > _savedMaxSpeed)
+            if (_rigidbody.velocity.magnitude > _playerSpeed && _rigidbody.velocity.magnitude > _savedMaxSpeed && !_sliding)
             {
                 _rigidbody.velocity = _rigidbody.velocity.normalized * _playerSpeed;
             }
@@ -244,6 +245,7 @@ public class PlayerController : MonoBehaviour
             _playerSpeed = maxSpeed;
             _rigidbody.AddForce(0, -30, 0);
             Debug.Log(_playerSpeed);
+            Debug.Log(maxSpeed);
             Debug.Log(_rigidbody.velocity.magnitude);
 
             if (_rigidbody.velocity.magnitude <= _savedMaxSpeed / 5)

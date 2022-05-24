@@ -17,6 +17,7 @@ public class Parkour : MonoBehaviour
 
     [HideInInspector]
     public bool _wallRunning;
+    [HideInInspector]
     public bool canMoveCamera;
 
 
