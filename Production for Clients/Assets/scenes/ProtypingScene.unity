@@ -8685,49 +8685,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerAnimationHost
       objectReference: {fileID: 0}
-    - target: {fileID: 322361515025143855, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516761487049, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516761487050, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: jumpForce
-      value: 9
+      propertyPath: maxSpeed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: sprintMultiplier
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052280, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_Drag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052280, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052281, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052281, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 322361516936052286, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: VaultHeight
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 344393740582110521, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
-      propertyPath: m_TagString
-      value: Player
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}

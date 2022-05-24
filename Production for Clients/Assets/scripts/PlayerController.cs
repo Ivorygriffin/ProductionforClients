@@ -98,7 +98,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-
         if (_grounded)
         {
             if (!Input.GetButton("Jump"))
@@ -159,6 +158,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Vertical") > 0)
         {
             _playerSpeed += Time.deltaTime * SprintSpeedup;
+            Debug.Log(_playerSpeed);
         }
         else if (Input.GetAxis("Vertical") < 0 || Input.GetButton("Horizontal"))
         {
@@ -176,13 +176,17 @@ public class PlayerController : MonoBehaviour
             if (_rigidbody.velocity.magnitude > maxSpeed)
             {
                 _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
-
+                _playerSpeed = maxSpeed;
             }
 
-            if (_rigidbody.velocity.magnitude > _playerSpeed)
+            if (_rigidbody.velocity.magnitude > _playerSpeed && _rigidbody.velocity.magnitude > _savedMaxSpeed)
             {
-                _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
+                _rigidbody.velocity = _rigidbody.velocity.normalized * _playerSpeed;
+            }
 
+            if(_playerSpeed < _savedMaxSpeed)
+            {
+                _playerSpeed = _savedMaxSpeed;
             }
             _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
         }
