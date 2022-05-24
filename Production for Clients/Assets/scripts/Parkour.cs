@@ -74,15 +74,14 @@ public class Parkour : MonoBehaviour
 
 
 
-        if (_rigidbody.velocity.magnitude > .5f)
+        if (_rigidbody.velocity.magnitude > 1f)
         {
             _animationSpeed = _rigidbody.velocity.magnitude / GetComponent<PlayerController>().maxSpeed * AnimationSpeedMax;
         }
-        else
+        else if(_animationSpeed < 1 || _rigidbody.velocity.magnitude < 1)
         {
             _animationSpeed = 1f;
         }
-
         if(_animationSpeed > AnimationSpeedMax)
         {
             _animationSpeed = AnimationSpeedMax;
@@ -96,9 +95,9 @@ public class Parkour : MonoBehaviour
         //---------------------------
         // Mantling & Ledge Grabbing
         //---------------------------
-        if (Input.GetButtonDown("Jump") && !_climbing && (!_animationPlaying || !_animationStart))
+        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying && !_animationStart)
         {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * _bumpSpeed;
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x * _bumpSpeed, _rigidbody.velocity.y, _rigidbody.velocity.z * _bumpSpeed);
             if (_wallRunning)
             {
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -203,7 +202,6 @@ public class Parkour : MonoBehaviour
         if (_farClimb)
         {
             _rigidbody.AddForce(0, 30, 0);
-            Debug.Log("E");
             if (!HeadFarCast())
             {
                 _savedSpeed = _rigidbody.velocity;
@@ -279,6 +277,7 @@ public class Parkour : MonoBehaviour
             transform.parent.position = transform.position;
             transform.localPosition = Vector3.zero;
         }
+
 
         //----------------
         // Swing Movement

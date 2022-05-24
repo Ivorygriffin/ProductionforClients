@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour
     public float SprintSpeedup;
     [Tooltip("How strong the FOV change is when sprinting (The higher number, the less it changes)")]
     public float FovChangeDampness;
-
-
+    [Tooltip("How much the players maximum speed cap is raised when sliding, affects how fast the player goes when sliding downhill")]
+    public float slideBoost;
 
     [HideInInspector]
     public float _mouseY;
@@ -158,7 +158,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Vertical") > 0)
         {
             _playerSpeed += Time.deltaTime * SprintSpeedup;
-            Debug.Log(_playerSpeed);
         }
         else if (Input.GetAxis("Vertical") < 0 || Input.GetButton("Horizontal"))
         {
@@ -248,11 +247,13 @@ public class PlayerController : MonoBehaviour
 
         if (_sliding)
         {
-            maxSpeed = _savedMaxSpeed * sprintMultiplier + 2 - _slideSlowdown;
-            _playerSpeed = maxSpeed;
             _slideSlowdown += Time.deltaTime * (SlideFriction + ((-SlideCast() + .2f) * 10));
-            _rigidbody.AddForce(0, -30, 0);
 
+            maxSpeed = _savedMaxSpeed * sprintMultiplier + slideBoost - _slideSlowdown;
+            _playerSpeed = maxSpeed;
+            _rigidbody.AddForce(0, -30, 0);
+            Debug.Log(_playerSpeed);
+            Debug.Log(_rigidbody.velocity.magnitude);
 
             if (_rigidbody.velocity.magnitude <= _savedMaxSpeed / 5)
             {
@@ -264,9 +265,9 @@ public class PlayerController : MonoBehaviour
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 0.0f, transform.localPosition.z);
                 _crouchDistance = 0.5f;
             }
-            else if (maxSpeed > _savedMaxSpeed * sprintMultiplier + 2)
+            else if (maxSpeed > _savedMaxSpeed * sprintMultiplier + slideBoost)
             {
-                maxSpeed = _savedMaxSpeed * sprintMultiplier + 2;
+                maxSpeed = _savedMaxSpeed * sprintMultiplier + slideBoost;
                 _slideSlowdown = 0;
             }
         }
@@ -277,7 +278,10 @@ public class PlayerController : MonoBehaviour
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 0.0f, transform.localPosition.z);
             _crouchDistance = 0.5f;
         }
-        if(!_sliding)
+        if (!_sliding)
+        {
+
+        }
 
 
 
@@ -289,6 +293,7 @@ public class PlayerController : MonoBehaviour
         {
 
             _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+
 
         }
 
