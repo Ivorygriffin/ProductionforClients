@@ -34,6 +34,7 @@ public class Parkour : MonoBehaviour
     private Rigidbody _rigidbody;
     private Animator _animator;
     private IEnumerator _stopAnim;
+    private PlayerController _playerController;
 
 
     void Start()
@@ -42,6 +43,7 @@ public class Parkour : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _swingCheck = GetComponentInChildren<Swing>();
         canMoveCamera = true;
+        _playerController = GetComponent<PlayerController>();
     }
 
 
@@ -93,12 +95,17 @@ public class Parkour : MonoBehaviour
             _animator.speed = _animationSpeed;
         }
 
+
         //---------------------------
         // Mantling & Ledge Grabbing
         //---------------------------
-        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying && !_animationStart)
+        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying && !_animationStart && (_playerController.groundAngle.x < .1f && _playerController.groundAngle.x > -.1f) && (_playerController.groundAngle.z < .1f  && _playerController.groundAngle.z > -.1f))
         {
-            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x * _bumpSpeed, _rigidbody.velocity.y, _rigidbody.velocity.z * _bumpSpeed);
+            if(_rigidbody.velocity.magnitude < 1)
+            {
+                _rigidbody.velocity = new Vector3(_rigidbody.velocity.x * _bumpSpeed, _rigidbody.velocity.y, _rigidbody.velocity.z * _bumpSpeed);
+            }
+
             if (_wallRunning)
             {
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -260,6 +267,7 @@ public class Parkour : MonoBehaviour
                 if (_swingBoost)
                 {
                     _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostSpeed / 2, SwingBoostSpeed), ForceMode.Impulse);
+
                 }
                 else
                 {
