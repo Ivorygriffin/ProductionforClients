@@ -7,9 +7,12 @@ public class SceneLoader : MonoBehaviour
 {
 
     public string mainMenu;    
-    public string forest;    
+    public string forest; 
+    public string forestTime;    
     public string desert; 
+    public string desertTime; 
     public string office; 
+    public string officeTime; 
     public string Endoffice;
     public string prototype;   
     public string targetScene;
@@ -38,27 +41,49 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMain()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(mainMenu);
     }  
     public void LoadForest()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(forest);
+    } 
+    public void LoadForestTime()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(forestTime);
     }  
     public void LoadDesert()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(desert);
+    }    
+    public void LoadDesertTime()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(desertTime);
     } 
     public void LoadOffice()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(office);
+        Debug.Log("office loading");
+    }  
+    public void LoadOfficeTime()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(officeTime);
         Debug.Log("office loading");
     }  
     public void LoadEndOffice()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(Endoffice);
     }
     public void LoadProtoype()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(prototype);
     }
 
@@ -74,7 +99,7 @@ public class SceneLoader : MonoBehaviour
     public void Restart()
     {
         Time.timeScale = 1;
-        TimeData.timeData = 0;
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -98,15 +123,18 @@ public class SceneLoader : MonoBehaviour
     {
         LoadingData.sceneToLoad = targetScene;
         SceneManager.LoadScene("LoadingScene");
+      
     } 
     public void LoadTimedScene()
     {
         LoadingData.sceneToLoad = targetTimedScene;
         SceneManager.LoadScene("LoadingScene");
+     
     }
 
     public void LoadCave()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("cave");
     }
 
