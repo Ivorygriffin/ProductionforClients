@@ -400,14 +400,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AlwaysSprint: 1
-  maxSpeed: 2
-  sprintMultiplier: 4
+  maxSpeed: 4
+  sprintMultiplier: 2
   lookSpeed: 1
-  jumpForce: 9
+  jumpForce: 10.5
   SlideFriction: 3.5
   SprintSpeedup: 2
   FovChangeDampness: 10
+  slideBoost: 4
+  gravityMultiplier: 1.85
   _mouseY: 0
+  groundAngle: {x: 0, y: 0, z: 0}
   _playerCamera: {fileID: 0}
   _grounded: 0
 --- !u!54 &322361516936052280
