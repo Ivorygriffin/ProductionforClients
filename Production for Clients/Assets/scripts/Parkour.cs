@@ -9,6 +9,8 @@ public class Parkour : MonoBehaviour
     public float VaultHeight;
     [Tooltip("Height above player head that a ledge grab can be triggered")]
     public float ClimbCap;
+    [Tooltip("How high the player jumps when dismounting from a walljump (% of jump height")]
+    public float wallJumpDismountJumpPercent;
 
     [Header("Player Speed")]
     [Tooltip("How fast the player moves forward when coming out of a swing")]
@@ -113,7 +115,7 @@ public class Parkour : MonoBehaviour
             {
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
-                _rigidbody.AddForce(transform.forward * 5 + new Vector3(0, 4, 0), ForceMode.Impulse);
+                _rigidbody.AddForce(transform.forward * 5 + new Vector3(0, _playerController.jumpForce * (wallJumpDismountJumpPercent * 100), 0), ForceMode.Impulse);
                 _savedPlayerRotation = transform.rotation;
                 transform.rotation = transform.parent.rotation;
                 transform.parent.rotation = _savedPlayerRotation;
