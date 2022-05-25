@@ -384,6 +384,7 @@ MonoBehaviour:
   VaultHeight: 0.9
   ClimbCap: 2
   SwingBoostSpeed: 4
+  SwingBoostHeight: 3
   AnimationSpeedMax: 2
   _wallRunning: 0
   canMoveCamera: 0
