@@ -64,11 +64,13 @@ public class PlayerController : MonoBehaviour
     public float _mouseY;
     [HideInInspector]
     public Vector3 groundAngle;
+    [HideInInspector]
+    public float _playerSpeed;
 
     private float _mouseX, _rotation, _yForce, _savedMaxSpeed;
 
     private bool _sliding, _crouching, _canJump;
-    private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov, _playerSpeed;
+    private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov;
     private Quaternion _savedPlayerRotation;
     private Animator _animator;
     private Parkour _parkour;
@@ -153,13 +155,11 @@ public class PlayerController : MonoBehaviour
 
         //--------------------------------------------------------------------------------
 
-
-
         //----------------------
         // Player Speed Limiter
         //----------------------
 
-        if (Input.GetAxis("Vertical") > 0)
+        if (Input.GetAxis("Vertical") > 0 && !_parkour._animationPlaying)
         {
             _playerSpeed += Time.deltaTime * SprintSpeedup;
         }

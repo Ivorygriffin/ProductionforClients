@@ -20,9 +20,6 @@ public class Respawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
         if (transform.position.y < -100)
         {
             transform.position = _respawn;
@@ -34,12 +31,19 @@ public class Respawn : MonoBehaviour
         if (other.tag == "Checkpoint")
         {
             _respawn = other.transform.position;
-            Debug.Log("A");
         }
         if (other.tag == "KillPlane")
         {
             transform.position = _respawn;
-            Debug.Log("B");
         }
+    }
+
+    private IEnumerator RespawnPlayer()
+    {
+        transform.position = _respawn;
+        transform.GetComponentInChildren<PlayerMovement>().enabled = false;
+        yield return new WaitForSeconds(1);
+        transform.GetComponentInChildren<PlayerMovement>().enabled = true;
+
     }
 }
