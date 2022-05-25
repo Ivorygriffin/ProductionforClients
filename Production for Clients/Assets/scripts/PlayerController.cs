@@ -67,9 +67,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float _playerSpeed;
 
-    private float _mouseX, _rotation, _yForce, _savedMaxSpeed;
+    private float _mouseX, _rotation, _yForce;
 
-    private bool _sliding, _crouching, _canJump;
+    private bool _crouching, _canJump;
     private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov;
     private Quaternion _savedPlayerRotation;
     private Animator _animator;
@@ -86,6 +86,10 @@ public class PlayerController : MonoBehaviour
     public GameObject _playerCamera;
     [HideInInspector]
     public bool _grounded;
+    [HideInInspector]
+    public bool _sliding;
+    [HideInInspector]
+    public float _savedMaxSpeed;
 
 
 

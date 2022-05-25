@@ -6,14 +6,15 @@ public class Respawn : MonoBehaviour
 {
 
 
-    private Vector3 _respawn;
+    private Vector3 _respawnPoint;
+    private IEnumerator _respawn;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _respawn = transform.position;
+        _respawnPoint = transform.position;
 
     }
 
@@ -22,7 +23,8 @@ public class Respawn : MonoBehaviour
     {
         if (transform.position.y < -100)
         {
-            transform.position = _respawn;
+            _respawn = RespawnPlayer();
+            StartCoroutine(_respawn);
         }
     }
 
@@ -30,20 +32,25 @@ public class Respawn : MonoBehaviour
     {
         if (other.tag == "Checkpoint")
         {
-            _respawn = other.transform.position;
+            _respawnPoint = other.transform.position;
         }
         if (other.tag == "KillPlane")
         {
-            transform.position = _respawn;
+            _respawn = RespawnPlayer();
+            StartCoroutine(_respawn);
         }
     }
 
     private IEnumerator RespawnPlayer()
     {
-        transform.position = _respawn;
-        transform.GetComponentInChildren<PlayerMovement>().enabled = false;
+        transform.position = _respawnPoint;
+        transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        transform.GetComponent<PlayerController>().enabled = false;
+        FindObjectOfType<HeadBob>()._animator.enabled = false;
         yield return new WaitForSeconds(1);
-        transform.GetComponentInChildren<PlayerMovement>().enabled = true;
+        transform.GetComponent<PlayerController>().enabled = true;
+        FindObjectOfType<HeadBob>()._animator.enabled = true;
+
 
     }
 }
