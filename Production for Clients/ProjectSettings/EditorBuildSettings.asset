@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/scenes/ProtypingScene.unity
-    guid: 0aac68e819138024594fd435340b1f3d
-  - enabled: 1
     path: Assets/scenes/Main Menu.unity
     guid: 0812257396cead547b5f00c6da2fde53
+  - enabled: 1
+    path: Assets/scenes/ProtypingScene.unity
+    guid: 0aac68e819138024594fd435340b1f3d
   - enabled: 1
     path: Assets/scenes/Office.unity
     guid: f47bfc77326444e47aa5383bfe4650ee
@@ -30,9 +30,12 @@ EditorBuildSettings:
     path: Assets/scenes/OfficeTimed.unity
     guid: be70296b85118c14580830d561094556
   - enabled: 1
-    path: Assets/scenes/Jungle Timed.unity
-    guid: 307ceb6e5bf422b498af29b1b31e34e5
-  - enabled: 1
     path: Assets/scenes/Desert Timed.unity
-    guid: f814baa2b50e51647b14e8edc41f581a
+    guid: 125e9b1a7921d8843b7507550a735afa
+  - enabled: 1
+    path: Assets/scenes/Desert.unity
+    guid: e0c1325aa30b2f242839629ce12890b8
+  - enabled: 1
+    path: Assets/scenes/Jungle Timed.unity
+    guid: 13a2dfacebda5ae41ba8cf71e96a18c2
   m_configObjects: {}

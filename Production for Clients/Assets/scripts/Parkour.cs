@@ -11,7 +11,10 @@ public class Parkour : MonoBehaviour
     public float ClimbCap;
 
     [Header("Player Speed")]
+    [Tooltip("How fast the player moves forward when coming out of a swing")]
     public float SwingBoostSpeed;
+    [Tooltip("How high the player jumps when coming out of a swing")]
+    public float SwingBoostHeight;
     [Tooltip("How much animations are slowed when the player is moving slow (divides the players velocity by this number)")]
     public float AnimationSpeedMax;
 
@@ -266,7 +269,7 @@ public class Parkour : MonoBehaviour
 
                 if (_swingBoost)
                 {
-                    _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostSpeed / 2, SwingBoostSpeed), ForceMode.Impulse);
+                    _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostHeight, SwingBoostSpeed), ForceMode.Impulse);
 
                 }
                 else

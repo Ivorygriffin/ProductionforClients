@@ -200,9 +200,9 @@ public class PlayerController : MonoBehaviour
             _crouching = true;
 
 
-            //--------
-            // Slide
-            //--------
+            //-------------
+            // Slide Check
+            //-------------
 
             if (_rigidbody.velocity.magnitude > _savedMaxSpeed + 0.01 && _sliding == false)
             {
@@ -240,6 +240,9 @@ public class PlayerController : MonoBehaviour
             FovChangeDampness += 0.2f;
         }
 
+        ///---------------
+        // Slide Movement
+        ///---------------
         if (_sliding)
         {
             _slideSlowdown += Time.deltaTime * (SlideFriction + ((-SlideCast() + .2f) * 10));

@@ -1908,7 +1908,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1119009790}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadTimedScene
+        m_MethodName: LoadOfficeTime
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2760,7 +2760,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1119009790}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: LoadOffice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5838,12 +5838,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: 
   forest: 
+  forestTime: 
   desert: 
+  desertTime: 
   office: Office
+  officeTime: OfficeTimed
   Endoffice: 
   prototype: 
   targetScene: Office
   targetTimedScene: OfficeTimed
+  cave: 
   pauseMenu: {fileID: 0}
   levelSelect: {fileID: 0}
 --- !u!4 &1119009791
