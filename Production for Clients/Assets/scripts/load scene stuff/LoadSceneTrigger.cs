@@ -8,9 +8,22 @@ public class LoadSceneTrigger : MonoBehaviour
 {
     [SerializeField] Image progressBar;
 
-    void Start()
+    private IEnumerator _loadScene;
+    private bool hasRun;
+
+    private void Start()
     {
-        StartCoroutine(LoadSceneAsyc());
+        hasRun = false;
+    }
+    void Update()
+    {
+        if (hasRun == false)
+        {
+            _loadScene = LoadSceneAsyc();
+            StartCoroutine(_loadScene);
+            
+        }
+     
     }
 
     IEnumerator LoadSceneAsyc()
@@ -25,6 +38,7 @@ public class LoadSceneTrigger : MonoBehaviour
             if(operation.progress >= 0.9f)
             {
                 operation.allowSceneActivation=true;
+                hasRun = true;
             }
             yield return null;
         }
