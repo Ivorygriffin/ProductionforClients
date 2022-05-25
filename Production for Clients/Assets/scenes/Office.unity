@@ -1767,8 +1767,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: Main Menu
   forest: Jungle new
+  forestTime: 
   desert: Desert
+  desertTime: 
   office: 
+  officeTime: 
   Endoffice: 
   prototype: ProtypingScene
   targetScene: Jungle new
@@ -12206,14 +12209,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3270597152476378444, guid: f2d982e314fde844da5fda93f3908f49, type: 3}
-      propertyPath: targetScene
-      value: Jungle new
-      objectReference: {fileID: 0}
-    - target: {fileID: 3270597152476378444, guid: f2d982e314fde844da5fda93f3908f49, type: 3}
-      propertyPath: targetTimedScene
-      value: Jungle Timed
-      objectReference: {fileID: 0}
     - target: {fileID: 8545799757649874943, guid: f2d982e314fde844da5fda93f3908f49, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -14585,7 +14580,7 @@ PrefabInstance:
       objectReference: {fileID: 250378796}
     - target: {fileID: 389852683589594802, guid: 64d3f3dec1896a24eae8715c893497b6, type: 3}
       propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
+      value: LoadForest
       objectReference: {fileID: 0}
     - target: {fileID: 389852683589594803, guid: 64d3f3dec1896a24eae8715c893497b6, type: 3}
       propertyPath: m_Name

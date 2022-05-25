@@ -252,12 +252,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: Main Menu
   forest: Jungle New
+  forestTime: Jungle Timed
   desert: Desert
+  desertTime: Desert Timed
   office: Office
+  officeTime: OfficeTimed
   Endoffice: End Office
   prototype: ProtypingScene
-  targetScene: End Office
-  targetTimedScene: 
+  targetScene: Jungle new
+  targetTimedScene: Jungle Timed
   cave: Cave
   pauseMenu: {fileID: 7377621882164376665}
   levelSelect: {fileID: 8545799757846640772}
@@ -950,6 +953,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3270597152476378440}
     m_Modifications:
+    - target: {fileID: 6628095038560715155, guid: 7f074d53bf3680e4ebe04d7a43dab89f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6628095040465611868, guid: 7f074d53bf3680e4ebe04d7a43dab89f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
