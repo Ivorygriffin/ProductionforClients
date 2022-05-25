@@ -38,8 +38,6 @@ public class PlayerController : MonoBehaviour
     public float sprintMultiplier;
     [Tooltip("The speed the camera moves with the mouse (AKA sensitivity)")]
     public float lookSpeed;
-    [Tooltip("How long before the player can roll again after rolling (Seconds)")]
-    public float rollCooldownLength;
     [Tooltip("Defines the height and vertical speed of the player's jump")]
     public float jumpForce;
     [Tooltip("How quickly the player loses momentum while sliding")]
@@ -48,12 +46,15 @@ public class PlayerController : MonoBehaviour
     public float SprintSpeedup;
     [Tooltip("How strong the FOV change is when sprinting (The higher number, the less it changes)")]
     public float FovChangeDampness;
-
-
+    [Tooltip("How much the players maximum speed cap is raised when sliding, affects how fast the player goes when sliding downhill")]
+    public float slideBoost;
+    [Tooltip("How strong gravity is")]
+    public float gravityMultiplier;
 
     [HideInInspector]
     public float _mouseY;
-
+    [HideInInspector]
+    public Vector3 groundAngle;
 
     private float _mouseX, _rotation, _yForce, _savedMaxSpeed;
 
@@ -63,12 +64,17 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private Parkour _parkour;
 
+    private ContactPoint[] _contactPoints;
+    private Vector3 playerGravity;
+
     //Timers
     private float _fovEaseIn;
 
     private Rigidbody _rigidbody;
     [HideInInspector]
     public GameObject _playerCamera;
+    [HideInInspector]
+    public bool _grounded;
 
 
 
@@ -90,34 +96,11 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _animator.enabled = false;
         _parkour = GetComponent<Parkour>();
+        _rigidbody.useGravity = false;
     }
 
     void Update()
     {
-
-
-        if (IsGrounded())
-        {
-            _rigidbody.useGravity = false;
-            if (!Input.GetButton("Jump"))
-            {
-                _rigidbody.AddForce(new Vector3(0, -5, 0));
-            }
-            if (!Input.GetButton("Vertical") && !Input.GetButton("Horizontal"))
-            {
-                _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            }
-            else
-            {
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-            }
-
-        }
-        else
-        {
-            _rigidbody.useGravity = true;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
 
 
         _savedPlayerRotation.y = _rigidbody.transform.rotation.y;
@@ -130,6 +113,11 @@ public class PlayerController : MonoBehaviour
         {
             _mouseX = Input.GetAxis("Mouse X") * lookSpeed;
             _mouseY = Input.GetAxis("Mouse Y") * lookSpeed;
+        }
+        else
+        {
+            _mouseX = 0;
+            _mouseY = 0;
         }
 
 
@@ -176,17 +164,27 @@ public class PlayerController : MonoBehaviour
         }
 
         _yForce = _rigidbody.velocity.y;
-
-        if (_rigidbody.velocity.magnitude > maxSpeed)
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
-        }
-        if (_rigidbody.velocity.magnitude > _playerSpeed)
-        {
-            _rigidbody.velocity = _rigidbody.velocity.normalized * SprintSpeedup;
 
+            if (_rigidbody.velocity.magnitude > maxSpeed)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * maxSpeed;
+                _playerSpeed = maxSpeed;
+            }
+
+            if (_rigidbody.velocity.magnitude > _playerSpeed && _rigidbody.velocity.magnitude > _savedMaxSpeed)
+            {
+                _rigidbody.velocity = _rigidbody.velocity.normalized * _playerSpeed;
+            }
+
+            if(_playerSpeed < _savedMaxSpeed)
+            {
+                _playerSpeed = _savedMaxSpeed;
+            }
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
         }
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _yForce, _rigidbody.velocity.z);
+
 
 
 
@@ -208,9 +206,14 @@ public class PlayerController : MonoBehaviour
 
             if (_rigidbody.velocity.magnitude > _savedMaxSpeed + 0.01 && _sliding == false)
             {
+                FovChangeDampness -= 0.2f;
+
                 maxSpeed = _savedMaxSpeed * sprintMultiplier;
+
                 transform.localScale = new Vector3(1, 0.2f, 1);
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 0.2f, transform.localPosition.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 0.75f, transform.localPosition.z);
+
+
                 _crouchDistance = 0.15f;
                 _sliding = true;
 
@@ -229,16 +232,24 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonUp("Crouch") && !Physics.Raycast(transform.position, Vector3.up, _distanceToGround - 0.1f))
         {
             Stand();
+            FovChangeDampness += 0.2f;
         }
         else if (_crouching && !Input.GetButton("Crouch") && !Physics.Raycast(transform.position, Vector3.up, _distanceToGround - 0.1f))
         {
             Stand();
+            FovChangeDampness += 0.2f;
         }
 
         if (_sliding)
         {
-            maxSpeed = _savedMaxSpeed * sprintMultiplier - _slideSlowdown + 1f;
-            _slideSlowdown += Time.deltaTime * SlideFriction;
+            _slideSlowdown += Time.deltaTime * (SlideFriction + ((-SlideCast() + .2f) * 10));
+
+            maxSpeed = _savedMaxSpeed * sprintMultiplier + slideBoost - _slideSlowdown;
+            _playerSpeed = maxSpeed;
+            _rigidbody.AddForce(0, -30, 0);
+            Debug.Log(_playerSpeed);
+            Debug.Log(maxSpeed);
+            Debug.Log(_rigidbody.velocity.magnitude);
 
             if (_rigidbody.velocity.magnitude <= _savedMaxSpeed / 5)
             {
@@ -250,6 +261,11 @@ public class PlayerController : MonoBehaviour
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 0.0f, transform.localPosition.z);
                 _crouchDistance = 0.5f;
             }
+            else if (maxSpeed > _savedMaxSpeed * sprintMultiplier + slideBoost)
+            {
+                maxSpeed = _savedMaxSpeed * sprintMultiplier + slideBoost;
+                _slideSlowdown = 0;
+            }
         }
         else if (!_sliding && _crouching)
         {
@@ -258,6 +274,10 @@ public class PlayerController : MonoBehaviour
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 0.0f, transform.localPosition.z);
             _crouchDistance = 0.5f;
         }
+        if (!_sliding)
+        {
+
+        }
 
 
 
@@ -265,10 +285,11 @@ public class PlayerController : MonoBehaviour
         // Jumping
         //----------
 
-        if (Input.GetButtonDown("Jump") && _canJump && IsGrounded())
+        if (Input.GetButtonDown("Jump") && _canJump && _grounded)
         {
 
             _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
+
 
         }
 
@@ -310,8 +331,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetAxis("Vertical") > 0 & AlwaysSprint == true)
         {
-            maxSpeed = _savedMaxSpeed * sprintMultiplier;
             Camera.main.fieldOfView = _fov + _fovEaseIn;
+            maxSpeed = _savedMaxSpeed * sprintMultiplier;
 
         }
         else
@@ -329,18 +350,57 @@ public class PlayerController : MonoBehaviour
             _fovEaseIn = _playerSpeed / FovChangeDampness;
         }
 
+        if (!_grounded)
+        {
+            playerGravity = Physics.gravity * gravityMultiplier;
+        }
+        else
+        {
+            if (_grounded)
+            {
+                playerGravity = -groundAngle * Physics.gravity.magnitude * 10;
 
+            }
+            else
+            {
+                playerGravity = -groundAngle * Physics.gravity.magnitude * gravityMultiplier;
+
+            }
+        }
+
+        _rigidbody.AddForce(playerGravity, ForceMode.Force);
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.tag != "Player")
+        {
+            _grounded = IsGrounded(collision);
+        }
+    }
 
-
+    private void OnCollisionExit(Collision collision)
+    {
+        _grounded = false;
+        groundAngle = Vector3.zero;
+    }
     //-----------
     // Functions
     //-----------
 
-    public bool IsGrounded()
+    public bool IsGrounded(Collision collision)
     {
-        return Physics.Raycast(transform.position, -Vector3.up, _distanceToGround + 0.1f);
+        _contactPoints = new ContactPoint[collision.contactCount];
+        collision.GetContacts(_contactPoints);
+        foreach (var ContactPoint in _contactPoints)
+        {
+            if (45 > Vector3.Angle(ContactPoint.normal, -Physics.gravity.normalized))
+            {
+                groundAngle = ContactPoint.normal;
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -353,6 +413,11 @@ public class PlayerController : MonoBehaviour
         _sliding = false;
         _slideSlowdown = 0;
     }
-
+    private float SlideCast()
+    {
+        RaycastHit hit;
+        Physics.Raycast(transform.position + transform.forward * 1.5f, -transform.up, out hit, 1.5f);
+        return hit.distance;
+    }
 
 }
