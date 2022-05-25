@@ -10,10 +10,18 @@ public class Parkour : MonoBehaviour
     [Tooltip("Height above player head that a ledge grab can be triggered")]
     public float ClimbCap;
 
-    [Header("Player Speed")]
+    [Header("Swing")]
+    [Tooltip("How fast the player moves forward when coming out of a swing")]
     public float SwingBoostSpeed;
+    [Tooltip("How high the player jumps when coming out of a swing")]
+    public float SwingBoostHeight;
+
+    [Header("Other")]
     [Tooltip("How much animations are slowed when the player is moving slow (divides the players velocity by this number)")]
     public float AnimationSpeedMax;
+    [Tooltip("How high the player jumps when dismounting from a walljump (% of jump height")]
+    public float wallJumpDismountJumpPercent;
+
 
     [HideInInspector]
     public bool _wallRunning;
@@ -110,7 +118,7 @@ public class Parkour : MonoBehaviour
             {
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
-                _rigidbody.AddForce(transform.forward * 5 + new Vector3(0, 4, 0), ForceMode.Impulse);
+                _rigidbody.AddForce(transform.forward * 5 + new Vector3(0, _playerController.jumpForce * (wallJumpDismountJumpPercent / 100), 0), ForceMode.Impulse);
                 _savedPlayerRotation = transform.rotation;
                 transform.rotation = transform.parent.rotation;
                 transform.parent.rotation = _savedPlayerRotation;
@@ -266,7 +274,7 @@ public class Parkour : MonoBehaviour
 
                 if (_swingBoost)
                 {
-                    _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostSpeed / 2, SwingBoostSpeed), ForceMode.Impulse);
+                    _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostHeight, SwingBoostSpeed), ForceMode.Impulse);
 
                 }
                 else
