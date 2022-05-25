@@ -58,7 +58,6 @@ public class Parkour : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_savedSpeed);
         // -----------------------
         // Object Bump Protection
         // -----------------------
@@ -275,14 +274,12 @@ public class Parkour : MonoBehaviour
                 if (_swingBoost)
                 {
                     _rigidbody.AddRelativeForce(new Vector3(0, SwingBoostHeight, SwingBoostSpeed), ForceMode.Impulse);
-                    Debug.Log("b");
 
                 }
                 else
                 {
                     _playerController._playerSpeed = _savedSpeed.magnitude;
                     _rigidbody.velocity = new Vector3(_savedSpeed.x, 0, _savedSpeed.z);
-                    Debug.Log("a");
                 }
                 _swingBoost = false;
                 _swingCheck.gameObject.SetActive(true);

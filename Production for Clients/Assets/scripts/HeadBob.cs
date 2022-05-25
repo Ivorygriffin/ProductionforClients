@@ -19,7 +19,7 @@ public class HeadBob : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_playerController._playerSpeed < 1 || _playerController._sliding)
+        if(_playerController._playerSpeed < 1 || _playerController._sliding || !_playerController._grounded)
         {
             _animator.speed = 0;
             //_animator.StopPlayback();
