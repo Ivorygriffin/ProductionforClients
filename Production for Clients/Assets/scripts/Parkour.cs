@@ -115,7 +115,7 @@ public class Parkour : MonoBehaviour
             {
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
-                _rigidbody.AddForce(transform.forward * 5 + new Vector3(0, _playerController.jumpForce * (wallJumpDismountJumpPercent * 100), 0), ForceMode.Impulse);
+                _rigidbody.AddForce(transform.forward * 5 + new Vector3(0, _playerController.jumpForce * (wallJumpDismountJumpPercent / 100), 0), ForceMode.Impulse);
                 _savedPlayerRotation = transform.rotation;
                 transform.rotation = transform.parent.rotation;
                 transform.parent.rotation = _savedPlayerRotation;

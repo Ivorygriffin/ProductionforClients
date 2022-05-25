@@ -383,6 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VaultHeight: 0.9
   ClimbCap: 2
+  wallJumpDismountJumpPercent: 75
   SwingBoostSpeed: 4
   SwingBoostHeight: 3
   AnimationSpeedMax: 2
@@ -408,7 +409,7 @@ MonoBehaviour:
   SlideFriction: 3.5
   SprintSpeedup: 2
   FovChangeDampness: 10
-  slideBoost: 4
+  slideBoost: 8
   gravityMultiplier: 1.85
   _mouseY: 0
   groundAngle: {x: 0, y: 0, z: 0}
