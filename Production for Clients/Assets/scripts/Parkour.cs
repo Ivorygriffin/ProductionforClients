@@ -9,16 +9,19 @@ public class Parkour : MonoBehaviour
     public float VaultHeight;
     [Tooltip("Height above player head that a ledge grab can be triggered")]
     public float ClimbCap;
-    [Tooltip("How high the player jumps when dismounting from a walljump (% of jump height")]
-    public float wallJumpDismountJumpPercent;
 
-    [Header("Player Speed")]
+    [Header("Swing")]
     [Tooltip("How fast the player moves forward when coming out of a swing")]
     public float SwingBoostSpeed;
     [Tooltip("How high the player jumps when coming out of a swing")]
     public float SwingBoostHeight;
+
+    [Header("Other")]
     [Tooltip("How much animations are slowed when the player is moving slow (divides the players velocity by this number)")]
     public float AnimationSpeedMax;
+    [Tooltip("How high the player jumps when dismounting from a walljump (% of jump height")]
+    public float wallJumpDismountJumpPercent;
+
 
     [HideInInspector]
     public bool _wallRunning;

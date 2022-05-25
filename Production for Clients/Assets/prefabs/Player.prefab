@@ -291,8 +291,8 @@ GameObject:
   - component: {fileID: 322361516936052281}
   - component: {fileID: 322361516936052282}
   - component: {fileID: 322361516936052283}
-  - component: {fileID: 322361516936052286}
   - component: {fileID: 322361516936052261}
+  - component: {fileID: 322361516936052286}
   - component: {fileID: 322361516936052280}
   - component: {fileID: 322361516936052287}
   - component: {fileID: 322361516936052260}
@@ -369,6 +369,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &322361516936052261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322361516936052263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8120921286048744d8248e5ce71abe07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 4
+  sprintMultiplier: 2
+  SprintSpeedup: 2
+  AlwaysSprint: 1
+  lookSpeed: 1
+  FovChangeDampness: 10
+  jumpForce: 10.5
+  gravityMultiplier: 1.85
+  slideBoost: 8
+  SlideFriction: 3.5
+  _mouseY: 0
+  groundAngle: {x: 0, y: 0, z: 0}
+  _playerCamera: {fileID: 0}
+  _grounded: 0
 --- !u!114 &322361516936052286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,38 +409,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VaultHeight: 0.9
   ClimbCap: 2
-  wallJumpDismountJumpPercent: 75
   SwingBoostSpeed: 4
   SwingBoostHeight: 3
   AnimationSpeedMax: 2
+  wallJumpDismountJumpPercent: 75
   _wallRunning: 0
   canMoveCamera: 0
---- !u!114 &322361516936052261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322361516936052263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8120921286048744d8248e5ce71abe07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AlwaysSprint: 1
-  maxSpeed: 4
-  sprintMultiplier: 2
-  lookSpeed: 1
-  jumpForce: 10.5
-  SlideFriction: 3.5
-  SprintSpeedup: 2
-  FovChangeDampness: 10
-  slideBoost: 8
-  gravityMultiplier: 1.85
-  _mouseY: 0
-  groundAngle: {x: 0, y: 0, z: 0}
-  _playerCamera: {fileID: 0}
-  _grounded: 0
 --- !u!54 &322361516936052280
 Rigidbody:
   m_ObjectHideFlags: 0
