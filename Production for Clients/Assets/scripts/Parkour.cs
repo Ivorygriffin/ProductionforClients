@@ -15,7 +15,6 @@ public class Parkour : MonoBehaviour
     public float SwingBoostSpeed;
     [Tooltip("How high the player jumps when coming out of a swing")]
     public float SwingBoostHeight;
-
     [Tooltip("How much animations are slowed when the player is moving slow (divides the players velocity by this number)")]
     public float AnimationSpeedMax;
 
