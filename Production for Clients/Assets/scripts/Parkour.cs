@@ -90,9 +90,9 @@ public class Parkour : MonoBehaviour
         {
             _animationSpeed = _rigidbody.velocity.magnitude / GetComponent<PlayerController>().maxSpeed * AnimationSpeedMax;
         }
-        else if(_animationSpeed < 1 || _rigidbody.velocity.magnitude < 1)
+        else if(_animationSpeed < 1.5f || _rigidbody.velocity.magnitude < 1)
         {
-            _animationSpeed = 1f;
+            _animationSpeed = 1.5f;
         }
         if(_animationSpeed > AnimationSpeedMax)
         {
