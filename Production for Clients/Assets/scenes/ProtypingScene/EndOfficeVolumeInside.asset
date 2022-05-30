@@ -39,13 +39,13 @@ MonoBehaviour:
   m_AdvancedMode: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.1692866}
+    m_Value: {x: 0.97683525, y: 1, z: 0.97130406, w: -0.2752188}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.0967352}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.009197008}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.4594921}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.063559316}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -296,18 +296,18 @@ MonoBehaviour:
   m_AdvancedMode: 0
   quality:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 3
   rayTracing:
     m_OverrideState: 0
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1.91
+    m_Value: 2.06
     min: 0
     max: 4
   directLightingStrength:
     m_OverrideState: 1
-    m_Value: 0.414
+    m_Value: 0.444
     min: 0
     max: 1
   radius:
@@ -348,7 +348,7 @@ MonoBehaviour:
     m_Value: 0
   m_MaximumRadiusInPixels:
     m_OverrideState: 1
-    m_Value: 32
+    m_Value: 128
     min: 16
     max: 256
   m_BilateralUpsample:
@@ -584,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d08ce26990eb1a4a9177b860541e702, type: 3}
   m_Name: Exposure
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
