@@ -8780,5 +8780,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerAnimationHost
       objectReference: {fileID: 0}
+    - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Volume
+      value: 0.85
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}

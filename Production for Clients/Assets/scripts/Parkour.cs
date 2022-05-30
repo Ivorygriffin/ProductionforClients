@@ -86,13 +86,13 @@ public class Parkour : MonoBehaviour
 
 
 
-        if (_rigidbody.velocity.magnitude > 1f)
+        if (_rigidbody.velocity.magnitude > 1.5f)
         {
             _animationSpeed = _rigidbody.velocity.magnitude / GetComponent<PlayerController>().maxSpeed * AnimationSpeedMax;
         }
-        else if(_animationSpeed < 1 || _rigidbody.velocity.magnitude < 1)
+        else if(_animationSpeed < 1.5f || _rigidbody.velocity.magnitude < 1)
         {
-            _animationSpeed = 1f;
+            _animationSpeed = 1.5f;
         }
         if(_animationSpeed > AnimationSpeedMax)
         {
@@ -108,7 +108,7 @@ public class Parkour : MonoBehaviour
         //---------------------------
         // Mantling & Ledge Grabbing
         //---------------------------
-        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying && !_animationStart && (_playerController.groundAngle.x < .1f && _playerController.groundAngle.x > -.1f) && (_playerController.groundAngle.z < .1f  && _playerController.groundAngle.z > -.1f))
+        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying && !_animationStart && _playerController.groundAngle.x < .1f && _playerController.groundAngle.x > -.1f && _playerController.groundAngle.z < .1f  && _playerController.groundAngle.z > -.1f)
         {
             if(_rigidbody.velocity.magnitude < 1)
             {

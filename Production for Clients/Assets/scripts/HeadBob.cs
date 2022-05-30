@@ -22,11 +22,9 @@ public class HeadBob : MonoBehaviour
         if(_playerController._playerSpeed < 1 || _playerController._sliding || !_playerController._grounded)
         {
             _animator.speed = 0;
-            //_animator.StopPlayback();
         }
         else
         {
-            //_animator.Play("HeadBob");
             _animator.speed = _playerController._playerSpeed / _playerController._savedMaxSpeed;
         }
     }
