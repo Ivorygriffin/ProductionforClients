@@ -8788,6 +8788,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 375289075893508227, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_CutoffFrequency
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 375289075893508227, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_HighpassResonanceQ
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1740985722511038912, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LowpassResonanceQ
       value: 1

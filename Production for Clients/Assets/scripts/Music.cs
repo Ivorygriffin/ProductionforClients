@@ -30,26 +30,33 @@ public class Music : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_playerController._savedMaxSpeed * .25f);
-        if (_rigidbody.velocity.magnitude < _playerController.maxSpeed * _playerController.sprintMultiplier)
+        if (_playerController._playerSpeed < _playerController._savedMaxSpeed * _playerController.sprintMultiplier + .1f && _highPassFilter.cutoffFrequency < 50)
         {
             _highPassFilter.enabled = false;
             _lowPassFilter.enabled = true;
 
-            if (_playerController.maxSpeed != _playerController._savedMaxSpeed)
+            if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") > 0 && _lowPassFilter.cutoffFrequency < 10000)
             {
-                _lowPassFilter.cutoffFrequency = _playerController._playerSpeed / _playerController.maxSpeed * 15000 - _playerController._savedMaxSpeed * .5f;
+                _lowPassFilter.cutoffFrequency += Time.deltaTime * 10000;
             }
-            else
+            else if(_lowPassFilter.cutoffFrequency > 3000)
             {
-                _lowPassFilter.cutoffFrequency = _playerController._savedMaxSpeed * .5f * 1000;
+                _lowPassFilter.cutoffFrequency -= Time.deltaTime * 10000;
             }
         }
         else
         {
             _lowPassFilter.enabled = false;
             _highPassFilter.enabled= true;
-            _highPassFilter.cutoffFrequency = _playerController._playerSpeed / (_playerController._savedMaxSpeed * _playerController.sprintMultiplier);
+            if(_playerController._playerSpeed > _playerController._savedMaxSpeed * _playerController.sprintMultiplier)
+            {
+                _highPassFilter.cutoffFrequency += Time.deltaTime * 300;
+            }
+            else
+            {
+                _highPassFilter.cutoffFrequency -= Time.deltaTime * 5000;
+
+            }
 
         }
     }
