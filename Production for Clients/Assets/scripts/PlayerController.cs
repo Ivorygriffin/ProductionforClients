@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
         if (_parkour._wallRunning)
         {
             transform.Rotate(0, _mouseX, 0);
-
+            Debug.Log("E");
         }
         else
         {
