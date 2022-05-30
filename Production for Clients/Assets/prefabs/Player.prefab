@@ -814,6 +814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7584315142062021932}
   - component: {fileID: 64624319092290789}
+  - component: {fileID: 624492791}
   m_Layer: 0
   m_Name: PlayerAudio
   m_TagString: Untagged
@@ -931,6 +932,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &624492791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049136087987816705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09eb7d34101be2b42884414f747f24ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FootstepSounds:
+  - {fileID: 8300000, guid: c8a15b0ea762a434fbea8acc704ec9cb, type: 3}
+  - {fileID: 8300000, guid: 9df58d067a4ae2d4e97ebcecf84f3754, type: 3}
+  - {fileID: 8300000, guid: 5cd46ced479daea47aabc6561ea203a1, type: 3}
+  - {fileID: 8300000, guid: f93716c982367e54da67186c53300ae9, type: 3}
+  - {fileID: 8300000, guid: 49e66869c9b74d04f860f6024661700a, type: 3}
+  - {fileID: 8300000, guid: 206a2bd7b73fca74a946d2aa98a51d8a, type: 3}
+  - {fileID: 8300000, guid: 311d68d8ea3d72f47ae6ebaa447c6088, type: 3}
+  LandingSounds:
+  - {fileID: 8300000, guid: 096b06222f6311b4aa9d092b9467ffd3, type: 3}
+  - {fileID: 8300000, guid: 8a8adca56983ac54fbfca1ae7650cd54, type: 3}
+  - {fileID: 8300000, guid: 30659e308da7370489243e9eaef92d6c, type: 3}
 --- !u!1 &7767566421915079963
 GameObject:
   m_ObjectHideFlags: 0
