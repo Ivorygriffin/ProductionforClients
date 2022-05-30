@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class Music : MonoBehaviour
 {
+    [Tooltip("The minimum value the high pass filter will reach")]
+    public float LowPassMin;
+    [Tooltip("The maximum value the high pass filter will reach")]
+    public float LowPassMax;
+    [Tooltip("How quickly the Low Pass Filter Cuttoff frequency changes")]
+    public float TransitionSpeed;
+
+
+
+
+
     private PlayerController _playerController;
     private Parkour _parkour;
     private Rigidbody _rigidbody;
@@ -35,13 +46,13 @@ public class Music : MonoBehaviour
             _highPassFilter.enabled = false;
             _lowPassFilter.enabled = true;
 
-            if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") > 0 && _lowPassFilter.cutoffFrequency < 10000)
+            if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") > 0 && _lowPassFilter.cutoffFrequency < LowPassMax)
             {
-                _lowPassFilter.cutoffFrequency += Time.deltaTime * 10000;
+                _lowPassFilter.cutoffFrequency += Time.deltaTime * TransitionSpeed;
             }
-            else if(_lowPassFilter.cutoffFrequency > 3000)
+            else if(_lowPassFilter.cutoffFrequency > LowPassMin)
             {
-                _lowPassFilter.cutoffFrequency -= Time.deltaTime * 10000;
+                _lowPassFilter.cutoffFrequency -= Time.deltaTime * TransitionSpeed;
             }
         }
         else
@@ -54,7 +65,7 @@ public class Music : MonoBehaviour
             }
             else
             {
-                _highPassFilter.cutoffFrequency -= Time.deltaTime * 5000;
+                _highPassFilter.cutoffFrequency -= Time.deltaTime * 2500;
 
             }
 

@@ -8736,6 +8736,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 363033085, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: LowPassMax
+      value: 15000
+      objectReference: {fileID: 0}
+    - target: {fileID: 363033085, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: LowPassMin
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 363033085, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: TransitionSpeed
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 322361515025143853, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_RootOrder
       value: 1
