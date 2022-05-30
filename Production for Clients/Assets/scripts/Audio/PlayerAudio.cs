@@ -53,7 +53,7 @@ public class PlayerAudio : MonoBehaviour
             _stepping = true;
             yield return new WaitForSeconds((.2f * 10 / 6) / (_playerController._playerSpeed / _playerController._savedMaxSpeed));
             _randomNumber = Random.Range(0, FootstepSounds.Length - 1);
-            if(_previousNumber != null && _randomNumber == _previousNumber)
+            if(_randomNumber == _previousNumber)
             {
                 if(_randomNumber == FootstepSounds.Length - 1)
                 {
