@@ -29,37 +29,48 @@ public class PlayerController : MonoBehaviour
     // Variables
     //------------
 
-    [Tooltip("Whether the player has to press Shift to Sprint")]
-    public bool AlwaysSprint;
-    [Header("Movement Values")]
+
+    [Header("Movement")]
     [Tooltip("The maximum speed the player can move")]
     public float maxSpeed;
     [Tooltip("How much the sprint speeds up the player")]
     public float sprintMultiplier;
-    [Tooltip("The speed the camera moves with the mouse (AKA sensitivity)")]
-    public float lookSpeed;
-    [Tooltip("Defines the height and vertical speed of the player's jump")]
-    public float jumpForce;
-    [Tooltip("How quickly the player loses momentum while sliding")]
-    public float SlideFriction;
     [Tooltip("How quickly the player gains speed when running")]
     public float SprintSpeedup;
+    [Tooltip("Whether the player has to press Shift to Sprint")]
+    public bool AlwaysSprint;
+
+    [Header("Camera")]
+    [Tooltip("The speed the camera moves with the mouse (AKA sensitivity)")]
+    public float lookSpeed;
     [Tooltip("How strong the FOV change is when sprinting (The higher number, the less it changes)")]
     public float FovChangeDampness;
-    [Tooltip("How much the players maximum speed cap is raised when sliding, affects how fast the player goes when sliding downhill")]
-    public float slideBoost;
+
+    [Header("Jump")]
+    [Tooltip("Defines the height and vertical speed of the player's jump")]
+    public float jumpForce;
     [Tooltip("How strong gravity is")]
     public float gravityMultiplier;
+
+    [Header("Slide")]
+    [Tooltip("How much the players maximum speed cap is raised when sliding, affects how fast the player goes when sliding downhill")]
+    public float slideBoost;
+    [Tooltip("How quickly the player loses momentum while sliding")]
+    public float SlideFriction;
+
+
 
     [HideInInspector]
     public float _mouseY;
     [HideInInspector]
     public Vector3 groundAngle;
+    [HideInInspector]
+    public float _playerSpeed;
 
-    private float _mouseX, _rotation, _yForce, _savedMaxSpeed;
+    private float _mouseX, _rotation, _yForce;
 
-    private bool _sliding, _crouching, _canJump;
-    private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov, _playerSpeed;
+    private bool _crouching, _canJump;
+    private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov;
     private Quaternion _savedPlayerRotation;
     private Animator _animator;
     private Parkour _parkour;
@@ -75,6 +86,10 @@ public class PlayerController : MonoBehaviour
     public GameObject _playerCamera;
     [HideInInspector]
     public bool _grounded;
+    [HideInInspector]
+    public bool _sliding;
+    [HideInInspector]
+    public float _savedMaxSpeed;
 
 
 
@@ -144,13 +159,11 @@ public class PlayerController : MonoBehaviour
 
         //--------------------------------------------------------------------------------
 
-
-
         //----------------------
         // Player Speed Limiter
         //----------------------
 
-        if (Input.GetAxis("Vertical") > 0)
+        if (Input.GetAxis("Vertical") > 0 && !_parkour._animationPlaying)
         {
             _playerSpeed += Time.deltaTime * SprintSpeedup;
         }
