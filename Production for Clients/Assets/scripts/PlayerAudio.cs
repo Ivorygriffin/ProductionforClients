@@ -64,7 +64,6 @@ public class PlayerAudio : MonoBehaviour
                     _randomNumber += 1;
                 }
             }
-            Debug.Log(_randomNumber);
             _audioSource.clip = FootstepSounds[_randomNumber];
 
             if (_playerController._grounded && !_playerController._sliding)

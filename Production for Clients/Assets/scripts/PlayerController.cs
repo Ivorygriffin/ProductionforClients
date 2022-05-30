@@ -436,6 +436,10 @@ public class PlayerController : MonoBehaviour
                 return true;
             }
         }
+        if(Physics.Raycast(transform.position, -transform.up, GetComponent<Collider>().bounds.size.y / 2))
+        {
+            return true;
+        }
         return false;
     }
 
