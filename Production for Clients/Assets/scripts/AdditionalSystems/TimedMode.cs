@@ -10,12 +10,23 @@ public class TimedMode : MonoBehaviour
 
     public void Awake()
     {
-        
+        if (LoadingData.isTimed)
+        {
+            timerText.gameObject.SetActive(true);
+        }
+        else
+        {
+            timerText.gameObject.SetActive(false);
+        }
     }
     void Update()
     {
-        TimeData.timeData += Time.deltaTime;
-        timerText.text = "Time: " + TimeData.timeData.ToString("F3");
+        if (LoadingData.isTimed)
+        {
+            TimeData.timeData += Time.deltaTime;
+            timerText.text = "Time: " + TimeData.timeData.ToString("F3");
+        }
+
     }
 
   
