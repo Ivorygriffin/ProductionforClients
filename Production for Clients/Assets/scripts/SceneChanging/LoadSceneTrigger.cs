@@ -42,6 +42,8 @@ public class LoadSceneTrigger : MonoBehaviour
             }
             yield return null;
         }
+
+        Debug.Log(LoadingData.sceneToLoad);
     }
    
    
