@@ -3336,9 +3336,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackToChangeTo: {fileID: 8300000, guid: aa772242122173d4aab26726fc0d2119, type: 3}
-  fade: 0
+  fade: 1
   onlyOnBeat: 0
-  tempo: 0
+  BPM: 0
 --- !u!1001 &956864693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9204,6 +9204,6 @@ PrefabInstance:
     - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: a143bd4d680cb8244a6fc13981e97d1f, type: 3}
+      objectReference: {fileID: 8300000, guid: 39877c1431717c94c9a5c16f3fd6ebbb, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
