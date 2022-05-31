@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
+
+
+
     public AudioClip[] FootstepSounds;
     public AudioClip[] LandingSounds;
 

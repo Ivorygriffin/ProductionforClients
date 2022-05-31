@@ -3336,6 +3336,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackToChangeTo: {fileID: 8300000, guid: aa772242122173d4aab26726fc0d2119, type: 3}
+  fade: 0
+  onlyOnBeat: 0
+  tempo: 0
 --- !u!1001 &956864693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9142,6 +9145,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 363033085, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: BPM
+      value: 115
+      objectReference: {fileID: 0}
     - target: {fileID: 322361515025143853, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_RootOrder
       value: 1

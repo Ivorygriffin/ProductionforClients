@@ -10,8 +10,13 @@ public class Music : MonoBehaviour
     public float LowPassMax;
     [Tooltip("How quickly the Low Pass Filter Cuttoff frequency changes")]
     public float TransitionSpeed;
+    [Tooltip("The BPM of the starting song")]
+    public float BPM;
 
 
+
+    [HideInInspector]
+    public bool canChangeTrack;
 
 
 
@@ -23,6 +28,9 @@ public class Music : MonoBehaviour
     private AudioLowPassFilter _lowPassFilter;
     private AudioHighPassFilter _highPassFilter;
 
+    private IEnumerator _beatCounter;
+    private bool _firstRun;
+
 
     void Start()
     {
@@ -33,9 +41,13 @@ public class Music : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _lowPassFilter = GetComponent<AudioLowPassFilter>();
         _highPassFilter = GetComponent<AudioHighPassFilter>();
+        AudioData.currentBPM = BPM;
 
+        _audioSource.Stop();
+        _firstRun = true;
         _lowPassFilter.enabled = false;
         _highPassFilter.enabled = false;
+        canChangeTrack = true;
     }
 
     // Update is called once per frame
@@ -70,5 +82,29 @@ public class Music : MonoBehaviour
             }
 
         }
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (canChangeTrack)
+        {
+
+            _beatCounter = BeatCounter();
+            canChangeTrack = false;
+            StartCoroutine(_beatCounter);
+            if (_firstRun)
+            {
+                _audioSource.Play();
+                _firstRun = false;
+            }
+        }
+    }
+
+    public IEnumerator BeatCounter()
+    {
+        yield return new WaitForSeconds(60 / AudioData.currentBPM * 4);
+        canChangeTrack = true;
+        Debug.Log("Tick");
     }
 }

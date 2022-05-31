@@ -5,7 +5,6 @@ using UnityEngine;
 public class Respawn : MonoBehaviour
 {
 
-
     private Vector3 _respawnPoint;
     private IEnumerator _respawn;
 
@@ -28,12 +27,16 @@ public class Respawn : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Checkpoint")
         {
             _respawnPoint = transform.position;
         }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.tag == "KillPlane")
         {
             _respawn = RespawnPlayer();

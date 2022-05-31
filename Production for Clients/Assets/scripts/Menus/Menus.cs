@@ -39,6 +39,10 @@ public class Menus : MonoBehaviour
             _playerController.enabled = false;
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
+            foreach (var audioSource in FindObjectsOfType<AudioSource>())
+            {
+                audioSource.Stop();
+            }
         }
         if (Input.GetKey(KeyCode.P) && levelSelect != null)
         {
@@ -83,7 +87,10 @@ public class Menus : MonoBehaviour
         {
             levelSelect.SetActive(false);
         }
-
+        foreach (var audioSource in FindObjectsOfType<AudioSource>())
+        {
+            audioSource.Play();
+        }
     }
 
     public void Restart()
