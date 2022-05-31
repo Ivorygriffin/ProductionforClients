@@ -75,8 +75,14 @@ public class Menus : MonoBehaviour
         _parkour.enabled = true;
         _playerController.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
-        pauseMenu.SetActive(false);
-        levelSelect.SetActive(false);
+        if(pauseMenu != null)
+        {
+            pauseMenu.SetActive(false);
+        }
+        if (levelSelect != null)
+        {
+            levelSelect.SetActive(false);
+        }
 
     }
 
