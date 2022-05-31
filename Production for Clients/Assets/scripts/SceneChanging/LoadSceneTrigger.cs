@@ -30,6 +30,7 @@ public class LoadSceneTrigger : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         AsyncOperation operation = SceneManager.LoadSceneAsync(LoadingData.sceneToLoad);
+        Debug.Log(LoadingData.sceneToLoad);
         operation.allowSceneActivation = false;
 
         while (!operation.isDone)
