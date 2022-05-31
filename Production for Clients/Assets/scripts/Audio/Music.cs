@@ -103,8 +103,8 @@ public class Music : MonoBehaviour
 
     public IEnumerator BeatCounter()
     {
-        yield return new WaitForSeconds(60 / AudioData.currentBPM * 4);
-        canChangeTrack = true;
-        Debug.Log("Tick");
+        yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.02f);
+            canChangeTrack = true;
+            Debug.Log(60 / AudioData.currentBPM * 4);
     }
 }

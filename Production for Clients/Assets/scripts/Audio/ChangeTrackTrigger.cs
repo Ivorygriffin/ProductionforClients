@@ -12,7 +12,7 @@ public class ChangeTrackTrigger : MonoBehaviour
     [Tooltip("If true, the audio can only change tracks at the start of a bar")]
     public bool onlyOnBeat;
     [Tooltip("The BPM of the song (Required for onlyOnBeat")]
-    public float tempo;
+    public float BPM;
 
 
 
@@ -46,10 +46,10 @@ public class ChangeTrackTrigger : MonoBehaviour
             _audioSource.volume += Time.deltaTime;
         }
 
-        if (_queueChange && _music.canChangeTrack)
-        {
+        //if (_queueChange && _music.canChangeTrack)
+        //{
 
-        }
+        //}
     }
 
     public IEnumerator ChangeClip()
