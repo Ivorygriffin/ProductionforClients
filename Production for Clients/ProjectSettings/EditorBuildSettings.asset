@@ -21,6 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScene.unity
     guid: c729f5b9bc468fd46961814e600b777d
   - enabled: 1
-    path: Assets/Scenes/DesertNew.unity
+    path: Assets/scenes/DesertNew.unity
     guid: 7126db6914788ee49bf988b278805214
   m_configObjects: {}
