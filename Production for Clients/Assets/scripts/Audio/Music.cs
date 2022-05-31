@@ -61,11 +61,11 @@ public class Music : MonoBehaviour
             _highPassFilter.enabled= true;
             if(_playerController._playerSpeed > _playerController._savedMaxSpeed * _playerController.sprintMultiplier)
             {
-                _highPassFilter.cutoffFrequency += Time.deltaTime * 300;
+                _highPassFilter.cutoffFrequency += Time.deltaTime * 700;
             }
             else
             {
-                _highPassFilter.cutoffFrequency -= Time.deltaTime * 2500;
+                _highPassFilter.cutoffFrequency -= Time.deltaTime * 8000;
 
             }
 

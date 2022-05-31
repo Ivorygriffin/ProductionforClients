@@ -32,7 +32,7 @@ public class Respawn : MonoBehaviour
     {
         if (other.tag == "Checkpoint")
         {
-            _respawnPoint = other.transform.position;
+            _respawnPoint = transform.position;
         }
         if (other.tag == "KillPlane")
         {

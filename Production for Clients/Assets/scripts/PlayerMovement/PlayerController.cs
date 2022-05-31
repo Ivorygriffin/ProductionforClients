@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
             {
                 maxSpeed = _savedMaxSpeed * sprintMultiplier + slideBoost - _slideSlowdown;
             }
-            _rigidbody.AddForce(0, -30, 0);
+            _rigidbody.AddForce(0, -50, 0);
             _playerSpeed += Time.deltaTime * (slideBoost / 3);
 
 
