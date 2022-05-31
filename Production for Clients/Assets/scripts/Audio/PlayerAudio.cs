@@ -53,7 +53,7 @@ public class PlayerAudio : MonoBehaviour
             _stepping = true;
             yield return new WaitForSeconds((.2f * 10 / 6) / (_playerController._playerSpeed / _playerController._savedMaxSpeed));
             _randomNumber = Random.Range(0, FootstepSounds.Length - 1);
-            if(_previousNumber != null && _randomNumber == _previousNumber)
+            if(_randomNumber == _previousNumber)
             {
                 if(_randomNumber == FootstepSounds.Length - 1)
                 {
@@ -64,7 +64,6 @@ public class PlayerAudio : MonoBehaviour
                     _randomNumber += 1;
                 }
             }
-            Debug.Log(_randomNumber);
             _audioSource.clip = FootstepSounds[_randomNumber];
 
             if (_playerController._grounded && !_playerController._sliding)

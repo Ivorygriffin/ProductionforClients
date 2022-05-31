@@ -5,5 +5,6 @@ using UnityEngine;
 public class LoadingData
 {
     public static string sceneToLoad;
+    public static bool isTimed;
 }
 
