@@ -42,7 +42,6 @@ public class ChangeTrackTrigger : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(_queueChange);
         if (_fadeDown)
         {
             _audioSource[AudioData.activeAudioSource].volume -= Time.deltaTime / transitionSpeed;
@@ -68,6 +67,7 @@ public class ChangeTrackTrigger : MonoBehaviour
         {
             if (_queueChange && _music.canChangeTrack)
             {
+                AudioData.currentBPM = BPM;
                 if (fade)
                 {
                     _fadeClip = FadeClip();
@@ -83,6 +83,7 @@ public class ChangeTrackTrigger : MonoBehaviour
         }
         else if (_queueChange && !onlyOnBeat)
         {
+            AudioData.currentBPM = BPM;
             if (fade)
             {
                 _fadeClip = FadeClip();

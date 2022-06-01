@@ -17,7 +17,8 @@ public class Music : MonoBehaviour
 
     [HideInInspector]
     public bool canChangeTrack;
-
+    [HideInInspector]
+    public IEnumerator _beatCounter;
 
 
     private PlayerController _playerController;
@@ -28,8 +29,9 @@ public class Music : MonoBehaviour
     private AudioLowPassFilter _lowPassFilter;
     private AudioHighPassFilter _highPassFilter;
 
-    private IEnumerator _beatCounter;
-    private bool _firstRun;
+
+    private float _savedBPM;
+    private bool _firstRun, _changeGate;
 
 
     void Start()
@@ -42,6 +44,8 @@ public class Music : MonoBehaviour
         _lowPassFilter = GetComponent<AudioLowPassFilter>();
         _highPassFilter = GetComponent<AudioHighPassFilter>();
         AudioData.currentBPM = BPM;
+        _savedBPM = AudioData.currentBPM;
+
 
         _audioSource.Stop();
         _firstRun = true;
@@ -99,13 +103,28 @@ public class Music : MonoBehaviour
                 _firstRun = false;
             }
         }
+        if (_savedBPM != AudioData.currentBPM && !_changeGate)
+        {
+            _beatCounter = BeatCounter();
+            StartCoroutine(_beatCounter);
+            _changeGate = true;
+        }
     }
 
     public IEnumerator BeatCounter()
     {
         yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.04f);
         yield return new WaitForFixedUpdate();
-        canChangeTrack = true;
-        Debug.Log("Tick");
+        if (_savedBPM == AudioData.currentBPM)
+        {
+            canChangeTrack = true;
+            Debug.Log("Tick");
+        }
+        else
+        {
+            _savedBPM = AudioData.currentBPM;
+            _changeGate = false;
+
+        }
     }
 }
