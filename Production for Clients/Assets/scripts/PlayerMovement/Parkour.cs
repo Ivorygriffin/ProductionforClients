@@ -320,9 +320,6 @@ public class Parkour : MonoBehaviour
 
         }
 
-
-
-
     }
 
 

@@ -430,7 +430,7 @@ public class PlayerController : MonoBehaviour
         collision.GetContacts(_contactPoints);
         foreach (var ContactPoint in _contactPoints)
         {
-            if (45 > Vector3.Angle(ContactPoint.normal, -Physics.gravity.normalized))
+            if (47.5f >= Vector3.Angle(ContactPoint.normal, -Physics.gravity.normalized))
             {
                 groundAngle = ContactPoint.normal;
                 return true;

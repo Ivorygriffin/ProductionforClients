@@ -62,7 +62,7 @@ public class Music : MonoBehaviour
             {
                 _lowPassFilter.cutoffFrequency += Time.deltaTime * TransitionSpeed;
             }
-            else if(_lowPassFilter.cutoffFrequency > LowPassMin)
+            else if (_lowPassFilter.cutoffFrequency > LowPassMin)
             {
                 _lowPassFilter.cutoffFrequency -= Time.deltaTime * TransitionSpeed;
             }
@@ -70,8 +70,8 @@ public class Music : MonoBehaviour
         else
         {
             _lowPassFilter.enabled = false;
-            _highPassFilter.enabled= true;
-            if(_playerController._playerSpeed > _playerController._savedMaxSpeed * _playerController.sprintMultiplier)
+            _highPassFilter.enabled = true;
+            if (_playerController._playerSpeed > _playerController._savedMaxSpeed * _playerController.sprintMultiplier)
             {
                 _highPassFilter.cutoffFrequency += Time.deltaTime * 700;
             }
@@ -103,8 +103,9 @@ public class Music : MonoBehaviour
 
     public IEnumerator BeatCounter()
     {
-        yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.02f);
-            canChangeTrack = true;
-            Debug.Log(60 / AudioData.currentBPM * 4);
+        yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.04f);
+        yield return new WaitForFixedUpdate();
+        canChangeTrack = true;
+        Debug.Log("Tick");
     }
 }

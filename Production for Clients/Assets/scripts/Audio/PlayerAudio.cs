@@ -32,7 +32,7 @@ public class PlayerAudio : MonoBehaviour
             _playFootsteps = Footsteps();
             StartCoroutine(_playFootsteps);
         }
-        if (!_playerController._grounded && !_playerController._sliding && _playerController.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1 && _playerController.groundAngle.magnitude < 20)
+        if (!_playerController._grounded && !_playerController._sliding && _playerController.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
         {
             _landing = true;
         }
