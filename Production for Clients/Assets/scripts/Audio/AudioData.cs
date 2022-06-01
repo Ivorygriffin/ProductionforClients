@@ -5,5 +5,5 @@ using UnityEngine;
 public class AudioData
 {
     public static float currentBPM;
-    public static bool queueChange;
+    public static int activeAudioSource, otherAudioSource;
 }

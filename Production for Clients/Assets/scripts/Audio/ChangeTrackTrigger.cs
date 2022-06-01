@@ -23,13 +23,12 @@ public class ChangeTrackTrigger : MonoBehaviour
     private bool _fadeDown, _fadeUp, _queueChange;
     private IEnumerator _fadeClip;
     private Music _music;
-    private int _activeAudioSource, _otherAudioSource;
 
     private void Start()
     {
         _music = FindObjectOfType<Music>();
-        _activeAudioSource = 0;
-        _otherAudioSource = 1;
+        AudioData.activeAudioSource = 0;
+        AudioData.otherAudioSource = 1;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,34 +36,52 @@ public class ChangeTrackTrigger : MonoBehaviour
         if (other.tag == "Player")
         {
             _audioSource = GameObject.Find("MusicSource").gameObject.GetComponents<AudioSource>();
-            AudioData.queueChange = true;
+            _queueChange = true;
         }
 
     }
     private void Update()
     {
+        Debug.Log(_queueChange);
         if (_fadeDown)
         {
-            _audioSource[_activeAudioSource].volume -= Time.deltaTime / transitionSpeed;
+            _audioSource[AudioData.activeAudioSource].volume -= Time.deltaTime / transitionSpeed;
         }
         if (_fadeUp)
         {
-            _audioSource[_otherAudioSource].volume += Time.deltaTime / transitionSpeed;
-            if(_audioSource[_otherAudioSource].volume == 1)
+            _audioSource[AudioData.otherAudioSource].volume += Time.deltaTime / transitionSpeed;
+            if (_audioSource[AudioData.otherAudioSource].volume == 1)
             {
-                if (_activeAudioSource == 1)
+                if (AudioData.activeAudioSource == 1)
                 {
-                    _activeAudioSource = 0;
-                    _otherAudioSource = 1;
+                    AudioData.activeAudioSource = 0;
+                    AudioData.otherAudioSource = 1;
                 }
                 else
                 {
-                    _activeAudioSource = 1;
-                    _otherAudioSource = 0;
+                    AudioData.activeAudioSource = 1;
+                    AudioData.otherAudioSource = 0;
                 }
             }
         }
-        if (AudioData.queueChange && _music.canChangeTrack)
+        if (onlyOnBeat)
+        {
+            if (_queueChange && _music.canChangeTrack)
+            {
+                if (fade)
+                {
+                    _fadeClip = FadeClip();
+                    StartCoroutine(_fadeClip);
+                }
+                else
+                {
+                    _audioSource[AudioData.activeAudioSource].clip = trackToChangeTo;
+                    _audioSource[AudioData.activeAudioSource].Play();
+                }
+                _queueChange = false;
+            }
+        }
+        else if (_queueChange && !onlyOnBeat)
         {
             if (fade)
             {
@@ -73,18 +90,18 @@ public class ChangeTrackTrigger : MonoBehaviour
             }
             else
             {
-                _audioSource[_activeAudioSource].clip = trackToChangeTo;
-                _audioSource[_activeAudioSource].Play();
+                _audioSource[AudioData.activeAudioSource].clip = trackToChangeTo;
+                _audioSource[AudioData.activeAudioSource].Play();
             }
-            AudioData.queueChange = false;
+            _queueChange = false;
         }
     }
 
     public IEnumerator FadeClip()
     {
         _fadeDown = true;
-        _audioSource[_otherAudioSource].clip = trackToChangeTo;
-        _audioSource[_otherAudioSource].Play();
+        _audioSource[AudioData.otherAudioSource].clip = trackToChangeTo;
+        _audioSource[AudioData.otherAudioSource].Play();
         _fadeUp = true;
 
 
