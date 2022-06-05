@@ -32,7 +32,7 @@ public class Parkour : MonoBehaviour
     [HideInInspector]
     public bool _animationPlaying;
 
-    private bool _animationStart, _climbing, _farClimb, _midVault, _swingBoost;
+    private bool _animationStart, _climbing, _farClimb, _midVault, _swingBoost, _approaching;
     private float _animationSpeed, _bumpSpeed;
 
 
@@ -110,7 +110,7 @@ public class Parkour : MonoBehaviour
         //---------------------------
         // Mantling & Ledge Grabbing
         //---------------------------
-        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying && !_animationStart && _playerController.groundAngle.x < .1f && _playerController.groundAngle.x > -.1f && _playerController.groundAngle.z < .1f  && _playerController.groundAngle.z > -.1f)
+        if (Input.GetButtonDown("Jump") && !_climbing && !_animationPlaying && !_animationStart && _playerController.groundAngle.x < .1f && _playerController.groundAngle.x > -.1f && _playerController.groundAngle.z < .1f  && _playerController.groundAngle.z > -.1f || _approaching)
         {
             if(_rigidbody.velocity.magnitude < 1)
             {
@@ -137,6 +137,9 @@ public class Parkour : MonoBehaviour
                     _swingCheck.gameObject.SetActive(true);
                 }
 
+
+                //Check for Vault Hop//
+
                 if (VaultFarCast() && !ChestFarCast() && gameObject.GetComponent<PlayerController>()._grounded)
                 {
 
@@ -155,6 +158,10 @@ public class Parkour : MonoBehaviour
                         }
                         _animationStart = true;
                     }
+
+
+                    //Check For Vault Slide//
+
                     else if (!VaultSlideFarCast())
                     {
                         _savedSpeed = _rigidbody.velocity;
@@ -170,6 +177,10 @@ public class Parkour : MonoBehaviour
                         }
                         _animationStart = true;
                     }
+
+
+                    //Play Vault//
+
                     else
                     {
                         _savedSpeed = _rigidbody.velocity;
@@ -186,6 +197,9 @@ public class Parkour : MonoBehaviour
                         _animationStart = true;
                     }
                 }
+
+                //Climb / Clamber//
+
                 else if (ChestFarCast() && HeadFarCast() && !CapFarCast())
                 {
                     if(ChestCast() && HeadCast() && !CapCast())
