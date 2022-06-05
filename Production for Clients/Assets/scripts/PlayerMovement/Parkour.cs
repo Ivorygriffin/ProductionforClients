@@ -188,7 +188,7 @@ public class Parkour : MonoBehaviour
                 }
                 else if (ChestFarCast() && HeadFarCast() && !CapFarCast())
                 {
-                    if(ChestCast() && HeadCast() && !CapFarCast())
+                    if(ChestCast() && HeadCast() && !CapCast())
                     {
                         _savedSpeed = _rigidbody.velocity;
                         _rigidbody.velocity = Vector3.zero;

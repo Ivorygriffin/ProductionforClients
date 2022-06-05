@@ -9428,6 +9428,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerAnimationHost
       objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052286, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: ExtendedCastMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2687350456795552870, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Volume
       value: 0
