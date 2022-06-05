@@ -66,7 +66,7 @@ public class Menus : MonoBehaviour
     {
         LoadingData.sceneToLoad = SceneToLoad;
 
-        SceneManager.LoadScene("LoadingScene");
+        SceneManager.LoadScene("scenes/LoadingScene");
     }
 
     public void Quit()

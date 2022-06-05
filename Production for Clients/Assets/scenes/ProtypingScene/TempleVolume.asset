@@ -108,11 +108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d08ce26990eb1a4a9177b860541e702, type: 3}
   m_Name: Exposure
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   meteringMode:
     m_OverrideState: 1
     m_Value: 2
@@ -127,7 +127,7 @@ MonoBehaviour:
     m_Value: 0
   limitMin:
     m_OverrideState: 1
-    m_Value: -1
+    m_Value: 11.379987
   limitMax:
     m_OverrideState: 1
     m_Value: 14
@@ -269,13 +269,13 @@ MonoBehaviour:
   m_AdvancedMode: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.97683525, y: 1, z: 0.97130406, w: -0.4449152}
+    m_Value: {x: 0.97683525, y: 1, z: 0.97130406, w: -0.105932124}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.38135597}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.19067799}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.2330508}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.21186435}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d877ec3e844f2ca46830012e8e79319b, type: 3}
   m_Name: PhysicallyBasedSky
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   rotation:
     m_OverrideState: 0
