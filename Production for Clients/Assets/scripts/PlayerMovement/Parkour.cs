@@ -226,7 +226,8 @@ public class Parkour : MonoBehaviour
         {
             _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!HeadCast())
-            {            
+            {
+                canMoveCamera = false;
                 _climbing = false;
                 _animator.enabled = true;
                 _animator.Play("Climb");
@@ -238,6 +239,8 @@ public class Parkour : MonoBehaviour
             _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!HeadFarCast())
             {
+                canMoveCamera = false;
+
                 _farClimb = false;
                 _animator.enabled = true;
                 _animator.Play("Climb_Far");
@@ -251,12 +254,16 @@ public class Parkour : MonoBehaviour
             {
                 if (VaultCast())
                 {
+                    canMoveCamera = false;
+
                     _animator.enabled = true;
                     _animator.Play("Vault");
                     _animationStart = true;
                 }
                 else
                 {
+                    canMoveCamera = false;
+
                     _animator.enabled = true;
                     _animator.Play("Vault_Far");
                     _animationStart = true;

@@ -84,7 +84,7 @@ public class Music : MonoBehaviour
             }
             else
             {
-                _highPassFilter.cutoffFrequency -= Time.deltaTime * 8000;
+                _highPassFilter.cutoffFrequency -= Time.deltaTime * 4000;
 
             }
 
