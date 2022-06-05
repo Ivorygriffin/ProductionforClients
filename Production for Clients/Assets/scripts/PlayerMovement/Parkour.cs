@@ -9,6 +9,8 @@ public class Parkour : MonoBehaviour
     public float VaultHeight;
     [Tooltip("Height above player head that a ledge grab can be triggered")]
     public float ClimbCap;
+    [Tooltip("How mant times further than a far cast that a parkour action can activate")]
+    public float ExtendedCastMultiplier;
 
     [Header("Swing")]
     [Tooltip("How fast the player moves forward when coming out of a swing")]
@@ -443,6 +445,36 @@ public class Parkour : MonoBehaviour
         return Physics.Raycast(transform.position + new Vector3(0, ClimbCap, 0), transform.forward, 2.5f);
     }
 
+
+
+    private bool VaultExtendedCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, VaultHeight - 1.01f, 0), transform.forward, 2.5f * ExtendedCastMultiplier);
+    }
+
+    private bool VaultHopExtendedCast()
+    {
+        return Physics.Raycast(transform.position + transform.forward * 3.5f * ExtendedCastMultiplier + new Vector3(0, 0.1f, 0), -transform.up, .5f);
+    }
+
+    private bool VaultSlideExtendedCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 5.5f * ExtendedCastMultiplier);
+    }
+
+    private bool ChestExtendedCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 0.1f, 0), transform.forward, 3 * ExtendedCastMultiplier);
+    }
+    private bool HeadExtendedCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, 1, 0), transform.forward, 2.5f * ExtendedCastMultiplier);
+    }
+
+    private bool CapExtendedCast()
+    {
+        return Physics.Raycast(transform.position + new Vector3(0, ClimbCap, 0), transform.forward, 2.5f * ExtendedCastMultiplier);
+    }
 
 
     //------------
