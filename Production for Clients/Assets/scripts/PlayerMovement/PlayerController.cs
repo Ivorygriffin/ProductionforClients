@@ -330,7 +330,12 @@ public class PlayerController : MonoBehaviour
             _jumpMargin = 0;
         }
 
-        if (Input.GetButtonDown("Jump") && _canJump && (_grounded || _jumpMargin < .3f))
+        if (Input.GetButtonDown("Jump"))
+        {
+            _jumpMargin = 1;
+        }
+
+        if (Input.GetButtonDown("Jump") && _canJump && (_grounded || _jumpMargin < .2f))
         {
 
             _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);

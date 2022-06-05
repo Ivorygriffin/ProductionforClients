@@ -25,7 +25,7 @@ public class Music : MonoBehaviour
     private Parkour _parkour;
     private Rigidbody _rigidbody;
 
-    private AudioSource _audioSource;
+    private AudioSource[] _audioSources;
     private AudioLowPassFilter _lowPassFilter;
     private AudioHighPassFilter _highPassFilter;
 
@@ -40,14 +40,17 @@ public class Music : MonoBehaviour
         _parkour = FindObjectOfType<Parkour>();
         _rigidbody = FindObjectOfType<PlayerController>().GetComponent<Rigidbody>();
 
-        _audioSource = GetComponent<AudioSource>();
+        _audioSources = GetComponents<AudioSource>();
         _lowPassFilter = GetComponent<AudioLowPassFilter>();
         _highPassFilter = GetComponent<AudioHighPassFilter>();
         AudioData.currentBPM = BPM;
         _savedBPM = AudioData.currentBPM;
+        AudioData.activeAudioSource = 0;
+        AudioData.otherAudioSource = 1;
 
+        _audioSources[AudioData.otherAudioSource].enabled = false;
+        _audioSources[AudioData.activeAudioSource].Stop();
 
-        _audioSource.Stop();
         _firstRun = true;
         _lowPassFilter.enabled = false;
         _highPassFilter.enabled = false;
@@ -99,7 +102,7 @@ public class Music : MonoBehaviour
             StartCoroutine(_beatCounter);
             if (_firstRun)
             {
-                _audioSource.Play();
+                _audioSources[AudioData.activeAudioSource].Play();
                 _firstRun = false;
             }
         }

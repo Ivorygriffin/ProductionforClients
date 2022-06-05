@@ -27,8 +27,10 @@ public class ChangeTrackTrigger : MonoBehaviour
     private void Start()
     {
         _music = FindObjectOfType<Music>();
-        AudioData.activeAudioSource = 0;
-        AudioData.otherAudioSource = 1;
+
+
+        _audioSource[AudioData.otherAudioSource].volume = 0;
+        _audioSource[AudioData.otherAudioSource].enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,6 +63,8 @@ public class ChangeTrackTrigger : MonoBehaviour
                     AudioData.activeAudioSource = 1;
                     AudioData.otherAudioSource = 0;
                 }
+                _audioSource[AudioData.otherAudioSource].enabled = false;
+
             }
         }
         if (onlyOnBeat)
@@ -100,6 +104,8 @@ public class ChangeTrackTrigger : MonoBehaviour
 
     public IEnumerator FadeClip()
     {
+        _audioSource[AudioData.otherAudioSource].enabled = true;
+
         _fadeDown = true;
         _audioSource[AudioData.otherAudioSource].clip = trackToChangeTo;
         _audioSource[AudioData.otherAudioSource].Play();

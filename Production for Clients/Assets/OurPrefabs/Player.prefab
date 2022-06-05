@@ -447,6 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VaultHeight: 0.9
   ClimbCap: 2
+  ExtendedCastMultiplier: 0
   SwingBoostSpeed: 8
   SwingBoostHeight: 4
   AnimationSpeedMax: 2
@@ -657,7 +658,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 697887460172680497}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &8133593345469310649
 AudioSource:
@@ -933,7 +934,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 697887460172680497}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &64624319092290789
 AudioSource:
@@ -1082,8 +1083,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7584315142062021932}
   - {fileID: 8510759904274507504}
+  - {fileID: 7584315142062021932}
   m_Father: {fileID: 322361515025143853}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -92,9 +92,9 @@ public class Parkour : MonoBehaviour
         {
             _animationSpeed = _rigidbody.velocity.magnitude / GetComponent<PlayerController>().maxSpeed * AnimationSpeedMax;
         }
-        else if(_animationSpeed < 1.5f || _rigidbody.velocity.magnitude < 1)
+        else if(_animationSpeed < AnimationSpeedMax / 2)
         {
-            _animationSpeed = 1.5f;
+            _animationSpeed = AnimationSpeedMax / 2;
         }
         if(_animationSpeed > AnimationSpeedMax)
         {
@@ -224,7 +224,7 @@ public class Parkour : MonoBehaviour
 
         if (_climbing)
         {
-            _rigidbody.AddForce(0, 30, 0);
+            _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!HeadCast())
             {            
                 _climbing = false;
@@ -235,7 +235,7 @@ public class Parkour : MonoBehaviour
         }
         if (_farClimb)
         {
-            _rigidbody.AddForce(0, 30, 0);
+            _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!HeadFarCast())
             {
                 _farClimb = false;
@@ -246,7 +246,7 @@ public class Parkour : MonoBehaviour
         }
         if (_midVault)
         {
-            _rigidbody.AddForce(0, 3, 0);
+            _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!ChestFarCast())
             {
                 if (VaultCast())
