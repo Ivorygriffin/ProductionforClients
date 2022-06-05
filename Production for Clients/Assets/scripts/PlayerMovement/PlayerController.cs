@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerGravity;
 
     //Timers
-    private float _fovEaseIn;
+    private float _fovEaseIn, _jumpMargin;
 
     private Rigidbody _rigidbody;
     [HideInInspector]
@@ -321,7 +321,16 @@ public class PlayerController : MonoBehaviour
         // Jumping
         //----------
 
-        if (Input.GetButtonDown("Jump") && _canJump && _grounded)
+        if (!_grounded)
+        {
+            _jumpMargin += Time.deltaTime;
+        }
+        else
+        {
+            _jumpMargin = 0;
+        }
+
+        if (Input.GetButtonDown("Jump") && _canJump && (_grounded || _jumpMargin < .3f))
         {
 
             _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
