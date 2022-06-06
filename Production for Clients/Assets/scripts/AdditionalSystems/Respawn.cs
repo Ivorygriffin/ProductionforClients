@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Respawn : MonoBehaviour
 {
 
     private Vector3 _respawnPoint;
     private IEnumerator _respawn;
+    private Image _DeathFade;
+    private float _deathFadeFade;
+    private bool _fadingOut;
+
+    [HideInInspector]
+    public bool _respawning;
 
 
 
@@ -14,7 +21,9 @@ public class Respawn : MonoBehaviour
     void Start()
     {
         _respawnPoint = transform.position;
-
+        _DeathFade = GameObject.Find("DeathFade").GetComponent<Image>();
+        _DeathFade.color = new Color (_DeathFade.color.r, _DeathFade.color.g, _DeathFade.color.b, 0f);
+        _DeathFade.enabled = false;
     }
 
     // Update is called once per frame
@@ -25,6 +34,20 @@ public class Respawn : MonoBehaviour
             _respawn = RespawnPlayer();
             StartCoroutine(_respawn);
         }
+
+        if (_fadingOut)
+        {
+            _deathFadeFade -= Time.deltaTime * 1.5f;
+            _DeathFade.color = new Color(_DeathFade.color.r, _DeathFade.color.g, _DeathFade.color.b, _deathFadeFade);
+        }
+        if (_respawning)
+        {
+            transform.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+
+            transform.GetComponent<Rigidbody>().AddForce(0, -Physics.gravity.magnitude / 4, 0);
+        }
+
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -33,7 +56,6 @@ public class Respawn : MonoBehaviour
         {
             _respawnPoint = transform.position;
         }
-
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -46,14 +68,25 @@ public class Respawn : MonoBehaviour
 
     private IEnumerator RespawnPlayer()
     {
-        transform.position = _respawnPoint;
+        _respawning = true;
         transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
         transform.GetComponent<PlayerController>().enabled = false;
         FindObjectOfType<HeadBob>()._animator.enabled = false;
         yield return new WaitForSeconds(1);
+        _deathFadeFade = 1f;
+
+        FindObjectOfType<AudioLowPassFilter>().cutoffFrequency = 500;
+        _DeathFade.enabled = true;
+
+        _DeathFade.color = new Color(_DeathFade.color.r, _DeathFade.color.g, _DeathFade.color.b, 1f);
+        transform.position = _respawnPoint;
+        _fadingOut = true;
+        yield return new WaitForSeconds(1);
+        _fadingOut = false;
         transform.GetComponent<PlayerController>().enabled = true;
         FindObjectOfType<HeadBob>()._animator.enabled = true;
-
+        _respawning = false;
+        _DeathFade.enabled = false;
 
     }
 }

@@ -81,7 +81,8 @@ public class PlayerController : MonoBehaviour
     //Timers
     private float _fovEaseIn, _pressJumpTimer;
 
-    private Rigidbody _rigidbody;
+    [HideInInspector]
+    public Rigidbody _rigidbody;
     [HideInInspector]
     public GameObject _playerCamera;
     [HideInInspector]
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour
         _animator.enabled = false;
         _parkour = GetComponent<Parkour>();
         _rigidbody.useGravity = false;
+
     }
 
     void Update()
@@ -225,7 +227,7 @@ public class PlayerController : MonoBehaviour
             // Slide Check
             //-------------
 
-            if (_rigidbody.velocity.magnitude > _savedMaxSpeed + 0.01 && _sliding == false)
+            if (_rigidbody.velocity.magnitude > _savedMaxSpeed + 0.01 && !_sliding)
             {
                 FovChangeDampness = (FovChangeDampness / 10) * 9;
 
@@ -309,10 +311,6 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1, 0.5f, 1);
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 0.0f, transform.localPosition.z);
             _crouchDistance = 0.5f;
-        }
-        if (!_sliding)
-        {
-
         }
 
 

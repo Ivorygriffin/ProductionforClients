@@ -10,6 +10,8 @@ public class Music : MonoBehaviour
     public float LowPassMax;
     [Tooltip("How quickly the Low Pass Filter Cuttoff frequency changes")]
     public float TransitionSpeed;
+    [Tooltip("How much faster the Transition Speed is when lowering, compared to when incresing")]
+    public float TransitionNegativeMultiplier;
     [Tooltip("The BPM of the starting song")]
     public float BPM;
 
@@ -29,8 +31,9 @@ public class Music : MonoBehaviour
     private AudioLowPassFilter _lowPassFilter;
     private AudioHighPassFilter _highPassFilter;
 
+    public AudioClip _audioLoopToPlay;
 
-    private float _savedBPM;
+    private float _savedBPM, _songLength, _playTime;
     private bool _firstRun, _changeGate;
 
 
@@ -48,6 +51,8 @@ public class Music : MonoBehaviour
         AudioData.activeAudioSource = 0;
         AudioData.otherAudioSource = 1;
 
+        AudioData.activeToLoop = _audioLoopToPlay;
+
         _audioSources[AudioData.otherAudioSource].enabled = false;
         _audioSources[AudioData.activeAudioSource].Stop();
 
@@ -55,11 +60,18 @@ public class Music : MonoBehaviour
         _lowPassFilter.enabled = false;
         _highPassFilter.enabled = false;
         canChangeTrack = true;
+        _songLength = _audioSources[0].clip.length;
     }
 
     // Update is called once per frame
     void Update()
     {
+        _playTime += Time.deltaTime;
+        if(_playTime == _songLength)
+        {
+            _audioSources[AudioData.activeAudioSource].clip = AudioData.activeToLoop;
+        }
+
         if (_playerController._playerSpeed < _playerController._savedMaxSpeed * _playerController.sprintMultiplier + .1f && _highPassFilter.cutoffFrequency < 50)
         {
             _highPassFilter.enabled = false;
@@ -71,7 +83,7 @@ public class Music : MonoBehaviour
             }
             else if (_lowPassFilter.cutoffFrequency > LowPassMin)
             {
-                _lowPassFilter.cutoffFrequency -= Time.deltaTime * TransitionSpeed;
+                _lowPassFilter.cutoffFrequency -= Time.deltaTime * (TransitionSpeed * TransitionNegativeMultiplier);
             }
         }
         else
