@@ -12,6 +12,7 @@ public class textbox : MonoBehaviour
     public GameObject dialogueBox;
 
     public GameObject cutcam;
+    public GameObject cutcam2;
     public GameObject nextLevelTrigger;
     
 
@@ -39,6 +40,7 @@ public class textbox : MonoBehaviour
             playerController.enabled = true;
             cutcam.SetActive(false);
             nextLevelTrigger.SetActive(true);
+            cutcam2.SetActive(false);
 
         }
     }
