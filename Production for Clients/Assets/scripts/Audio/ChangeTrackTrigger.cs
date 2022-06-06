@@ -6,6 +6,8 @@ public class ChangeTrackTrigger : MonoBehaviour
 {
     public AudioClip trackToChangeTo;
     public AudioClip trackToChangeToLoop;
+    public AudioClip AmbienceTrack;
+    public AudioReverbPreset AmbienceReverbPreset;
     [Tooltip("If true, the audio fades to silence, then fades back in to the new track")]
     public bool fade;
 
@@ -40,7 +42,16 @@ public class ChangeTrackTrigger : MonoBehaviour
         if (other.tag == "Player")
         {
             _audioSource = GameObject.Find("MusicSource").gameObject.GetComponents<AudioSource>();
-            _queueChange = true;
+            if (trackToChangeTo != null)
+            {
+                _queueChange = true;
+
+            }
+            if (AmbienceTrack != null)
+            {
+                AudioData.currentAmbience = AmbienceTrack;
+                AudioData.ambienceReverbPreset = AmbienceReverbPreset;
+            }
         }
 
     }

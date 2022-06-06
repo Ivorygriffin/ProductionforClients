@@ -53,24 +53,28 @@ public class Music : MonoBehaviour
 
         AudioData.activeToLoop = _audioLoopToPlay;
 
-        _audioSources[AudioData.otherAudioSource].enabled = false;
+        _audioSources[AudioData.otherAudioSource].volume = 0;
+        _audioSources[AudioData.otherAudioSource].Stop();
         _audioSources[AudioData.activeAudioSource].Stop();
+
+        _audioSources[AudioData.activeAudioSource].loop = false;
+        _audioSources[AudioData.otherAudioSource].loop = true;
+
+        _audioSources[AudioData.otherAudioSource].clip = AudioData.activeToLoop;
+        _audioSources[AudioData.otherAudioSource].enabled = false;
+
 
         _firstRun = true;
         _lowPassFilter.enabled = false;
         _highPassFilter.enabled = false;
         canChangeTrack = true;
-        _songLength = _audioSources[0].clip.length;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        _playTime += Time.deltaTime;
-        if(_playTime == _songLength)
-        {
-            _audioSources[AudioData.activeAudioSource].clip = AudioData.activeToLoop;
-        }
+
 
         if (_playerController._playerSpeed < _playerController._savedMaxSpeed * _playerController.sprintMultiplier + .1f && _highPassFilter.cutoffFrequency < 50)
         {
@@ -101,6 +105,25 @@ public class Music : MonoBehaviour
             }
 
         }
+        if (_playTime >= _songLength - 1.5f)
+        {
+                _playTime = 0;
+                _songLength = _audioSources[AudioData.activeAudioSource].clip.length;
+            _audioSources[AudioData.activeAudioSource].volume = 0;
+            _audioSources[AudioData.otherAudioSource].volume = 1;
+            if (AudioData.activeAudioSource == 1)
+            {
+                AudioData.activeAudioSource = 0;
+                AudioData.otherAudioSource = 1;
+            }
+            else
+            {
+                AudioData.activeAudioSource = 1;
+                AudioData.otherAudioSource = 0;
+            }
+            _audioSources[AudioData.otherAudioSource].enabled = false;
+
+        }
 
     }
 
@@ -114,8 +137,11 @@ public class Music : MonoBehaviour
             StartCoroutine(_beatCounter);
             if (_firstRun)
             {
+                _songLength = _audioSources[0].clip.length;
+                _audioSources[AudioData.otherAudioSource].enabled = true;
                 _audioSources[AudioData.activeAudioSource].Play();
-                _firstRun = false;
+                _audioSources[AudioData.otherAudioSource].Play();
+
             }
         }
         if (_savedBPM != AudioData.currentBPM && !_changeGate)
@@ -124,16 +150,28 @@ public class Music : MonoBehaviour
             StartCoroutine(_beatCounter);
             _changeGate = true;
         }
+
+        _playTime += Time.fixedDeltaTime;
     }
 
     public IEnumerator BeatCounter()
     {
-        yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.04f);
-        yield return new WaitForFixedUpdate();
+        if (_firstRun)
+        {
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.04f);
+
+            _firstRun = false;
+
+        }
+        else
+        {
+            yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.02f);
+        }
+
         if (_savedBPM == AudioData.currentBPM)
         {
             canChangeTrack = true;
-            Debug.Log("Tick");
         }
         else
         {

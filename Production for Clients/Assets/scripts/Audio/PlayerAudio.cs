@@ -19,7 +19,7 @@ public class PlayerAudio : MonoBehaviour
 
 
 
-
+    private AudioReverbFilter _reverbFilter;
     private AudioSource _audioSource;
     private IEnumerator _playFootsteps;
     private bool _stepping, _landing, _startWallRun;
@@ -39,11 +39,13 @@ public class PlayerAudio : MonoBehaviour
         _parkour = FindObjectOfType<Parkour>();
         _respawn = FindObjectOfType<Respawn>();
         _savedVolume = _audioSource.volume;
+        _reverbFilter = GetComponent<AudioReverbFilter>();
     }
 
 
     void Update()
     {
+        _reverbFilter.reverbPreset = AudioData.ambienceReverbPreset;
         if ((Input.GetButton("Vertical") || Input.GetButton("Horizontal")) && !_stepping && !_playerController._sliding)
         {
             _playFootsteps = Footsteps();
@@ -54,39 +56,45 @@ public class PlayerAudio : MonoBehaviour
             _landing = true;
         }
 
-        Debug.Log(_landing);
         if(_playerController.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
         {
             _landing = false;
-            Debug.Log("A");
         }
         if (_playerController._grounded && _landing && !_respawn._respawning)
         {
-            _audioSource.clip = LandingSounds[Random.Range(0, LandingSounds.Length - 1)];
+            GetRandom(LandingSounds);
+
+            _audioSource.clip = LandingSounds[_randomNumber];
             _audioSource.Play();
             _landing = false;
         }
         if (_playerController._rigidbody.velocity.magnitude > _playerController._savedMaxSpeed + 0.01 && !_playerController._sliding && Input.GetButtonDown("Crouch"))
         {
-            _audioSource.clip = SlideSounds[Random.Range(0, SlideSounds.Length - 1)];
+            GetRandom(SlideSounds);
+
+            _audioSource.clip = SlideSounds[_randomNumber];
             _audioSource.Play();
         }
 
         if (_vaulting)
         {
-            _audioSource.clip = VaultSound[Random.Range(0, VaultSound.Length - 1)];
+            GetRandom(VaultSound);
+            _audioSource.clip = VaultSound[_randomNumber];
             _audioSource.Play();
             _vaulting = false;
         }
         if (_clambering)
         {
-            _audioSource.clip = ClamberSound[Random.Range(0, ClamberSound.Length - 1)];
+            GetRandom(ClamberSound);
+            _audioSource.clip = ClamberSound[_randomNumber];
             _audioSource.Play();
             _clambering = false;
         }
         if (_swinging)
         {
-            _audioSource.clip = SwingSound[Random.Range(0, SwingSound.Length - 1)];
+            GetRandom(SwingSound);
+
+            _audioSource.clip = SwingSound[_randomNumber];
             _audioSource.Play();
             _swinging = false;
         }
@@ -126,25 +134,12 @@ public class PlayerAudio : MonoBehaviour
 
     private IEnumerator Footsteps()
     {
-        Debug.Log("e");
         if (_playerController._playerSpeed > 0 && !_playerController._sliding && !_audioSource.isPlaying && !_respawn._respawning)
         {
             _stepping = true;
             yield return new WaitForSeconds((.2f * 10 / 6) / (_playerController._playerSpeed / _playerController._savedMaxSpeed));
-            _randomNumber = Random.Range(0, FootstepSounds.Length - 1);
-            if (_randomNumber == _previousNumber && !_playerController._sliding && !_audioSource.isPlaying)
-            {
-                Debug.Log("o");
+            GetRandom(FootstepSounds);
 
-                if (_randomNumber == FootstepSounds.Length - 1)
-                {
-                    _randomNumber = Random.Range(0, FootstepSounds.Length - 2);
-                }
-                else
-                {
-                    _randomNumber += 1;
-                }
-            }
             if (!_audioSource.isPlaying)
             {
                 _audioSource.clip = FootstepSounds[_randomNumber];
@@ -154,11 +149,30 @@ public class PlayerAudio : MonoBehaviour
             {
                 _audioSource.Play();
             }
-            _previousNumber = _randomNumber;
+
             yield return new WaitForSeconds((.2f * 10 / 6) / (_playerController._playerSpeed / _playerController._savedMaxSpeed));
         }
         _stepping = false;
 
     }
 
+    private void GetRandom(AudioClip[] audioClips)
+    {
+
+        _randomNumber = Random.Range(0, audioClips.Length - 1);
+        if (_randomNumber == _previousNumber)
+        {
+
+            if (_randomNumber == audioClips.Length - 1)
+            {
+                _randomNumber = Random.Range(0, audioClips.Length - 2);
+            }
+            else
+            {
+                _randomNumber += 1;
+            }
+        }
+        _previousNumber = _randomNumber;
+
+    }
 }
