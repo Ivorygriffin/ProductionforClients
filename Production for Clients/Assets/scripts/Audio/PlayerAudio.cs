@@ -10,9 +10,9 @@ public class PlayerAudio : MonoBehaviour
     public AudioClip[] FootstepSounds;
     public AudioClip[] LandingSounds;
     public AudioClip[] SlideSounds;
-    public AudioClip VaultSound;
-    public AudioClip ClamberSound;
-    public AudioClip SwingSound;
+    public AudioClip[] VaultSound;
+    public AudioClip[] ClamberSound;
+    public AudioClip[] SwingSound;
     public AudioClip WallRunSound;
     public AudioClip RespawnSound;
 
@@ -49,9 +49,16 @@ public class PlayerAudio : MonoBehaviour
             _playFootsteps = Footsteps();
             StartCoroutine(_playFootsteps);
         }
-        if (!_playerController._grounded && !_playerController._sliding && _playerController.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1 && _playerController._jumpMargin > .3f)
+        if (!_playerController._grounded && !_playerController._sliding && _playerController._jumpMargin > .3f)
         {
             _landing = true;
+        }
+
+        Debug.Log(_landing);
+        if(_playerController.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        {
+            _landing = false;
+            Debug.Log("A");
         }
         if (_playerController._grounded && _landing && !_respawn._respawning)
         {
@@ -67,19 +74,19 @@ public class PlayerAudio : MonoBehaviour
 
         if (_vaulting)
         {
-            _audioSource.clip = VaultSound;
+            _audioSource.clip = VaultSound[Random.Range(0, VaultSound.Length - 1)];
             _audioSource.Play();
             _vaulting = false;
         }
         if (_clambering)
         {
-            _audioSource.clip = ClamberSound;
+            _audioSource.clip = ClamberSound[Random.Range(0, ClamberSound.Length - 1)];
             _audioSource.Play();
             _clambering = false;
         }
         if (_swinging)
         {
-            _audioSource.clip = SwingSound;
+            _audioSource.clip = SwingSound[Random.Range(0, SwingSound.Length - 1)];
             _audioSource.Play();
             _swinging = false;
         }
@@ -119,6 +126,7 @@ public class PlayerAudio : MonoBehaviour
 
     private IEnumerator Footsteps()
     {
+        Debug.Log("e");
         if (_playerController._playerSpeed > 0 && !_playerController._sliding && !_audioSource.isPlaying && !_respawn._respawning)
         {
             _stepping = true;
@@ -126,6 +134,8 @@ public class PlayerAudio : MonoBehaviour
             _randomNumber = Random.Range(0, FootstepSounds.Length - 1);
             if (_randomNumber == _previousNumber && !_playerController._sliding && !_audioSource.isPlaying)
             {
+                Debug.Log("o");
+
                 if (_randomNumber == FootstepSounds.Length - 1)
                 {
                     _randomNumber = Random.Range(0, FootstepSounds.Length - 2);
@@ -146,7 +156,9 @@ public class PlayerAudio : MonoBehaviour
             }
             _previousNumber = _randomNumber;
             yield return new WaitForSeconds((.2f * 10 / 6) / (_playerController._playerSpeed / _playerController._savedMaxSpeed));
-            _stepping = false;
         }
+        _stepping = false;
+
     }
+
 }

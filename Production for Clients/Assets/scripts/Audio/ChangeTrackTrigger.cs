@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChangeTrackTrigger : MonoBehaviour
 {
     public AudioClip trackToChangeTo;
+    public AudioClip trackToChangeToLoop;
     [Tooltip("If true, the audio fades to silence, then fades back in to the new track")]
     public bool fade;
 
@@ -81,6 +82,7 @@ public class ChangeTrackTrigger : MonoBehaviour
                 else
                 {
                     _audioSource[AudioData.activeAudioSource].clip = trackToChangeTo;
+                    AudioData.activeToLoop = trackToChangeToLoop;
                     _audioSource[AudioData.activeAudioSource].Play();
                 }
                 _queueChange = false;

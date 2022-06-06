@@ -2331,6 +2331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackToChangeTo: {fileID: 8300000, guid: aa772242122173d4aab26726fc0d2119, type: 3}
+  trackToChangeToLoop: {fileID: 0}
   fade: 1
   onlyOnBeat: 1
   transitionSpeed: 3
@@ -3449,6 +3450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackToChangeTo: {fileID: 8300000, guid: aa772242122173d4aab26726fc0d2119, type: 3}
+  trackToChangeToLoop: {fileID: 0}
   fade: 0
   onlyOnBeat: 0
   transitionSpeed: 3
@@ -4642,6 +4644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackToChangeTo: {fileID: 8300000, guid: fcba4b78d4867654ab8b3df58c05dc9c, type: 3}
+  trackToChangeToLoop: {fileID: 0}
   fade: 0
   onlyOnBeat: 0
   transitionSpeed: 2
@@ -9467,6 +9470,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1680689760, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Volume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 322361515025143853, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -9514,6 +9521,14 @@ PrefabInstance:
     - target: {fileID: 322361515025143855, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Name
       value: PlayerAnimationHost
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687350456795552870, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Volume
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
