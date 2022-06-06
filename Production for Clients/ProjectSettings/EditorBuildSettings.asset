@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/scenes/Main Menu.unity
     guid: 0812257396cead547b5f00c6da2fde53
   - enabled: 1
-    path: Assets/scenes/Office.unity
-    guid: f47bfc77326444e47aa5383bfe4650ee
+    path: Assets/scenes/Office 1.unity
+    guid: 19e2d90a32755fc4783fe4c7ae42f9ed
   - enabled: 1
     path: Assets/scenes/Jungle new.unity
     guid: 39198664f31fe584db9227043fb8a896
