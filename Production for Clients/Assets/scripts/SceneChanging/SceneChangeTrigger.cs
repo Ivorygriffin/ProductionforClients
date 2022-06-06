@@ -17,7 +17,7 @@ public class SceneChangeTrigger : MonoBehaviour
         {
             Time.timeScale = 1;
             LoadingData.sceneToLoad = targetScene;
-            SceneManager.LoadScene("LoadingScene");
+            SceneManager.LoadScene(targetScene);
         }
     }
 
