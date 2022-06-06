@@ -2608,6 +2608,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 275255448, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c4ff88347f38874489103710e5be26e3, type: 3}
     - target: {fileID: 322361515025143853, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2684,6 +2688,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.01914816
       objectReference: {fileID: 0}
+    - target: {fileID: 322361516665959189, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Volume
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: aa772242122173d4aab26726fc0d2119, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
 --- !u!1 &1175568514 stripped

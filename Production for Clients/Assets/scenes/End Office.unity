@@ -640,6 +640,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1595427032}
     m_Modifications:
+    - target: {fileID: 275255448, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 275255448, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 52b924a09aac7734c9d1e85029ed9c18, type: 3}
+    - target: {fileID: 1680689760, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 322361515025143853, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -715,6 +727,34 @@ PrefabInstance:
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.00024017814
+      objectReference: {fileID: 0}
+    - target: {fileID: 322361516665959189, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: far clip plane
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: maxSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: jumpForce
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: slideBoost
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: SprintSpeedup
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 322361516936052261, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: sprintMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
