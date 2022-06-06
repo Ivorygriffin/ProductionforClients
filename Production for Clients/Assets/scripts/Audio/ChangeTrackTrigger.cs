@@ -24,6 +24,7 @@ public class ChangeTrackTrigger : MonoBehaviour
     private IEnumerator _fadeClip;
     private Music _music;
 
+
     private void Start()
     {
         _music = FindObjectOfType<Music>();

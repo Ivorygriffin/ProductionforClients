@@ -46,6 +46,8 @@ public class Parkour : MonoBehaviour
     private Animator _animator;
     private IEnumerator _stopAnim;
     private PlayerController _playerController;
+    private PlayerAudio _playerAudio;
+
 
 
     void Start()
@@ -55,6 +57,7 @@ public class Parkour : MonoBehaviour
         _swingCheck = GetComponentInChildren<Swing>();
         canMoveCamera = true;
         _playerController = GetComponent<PlayerController>();
+        _playerAudio = FindObjectOfType<PlayerAudio>();
     }
 
 
@@ -145,6 +148,7 @@ public class Parkour : MonoBehaviour
 
                     if (!VaultHopFarCast() && !VaultSlideFarCast())
                     {
+                        _playerAudio._vaulting = true;
                         _savedSpeed = _rigidbody.velocity;
                         _animator.enabled = true;
 
@@ -164,6 +168,7 @@ public class Parkour : MonoBehaviour
 
                     else if (!VaultSlideFarCast())
                     {
+                        _playerAudio._vaulting = true;
                         _savedSpeed = _rigidbody.velocity;
                         _animator.enabled = true;
 
@@ -183,6 +188,7 @@ public class Parkour : MonoBehaviour
 
                     else
                     {
+                        _playerAudio._vaulting = true;
                         _savedSpeed = _rigidbody.velocity;
                         _animator.enabled = true;
 
@@ -224,9 +230,12 @@ public class Parkour : MonoBehaviour
 
         if (_climbing)
         {
+            _playerAudio._clambering = true;
             _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!HeadCast())
             {
+
+
                 canMoveCamera = false;
                 _climbing = false;
                 _animator.enabled = true;
@@ -236,9 +245,13 @@ public class Parkour : MonoBehaviour
         }
         if (_farClimb)
         {
+            _playerAudio._clambering = true;
+
             _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!HeadFarCast())
             {
+                 
+
                 canMoveCamera = false;
 
                 _farClimb = false;
@@ -249,9 +262,13 @@ public class Parkour : MonoBehaviour
         }
         if (_midVault)
         {
+            _playerAudio._clambering = true;
+
             _rigidbody.AddForce(0, Physics.gravity.magnitude * _playerController.gravityMultiplier / 4, 0, ForceMode.Impulse);
             if (!ChestFarCast())
             {
+                 
+
                 if (VaultCast())
                 {
                     canMoveCamera = false;
@@ -324,6 +341,7 @@ public class Parkour : MonoBehaviour
 
         if (_swingCheck._startSwing)
         {
+            _playerAudio._swinging = true;
             _swingCheck._startSwing = false;
             _swingCheck.gameObject.SetActive(false);
             _savedSpeed = _rigidbody.velocity;
