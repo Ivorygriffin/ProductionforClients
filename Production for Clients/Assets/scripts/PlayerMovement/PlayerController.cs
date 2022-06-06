@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     private float _mouseX, _rotation, _yForce;
 
-    private bool _crouching, _canJump;
+    private bool _crouching, _canJump, _hasJumped;
     private float _slideSlowdown, _crouchDistance, _distanceToGround, _fov;
     private Quaternion _savedPlayerRotation;
     private Animator _animator;
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerGravity;
 
     //Timers
-    private float _fovEaseIn;
+    private float _fovEaseIn, _pressJumpTimer;
 
     private Rigidbody _rigidbody;
     [HideInInspector]
@@ -321,25 +321,36 @@ public class PlayerController : MonoBehaviour
         // Jumping
         //----------
 
+        if (_hasJumped)
+        {
+            _pressJumpTimer += Time.deltaTime;
+        }
+
+        if(_pressJumpTimer > .3f)
+        {
+            _pressJumpTimer = 0;
+            _hasJumped = false;
+        }
+
         if (!_grounded)
         {
             _jumpMargin += Time.deltaTime;
         }
-        else
+        else if (!_hasJumped)
         {
             _jumpMargin = 0;
         }
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            _jumpMargin = 1;
-        }
-
-        if (Input.GetButtonDown("Jump") && _canJump && (_grounded || _jumpMargin < .3f))
+        if (Input.GetButtonDown("Jump") && _canJump && _jumpMargin < .3f)
         {
 
             _rigidbody.AddForce(0, jumpForce, 0, ForceMode.Impulse);
 
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            _jumpMargin = 1;
+            _hasJumped = true;
 
         }
 
@@ -450,7 +461,7 @@ public class PlayerController : MonoBehaviour
                 return true;
             }
         }
-        if(Physics.Raycast(transform.position, -transform.up, GetComponent<Collider>().bounds.size.y / 2))
+        if (Physics.Raycast(transform.position, -transform.up, GetComponent<Collider>().bounds.size.y / 2))
         {
             return true;
         }
