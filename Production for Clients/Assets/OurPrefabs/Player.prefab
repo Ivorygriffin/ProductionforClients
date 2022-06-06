@@ -238,7 +238,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -551,7 +551,7 @@ MonoBehaviour:
   FovChangeDampness: 10
   jumpForce: 10.5
   gravityMultiplier: 1.85
-  slideBoost: 8
+  slideBoost: 12
   SlideFriction: 3.5
   _mouseY: 0
   groundAngle: {x: 0, y: 0, z: 0}
@@ -645,6 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d1f64deeea6a1d448aa2b4c7164ad91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _respawning: 0
 --- !u!1 &344393740582110521
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,13 +991,13 @@ AudioLowPassFilter:
   m_GameObject: {fileID: 2433623959299576177}
   m_Enabled: 1
   serializedVersion: 3
-  m_LowpassResonanceQ: 1
+  m_LowpassResonanceQ: 1.5
   lowpassLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.13597089
+      value: 0.019827195
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1015,7 +1016,7 @@ AudioHighPassFilter:
   m_GameObject: {fileID: 2433623959299576177}
   m_Enabled: 1
   m_CutoffFrequency: 10
-  m_HighpassResonanceQ: 2
+  m_HighpassResonanceQ: 1.75
 --- !u!114 &363033085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1029,8 +1030,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LowPassMin: 3000
-  LowPassMax: 20000
-  TransitionSpeed: 10000
+  LowPassMax: 10000
+  TransitionSpeed: 5000
+  TransitionNegativeMultiplier: 1.75
   BPM: 115.15
   canChangeTrack: 0
 --- !u!1 &4049136087987816705
@@ -1077,7 +1079,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.45
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1193,9 +1195,12 @@ MonoBehaviour:
   VaultSound: {fileID: 8300000, guid: 2154a06fdda4faf44867bcc5fe9c22c8, type: 3}
   ClamberSound: {fileID: 8300000, guid: ff49ced08e5657e4f9c4e25ccb307415, type: 3}
   SwingSound: {fileID: 8300000, guid: 100ef36430606b0488ca71f1ff472389, type: 3}
+  WallRunSound: {fileID: 8300000, guid: 24cf6ad68d86d764fabb5dc3f035f6ab, type: 3}
+  RespawnSound: {fileID: 8300000, guid: 86d12d05ec0bd6542a173872e3919c77, type: 3}
   _vaulting: 0
   _clambering: 0
   _swinging: 0
+  _playRespawn: 0
 --- !u!1 &7767566421915079963
 GameObject:
   m_ObjectHideFlags: 0

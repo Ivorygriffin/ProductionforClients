@@ -10,6 +10,8 @@ public class Music : MonoBehaviour
     public float LowPassMax;
     [Tooltip("How quickly the Low Pass Filter Cuttoff frequency changes")]
     public float TransitionSpeed;
+    [Tooltip("How much faster the Transition Speed is when lowering, compared to when incresing")]
+    public float TransitionNegativeMultiplier;
     [Tooltip("The BPM of the starting song")]
     public float BPM;
 
@@ -71,7 +73,7 @@ public class Music : MonoBehaviour
             }
             else if (_lowPassFilter.cutoffFrequency > LowPassMin)
             {
-                _lowPassFilter.cutoffFrequency -= Time.deltaTime * TransitionSpeed;
+                _lowPassFilter.cutoffFrequency -= Time.deltaTime * (TransitionSpeed * TransitionNegativeMultiplier);
             }
         }
         else

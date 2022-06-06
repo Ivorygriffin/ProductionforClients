@@ -13,6 +13,8 @@ public class PlayerAudio : MonoBehaviour
     public AudioClip VaultSound;
     public AudioClip ClamberSound;
     public AudioClip SwingSound;
+    public AudioClip WallRunSound;
+    public AudioClip RespawnSound;
 
 
 
@@ -20,16 +22,23 @@ public class PlayerAudio : MonoBehaviour
 
     private AudioSource _audioSource;
     private IEnumerator _playFootsteps;
-    private bool _stepping, _landing;
+    private bool _stepping, _landing, _startWallRun;
     private PlayerController _playerController;
     private int _randomNumber, _previousNumber;
+    private Parkour _parkour;
+    private Respawn _respawn;
+    private float _savedVolume;
+
     [HideInInspector]
-    public bool _vaulting, _clambering, _swinging;
+    public bool _vaulting, _clambering, _swinging, _playRespawn;
 
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         _playerController = FindObjectOfType<PlayerController>();
+        _parkour = FindObjectOfType<Parkour>();
+        _respawn = FindObjectOfType<Respawn>();
+        _savedVolume = _audioSource.volume;
     }
 
 
@@ -44,7 +53,7 @@ public class PlayerAudio : MonoBehaviour
         {
             _landing = true;
         }
-        if(_playerController._grounded && _landing)
+        if (_playerController._grounded && _landing && !_respawn._respawning)
         {
             _audioSource.clip = LandingSounds[Random.Range(0, LandingSounds.Length - 1)];
             _audioSource.Play();
@@ -74,18 +83,50 @@ public class PlayerAudio : MonoBehaviour
             _audioSource.Play();
             _swinging = false;
         }
+        if (_parkour._wallRunning && _startWallRun)
+        {
+            _audioSource.clip = WallRunSound;
+            _audioSource.Play();
+            _startWallRun = false;
+        }
+        else if (!_parkour._wallRunning)
+        {
+            if (!_startWallRun)
+            {
+                _audioSource.Stop();
+            }
+            _startWallRun = true;
+        }
+        if (_respawn._respawning && _playRespawn)
+        {
+            _audioSource.clip = RespawnSound;
+            _audioSource.Play();
+            _playRespawn = false;
+        }
+        else if (!_respawn._respawning)
+        {
+            _playRespawn = true;
+        }
+        if (_respawn._respawning)
+        {
+            _audioSource.volume += Time.deltaTime / 1.8f;
+        }
+        else
+        {
+            _audioSource.volume = _savedVolume;
+        }
     }
 
     private IEnumerator Footsteps()
     {
-        if(_playerController._playerSpeed > 0 && !_playerController._sliding && !_audioSource.isPlaying)
+        if (_playerController._playerSpeed > 0 && !_playerController._sliding && !_audioSource.isPlaying && !_respawn._respawning)
         {
             _stepping = true;
             yield return new WaitForSeconds((.2f * 10 / 6) / (_playerController._playerSpeed / _playerController._savedMaxSpeed));
             _randomNumber = Random.Range(0, FootstepSounds.Length - 1);
-            if(_randomNumber == _previousNumber && !_playerController._sliding && !_audioSource.isPlaying)
+            if (_randomNumber == _previousNumber && !_playerController._sliding && !_audioSource.isPlaying)
             {
-                if(_randomNumber == FootstepSounds.Length - 1)
+                if (_randomNumber == FootstepSounds.Length - 1)
                 {
                     _randomNumber = Random.Range(0, FootstepSounds.Length - 2);
                 }

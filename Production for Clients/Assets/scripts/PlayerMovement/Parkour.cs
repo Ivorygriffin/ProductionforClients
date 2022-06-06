@@ -352,6 +352,7 @@ public class Parkour : MonoBehaviour
         }
         if (_wallRunning)
         {
+
             transform.parent.position += transform.parent.forward * Time.deltaTime * _savedSpeed.magnitude;
 
         }
@@ -380,34 +381,35 @@ public class Parkour : MonoBehaviour
 
         if (other.tag == "RunableWall")
         {
+
             if (!_wallRunning)
             {
 
                 _savedSpeed = _rigidbody.velocity;
-                _savedPlayerRotation = transform.rotation;
-                transform.parent.rotation = Quaternion.Euler(transform.rotation.x, other.transform.rotation.eulerAngles.y, transform.rotation.z);
 
-                transform.rotation = _savedPlayerRotation;
+                    _savedPlayerRotation = transform.rotation;
+                    transform.parent.rotation = Quaternion.Euler(transform.rotation.x, other.transform.rotation.eulerAngles.y, transform.rotation.z);
 
-                if (transform.localRotation.w < 0)
-                {
-                    transform.rotation = new Quaternion(transform.rotation.x, -transform.rotation.y, transform.rotation.z, -transform.rotation.w);
+                    transform.rotation = _savedPlayerRotation;
 
-                }
+                    if (transform.localRotation.w < 0)
+                    {
+                        transform.rotation = new Quaternion(transform.rotation.x, -transform.rotation.y, transform.rotation.z, -transform.rotation.w);
 
-                if (transform.localRotation.y > 0)
-                {
-                    transform.parent.Rotate(0, 90, 0);
-                }
-                else
-                {
-                    transform.parent.Rotate(0, -90, 0);
+                    }
 
-                }
-                transform.rotation = _savedPlayerRotation;
-                _wallRunning = true;
-                _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+                    if (transform.localRotation.y > 0)
+                    {
+                        transform.parent.Rotate(0, 90, 0);
+                    }
+                    else
+                    {
+                        transform.parent.Rotate(0, -90, 0);
 
+                    }
+                    transform.rotation = _savedPlayerRotation;
+                    _wallRunning = true;
+                    _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             }
         }
     }
