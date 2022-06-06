@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Production for Clients/Assets/Materials/brownemissive.mat.meta
 guid: 61d37f5c35c1fa34eafd36a711f4ea98
+========
+guid: 0b76a403e6e95b64cb47b675a63857c0
+>>>>>>>> KOBI-FINAL-BRANCH-(SO-HE-HOPES):Production for Clients/Assets/Materials/Materials/toppng.com-scratches-transparent-background-scratch-3635x2521.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

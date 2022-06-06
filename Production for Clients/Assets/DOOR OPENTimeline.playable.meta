@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Production for Clients/Assets/DOOR OPENTimeline.playable.meta
 guid: 3b7b1c10c2947c94aa48c539dbb14ad0
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
+========
+guid: c23a4f0159a8c514fa6a88dc3f4c8902
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+>>>>>>>> KOBI-FINAL-BRANCH-(SO-HE-HOPES):Production for Clients/Assets/Materials/Materials/toppng.com-scratches-transparent-background-scratch-3635x2522.mat.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
