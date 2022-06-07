@@ -32,7 +32,7 @@ public class textbox : MonoBehaviour
             currentArrayNum += 1;
            dialogue.text = texts[currentArrayNum];
         }
-        if(currentArrayNum == texts.Length)
+        if(currentArrayNum >= texts.Length)
         {
             dialogueBox.SetActive(false);
 
