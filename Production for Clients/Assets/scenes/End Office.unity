@@ -648,9 +648,73 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 52b924a09aac7734c9d1e85029ed9c18, type: 3}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Room
+      value: -1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_RoomHF
+      value: -1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_DecayTime
+      value: 10.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbDelay
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbLevel
+      value: 198
+      objectReference: {fileID: 0}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_DecayHFRatio
+      value: 0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbPreset
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 902682268, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReflectionsLevel
+      value: -602
+      objectReference: {fileID: 0}
     - target: {fileID: 1680689760, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_RoomHF
+      value: -1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_DecayTime
+      value: 10.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Diffusion
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbDelay
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbLevel
+      value: 198
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_DecayHFRatio
+      value: 0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbPreset
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReflectionsLevel
+      value: -602
       objectReference: {fileID: 0}
     - target: {fileID: 322361515025143853, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_RootOrder
@@ -706,7 +770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2266444
+      value: 0.19864428
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalPosition.z
