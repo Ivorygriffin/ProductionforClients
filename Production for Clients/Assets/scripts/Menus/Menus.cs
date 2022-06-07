@@ -32,17 +32,25 @@ public class Menus : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape) && pauseMenu != null)
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu != null)
         {
-            Cursor.lockState = CursorLockMode.None;
-            _parkour.enabled = false;
-            _playerController.enabled = false;
-            Time.timeScale = 0;
-            pauseMenu.SetActive(true);
-            foreach (var audioSource in FindObjectsOfType<AudioSource>())
+            if (!pauseMenu.activeInHierarchy)
             {
-                audioSource.Stop();
+                Cursor.lockState = CursorLockMode.None;
+                _parkour.enabled = false;
+                _playerController.enabled = false;
+                Time.timeScale = 0;
+                pauseMenu.SetActive(true);
+                foreach (var audioSource in FindObjectsOfType<AudioSource>())
+                {
+                    audioSource.Pause();
+                }
             }
+            else
+            {
+                Resume();
+            }
+
         }
         if (Input.GetKey(KeyCode.P) && levelSelect != null)
         {
@@ -89,7 +97,7 @@ public class Menus : MonoBehaviour
         }
         foreach (var audioSource in FindObjectsOfType<AudioSource>())
         {
-            audioSource.Play();
+            audioSource.UnPause();
         }
     }
 

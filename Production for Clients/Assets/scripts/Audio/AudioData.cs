@@ -6,5 +6,6 @@ public class AudioData
 {
     public static float currentBPM;
     public static int activeAudioSource, otherAudioSource;
-    public static AudioClip activeToLoop;
+    public static AudioClip activeToLoop, currentAmbience;
+    public static AudioReverbPreset ambienceReverbPreset;
 }

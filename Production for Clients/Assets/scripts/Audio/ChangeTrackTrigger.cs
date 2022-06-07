@@ -6,6 +6,8 @@ public class ChangeTrackTrigger : MonoBehaviour
 {
     public AudioClip trackToChangeTo;
     public AudioClip trackToChangeToLoop;
+    public AudioClip AmbienceTrack;
+    public AudioReverbPreset AmbienceReverbPreset;
     [Tooltip("If true, the audio fades to silence, then fades back in to the new track")]
     public bool fade;
 
@@ -30,9 +32,12 @@ public class ChangeTrackTrigger : MonoBehaviour
     {
         _music = FindObjectOfType<Music>();
 
+        if (_audioSource[AudioData.otherAudioSource] != null)
+        {
+            _audioSource[AudioData.otherAudioSource].volume = 0;
+            _audioSource[AudioData.otherAudioSource].enabled = false;
+        }
 
-        _audioSource[AudioData.otherAudioSource].volume = 0;
-        _audioSource[AudioData.otherAudioSource].enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,7 +45,17 @@ public class ChangeTrackTrigger : MonoBehaviour
         if (other.tag == "Player")
         {
             _audioSource = GameObject.Find("MusicSource").gameObject.GetComponents<AudioSource>();
-            _queueChange = true;
+            if (trackToChangeTo != null)
+            {
+                _queueChange = true;
+                _music._songLength = Mathf.Infinity;
+
+            }
+            if (AmbienceTrack != null)
+            {
+                AudioData.currentAmbience = AmbienceTrack;
+                AudioData.ambienceReverbPreset = AmbienceReverbPreset;
+            }
         }
 
     }
@@ -53,7 +68,7 @@ public class ChangeTrackTrigger : MonoBehaviour
         if (_fadeUp)
         {
             _audioSource[AudioData.otherAudioSource].volume += Time.deltaTime / transitionSpeed;
-            if (_audioSource[AudioData.otherAudioSource].volume == 1)
+            if (_audioSource[AudioData.otherAudioSource].volume >= 0.8)
             {
                 if (AudioData.activeAudioSource == 1)
                 {
@@ -66,6 +81,9 @@ public class ChangeTrackTrigger : MonoBehaviour
                     AudioData.otherAudioSource = 0;
                 }
                 _audioSource[AudioData.otherAudioSource].enabled = false;
+                _audioSource[AudioData.activeAudioSource].volume = 0.8f;
+                _fadeUp = false;
+                _fadeDown = false;
 
             }
         }

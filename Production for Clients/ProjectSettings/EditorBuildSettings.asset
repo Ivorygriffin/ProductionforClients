@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/scenes/CaveNew.unity
     guid: 2ce1d6e516fedb54f9151c0d178d380b
+  - enabled: 1
+    path: Assets/scenes/END MAIN.unity
+    guid: 8becbbed250b2654fa44c9648e8fbc7a
   m_configObjects: {}
