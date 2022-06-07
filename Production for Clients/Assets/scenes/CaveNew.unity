@@ -2446,6 +2446,31 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: a7bf09e66f48b454494b6f1e2cd639cb, type: 3}
+--- !u!1 &1015893177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 379483555, guid: cee31a1cf936ecc49bab1ad715aeab7d, type: 3}
+  m_PrefabInstance: {fileID: 1015893169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1015893178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015893177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3ae39248fd5114a85b99b937da1fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackToChangeTo: {fileID: 8300000, guid: aabf25e1e3e49184584201b56100c0ef, type: 3}
+  trackToChangeToLoop: {fileID: 8300000, guid: aabf25e1e3e49184584201b56100c0ef, type: 3}
+  AmbienceTrack: {fileID: 0}
+  AmbienceReverbPreset: 0
+  fade: 1
+  onlyOnBeat: 0
+  transitionSpeed: 4
+  BPM: 0
 --- !u!1001 &1054464588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2687,6 +2712,42 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: c4ff88347f38874489103710e5be26e3, type: 3}
+    - target: {fileID: 363033085, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: _audioLoopToPlay
+      value: 
+      objectReference: {fileID: 8300000, guid: d4ad7a078e00be84083f09f8e6e1cbb1, type: 3}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_RoomHF
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_DecayTime
+      value: 2.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Diffusion
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbDelay
+      value: 0.022
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbLevel
+      value: -302
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_DecayHFRatio
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReverbPreset
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702004709, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_ReflectionsLevel
+      value: -602
+      objectReference: {fileID: 0}
     - target: {fileID: 322361515025143853, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2782,7 +2843,7 @@ PrefabInstance:
     - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: aa772242122173d4aab26726fc0d2119, type: 3}
+      objectReference: {fileID: 8300000, guid: 9030f5cdcb7719c419526dbcc1c8e9f0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
 --- !u!1 &1175568514 stripped
@@ -3806,6 +3867,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1660860939}
   - component: {fileID: 1660860940}
+  - component: {fileID: 1660860941}
   m_Layer: 0
   m_Name: Checkpoint 9 (1)
   m_TagString: Checkpoint
@@ -3840,6 +3902,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1761186, y: 8.871317, z: 3.7766175}
   m_Center: {x: 6.2451687, y: -2.9080477, z: 13.12329}
+--- !u!114 &1660860941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660860938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d3ae39248fd5114a85b99b937da1fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackToChangeTo: {fileID: 8300000, guid: ce7dd85ed738b394a96e9dce5f11baca, type: 3}
+  trackToChangeToLoop: {fileID: 0}
+  AmbienceTrack: {fileID: 0}
+  AmbienceReverbPreset: 0
+  fade: 0
+  onlyOnBeat: 0
+  transitionSpeed: 0
+  BPM: 0
 --- !u!1001 &1668022895
 PrefabInstance:
   m_ObjectHideFlags: 0

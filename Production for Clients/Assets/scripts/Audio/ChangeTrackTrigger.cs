@@ -35,7 +35,6 @@ public class ChangeTrackTrigger : MonoBehaviour
         if (_audioSource[AudioData.otherAudioSource] != null)
         {
             _audioSource[AudioData.otherAudioSource].volume = 0;
-            _audioSource[AudioData.otherAudioSource].enabled = false;
         }
 
     }
@@ -47,6 +46,8 @@ public class ChangeTrackTrigger : MonoBehaviour
             _audioSource = GameObject.Find("MusicSource").gameObject.GetComponents<AudioSource>();
             if (trackToChangeTo != null)
             {
+                Debug.Log(trackToChangeTo != null);
+
                 _queueChange = true;
                 _music._songLength = Mathf.Infinity;
 
@@ -80,13 +81,13 @@ public class ChangeTrackTrigger : MonoBehaviour
                     AudioData.activeAudioSource = 1;
                     AudioData.otherAudioSource = 0;
                 }
-                _audioSource[AudioData.otherAudioSource].enabled = false;
                 _audioSource[AudioData.activeAudioSource].volume = 0.8f;
                 _fadeUp = false;
                 _fadeDown = false;
 
             }
         }
+        Debug.Log(_music.canChangeTrack);
         if (onlyOnBeat)
         {
             if (_queueChange && _music.canChangeTrack)
@@ -125,7 +126,6 @@ public class ChangeTrackTrigger : MonoBehaviour
 
     public IEnumerator FadeClip()
     {
-        _audioSource[AudioData.otherAudioSource].enabled = true;
 
         _fadeDown = true;
         _audioSource[AudioData.otherAudioSource].clip = trackToChangeTo;

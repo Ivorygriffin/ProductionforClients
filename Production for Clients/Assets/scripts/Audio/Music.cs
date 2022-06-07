@@ -170,12 +170,17 @@ public class Music : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.02f);
+            yield return new WaitForFixedUpdate();
+            canChangeTrack = false;
+            yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.04f);
         }
-        Debug.Log("Tick");
+        Debug.Log(_savedBPM);
+        Debug.Log(AudioData.currentBPM);
 
         if (_savedBPM == AudioData.currentBPM)
         {
+            Debug.Log("Tick");
+
             canChangeTrack = true;
         }
         else
