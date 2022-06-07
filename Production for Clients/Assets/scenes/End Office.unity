@@ -1032,6 +1032,36 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2462425995416251434, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
   m_PrefabInstance: {fileID: 4946728838851216511}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1369856546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1369856547}
+  m_Layer: 0
+  m_Name: nulls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1369856547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369856546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -21.324736, y: -79.90994, z: -213.37886}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1573581414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,12 +1076,12 @@ GameObject:
   - component: {fileID: 1573581416}
   - component: {fileID: 1573581415}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: next level trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1573581415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1321,6 +1351,26 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1316501939}
+    - target: {fileID: 2462425995416251432, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: cutcam
+      value: 
+      objectReference: {fileID: 1369856546}
+    - target: {fileID: 2462425995416251432, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: cutcam2
+      value: 
+      objectReference: {fileID: 1369856546}
+    - target: {fileID: 2462425995416251432, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: parkourScript
+      value: 
+      objectReference: {fileID: 1316501947}
+    - target: {fileID: 2462425995416251432, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: nextLevelTrigger
+      value: 
+      objectReference: {fileID: 1573581414}
+    - target: {fileID: 2462425995416251432, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 1316501939}
     - target: {fileID: 2499759979958215665, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1413,6 +1463,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2505368811547045187, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3327395749499344990, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -1498,9 +1552,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5133709048927531422, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: ad938127b6cf1a444939cd6344b581d5, type: 2}
+    - target: {fileID: 5133709048927531422, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2584330555772234305, guid: 1ff08e41e98b9e742827e87a10e47514, type: 2}
+    - target: {fileID: 5133709048927531422, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6353592569645594705, guid: c97d4f9aafd77854b8362a071bb777e8, type: 3}
       propertyPath: m_fontAsset
       value: 
