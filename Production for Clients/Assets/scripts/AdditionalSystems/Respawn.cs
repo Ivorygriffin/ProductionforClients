@@ -22,7 +22,7 @@ public class Respawn : MonoBehaviour
     {
         _respawnPoint = transform.position;
         _DeathFade = GameObject.Find("DeathFade").GetComponent<Image>();
-        _DeathFade.color = new Color (_DeathFade.color.r, _DeathFade.color.g, _DeathFade.color.b, 0f);
+        _DeathFade.color = new Color(_DeathFade.color.r, _DeathFade.color.g, _DeathFade.color.b, 0f);
         _DeathFade.enabled = false;
     }
 
@@ -75,7 +75,7 @@ public class Respawn : MonoBehaviour
         yield return new WaitForSeconds(1);
         _deathFadeFade = 1f;
 
-        FindObjectOfType<AudioLowPassFilter>().cutoffFrequency = 500;
+        FindObjectOfType<Music>()._lowPassFrequency = 500;
         _DeathFade.enabled = true;
 
         _DeathFade.color = new Color(_DeathFade.color.r, _DeathFade.color.g, _DeathFade.color.b, 1f);

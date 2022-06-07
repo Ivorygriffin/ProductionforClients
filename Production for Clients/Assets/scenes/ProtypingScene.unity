@@ -3494,6 +3494,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 484262314424560665, guid: f2d982e314fde844da5fda93f3908f49, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 51.802246
+      objectReference: {fileID: 0}
     - target: {fileID: 3270597152476378435, guid: f2d982e314fde844da5fda93f3908f49, type: 3}
       propertyPath: m_Name
       value: Canvas Updated
@@ -4679,7 +4683,7 @@ MonoBehaviour:
   trackToChangeToLoop: {fileID: 0}
   AmbienceTrack: {fileID: 8300000, guid: 66b379a6267c9eb4f9bfab9d3f63818b, type: 3}
   AmbienceReverbPreset: 17
-  fade: 0
+  fade: 1
   onlyOnBeat: 1
   transitionSpeed: 2
   BPM: 118.17
@@ -9731,6 +9735,10 @@ PrefabInstance:
       value: 115
       objectReference: {fileID: 0}
     - target: {fileID: 363033085, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 9e804af6a3eff314c9423d935122f134, type: 2}
+    - target: {fileID: 363033085, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: _audioLoopToPlay
       value: 
       objectReference: {fileID: 8300000, guid: ce0f9932cdce3c0498078507908d6afb, type: 3}
@@ -9790,25 +9798,41 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 375289075893508227, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1740985722511038912, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2687350456795552870, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: Loop
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2687350456795552870, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2687350456795552870, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -4008623048626897954, guid: 9e804af6a3eff314c9423d935122f134, type: 2}
     - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Volume
       value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 341b47bf40014704393881bf84e839be, type: 3}
+    - target: {fileID: 8133593345469310649, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -4008623048626897954, guid: 9e804af6a3eff314c9423d935122f134, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}

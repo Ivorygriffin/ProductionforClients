@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Music : MonoBehaviour
 {
@@ -15,12 +16,15 @@ public class Music : MonoBehaviour
     [Tooltip("The BPM of the starting song")]
     public float BPM;
 
+    public AudioMixer audioMixer;
 
 
     [HideInInspector]
     public bool canChangeTrack;
     [HideInInspector]
     public IEnumerator _beatCounter;
+    [HideInInspector]
+    public float _lowPassFrequency, _songLength;
 
 
     private PlayerController _playerController;
@@ -28,12 +32,10 @@ public class Music : MonoBehaviour
     private Rigidbody _rigidbody;
 
     private AudioSource[] _audioSources;
-    private AudioLowPassFilter _lowPassFilter;
-    private AudioHighPassFilter _highPassFilter;
 
     public AudioClip _audioLoopToPlay;
 
-    private float _savedBPM, _songLength, _playTime;
+    private float _savedBPM, _playTime, _highPassFrequency;
     private bool _firstRun, _changeGate;
 
 
@@ -42,10 +44,7 @@ public class Music : MonoBehaviour
         _playerController = FindObjectOfType<PlayerController>();
         _parkour = FindObjectOfType<Parkour>();
         _rigidbody = FindObjectOfType<PlayerController>().GetComponent<Rigidbody>();
-
         _audioSources = GetComponents<AudioSource>();
-        _lowPassFilter = GetComponent<AudioLowPassFilter>();
-        _highPassFilter = GetComponent<AudioHighPassFilter>();
         AudioData.currentBPM = BPM;
         _savedBPM = AudioData.currentBPM;
         AudioData.activeAudioSource = 0;
@@ -63,10 +62,10 @@ public class Music : MonoBehaviour
         _audioSources[AudioData.otherAudioSource].clip = AudioData.activeToLoop;
         _audioSources[AudioData.otherAudioSource].enabled = false;
 
+        _lowPassFrequency = 500;
+        _highPassFrequency = 0;
 
         _firstRun = true;
-        _lowPassFilter.enabled = false;
-        _highPassFilter.enabled = false;
         canChangeTrack = true;
 
     }
@@ -74,33 +73,31 @@ public class Music : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        audioMixer.SetFloat("LowPassFreq", _lowPassFrequency);
+        audioMixer.SetFloat("HighPassFreq", _highPassFrequency);
 
-
-        if (_playerController._playerSpeed < _playerController._savedMaxSpeed * _playerController.sprintMultiplier + .1f && _highPassFilter.cutoffFrequency < 50)
+        if (_playerController._playerSpeed < _playerController._savedMaxSpeed * _playerController.sprintMultiplier + .1f && _highPassFrequency < 50)
         {
-            _highPassFilter.enabled = false;
-            _lowPassFilter.enabled = true;
 
-            if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") > 0 && _lowPassFilter.cutoffFrequency < LowPassMax)
-            {
-                _lowPassFilter.cutoffFrequency += Time.deltaTime * TransitionSpeed;
+
+            if (Input.GetButton("Vertical") && Input.GetAxis("Vertical") > 0 && _lowPassFrequency < LowPassMax)
+            {              
+                _lowPassFrequency += Time.deltaTime * TransitionSpeed;
             }
-            else if (_lowPassFilter.cutoffFrequency > LowPassMin)
+            else if (_lowPassFrequency > LowPassMin)
             {
-                _lowPassFilter.cutoffFrequency -= Time.deltaTime * (TransitionSpeed * TransitionNegativeMultiplier);
+                _lowPassFrequency -= Time.deltaTime * (TransitionSpeed * TransitionNegativeMultiplier);
             }
         }
         else
         {
-            _lowPassFilter.enabled = false;
-            _highPassFilter.enabled = true;
             if (_playerController._playerSpeed > _playerController._savedMaxSpeed * _playerController.sprintMultiplier)
             {
-                _highPassFilter.cutoffFrequency += Time.deltaTime * 700;
+                _highPassFrequency += Time.deltaTime * 700;
             }
             else
             {
-                _highPassFilter.cutoffFrequency -= Time.deltaTime * 4000;
+                _highPassFrequency -= Time.deltaTime * 4000;
 
             }
 
@@ -108,7 +105,7 @@ public class Music : MonoBehaviour
         if (_playTime >= _songLength - 1.5f)
         {
                 _playTime = 0;
-                _songLength = _audioSources[AudioData.activeAudioSource].clip.length;
+                _songLength = Mathf.Infinity;
             _audioSources[AudioData.activeAudioSource].volume = 0;
             _audioSources[AudioData.otherAudioSource].volume = 1;
             if (AudioData.activeAudioSource == 1)

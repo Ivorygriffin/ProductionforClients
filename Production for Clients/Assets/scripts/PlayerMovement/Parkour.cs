@@ -52,6 +52,7 @@ public class Parkour : MonoBehaviour
 
     void Start()
     {
+
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
         _swingCheck = GetComponentInChildren<Swing>();
