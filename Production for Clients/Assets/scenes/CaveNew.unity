@@ -2798,31 +2798,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -159.47987
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 74.864426
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 139.55992
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.6749481
+      value: -0.061564706
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.024070295
+      value: -0.0062720086
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7372239
+      value: -0.99634296
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959188, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.01914816
+      value: -0.058916222
       objectReference: {fileID: 0}
     - target: {fileID: 322361516665959189, guid: c93ec970342f4794bbdfda12d70b9942, type: 3}
       propertyPath: far clip plane
@@ -3001,7 +3001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1223616052
 Transform:
   m_ObjectHideFlags: 0
@@ -6566,9 +6566,9 @@ PlayableDirector:
   - key: {fileID: 1620440454548355432, guid: d479e0dbba675db448f6bdea86c067a8, type: 2}
     value: {fileID: 1703198806}
   - key: {fileID: 826686587315059775, guid: d479e0dbba675db448f6bdea86c067a8, type: 2}
-    value: {fileID: 1015893172}
-  - key: {fileID: -1575786419051571605, guid: d479e0dbba675db448f6bdea86c067a8, type: 2}
     value: {fileID: 1015893173}
+  - key: {fileID: -1575786419051571605, guid: d479e0dbba675db448f6bdea86c067a8, type: 2}
+    value: {fileID: 1015893172}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1755991649075248135
