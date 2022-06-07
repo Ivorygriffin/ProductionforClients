@@ -7,7 +7,7 @@ public class Respawn : MonoBehaviour
 {
 
     private Vector3 _respawnPoint;
-    private IEnumerator _respawn;
+    private IEnumerator _respawn, _beatReset;
     private Image _DeathFade;
     private float _deathFadeFade;
     private bool _fadingOut;
@@ -76,6 +76,12 @@ public class Respawn : MonoBehaviour
         _deathFadeFade = 1f;
 
         FindObjectOfType<Music>()._lowPassFrequency = 500;
+        FindObjectOfType<Music>().GetComponents<AudioSource>()[AudioData.activeAudioSource].Stop();
+        FindObjectOfType<Music>().GetComponents<AudioSource>()[AudioData.activeAudioSource].clip = AudioData.activeToLoop;
+        FindObjectOfType<Music>()._respawned = true;
+        FindObjectOfType<Music>().GetComponents<AudioSource>()[AudioData.activeAudioSource].Play();
+
+        ;
         _DeathFade.enabled = true;
 
         _DeathFade.color = new Color(_DeathFade.color.r, _DeathFade.color.g, _DeathFade.color.b, 1f);

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 275255447}
   - component: {fileID: 275255448}
+  - component: {fileID: 1702004709}
+  - component: {fileID: 1702004710}
   m_Layer: 0
   m_Name: AmbienceSource
   m_TagString: Untagged
@@ -127,6 +129,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!164 &1702004709
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275255446}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: -3300
+  m_DecayTime: 1.49
+  m_DecayHFRatio: 0.54
+  m_ReflectionsLevel: -2560
+  m_ReverbLevel: -229
+  m_ReverbDelay: 0.088
+  m_Diffusion: 79
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 16
+--- !u!114 &1702004710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275255446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 874ec49b530cfb64eae193a399fb0e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1680689758
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,8 +977,8 @@ AudioSource:
   m_GameObject: {fileID: 2433623959299576177}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 39877c1431717c94c9a5c16f3fd6ebbb, type: 3}
+  OutputAudioMixerGroup: {fileID: -4008623048626897954, guid: 9e804af6a3eff314c9423d935122f134, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 341b47bf40014704393881bf84e839be, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.8
   m_Pitch: 1
@@ -1036,7 +1073,7 @@ AudioSource:
   m_GameObject: {fileID: 2433623959299576177}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4008623048626897954, guid: 9e804af6a3eff314c9423d935122f134, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0
@@ -1130,7 +1167,7 @@ AudioLowPassFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2433623959299576177}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_LowpassResonanceQ: 1.5
   lowpassLevelCustomCurve:
@@ -1155,7 +1192,7 @@ AudioHighPassFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2433623959299576177}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CutoffFrequency: 10
   m_HighpassResonanceQ: 1.75
 --- !u!114 &363033085
@@ -1174,9 +1211,12 @@ MonoBehaviour:
   LowPassMax: 10000
   TransitionSpeed: 5000
   TransitionNegativeMultiplier: 1.75
-  BPM: 115.15
+  BPM: 115
+  audioMixer: {fileID: 24100000, guid: 9e804af6a3eff314c9423d935122f134, type: 2}
   canChangeTrack: 0
-  _audioLoopToPlay: {fileID: 0}
+  _lowPassFrequency: 0
+  _songLength: 0
+  _audioLoopToPlay: {fileID: 8300000, guid: ce0f9932cdce3c0498078507908d6afb, type: 3}
 --- !u!1 &4049136087987816705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,6 +1228,7 @@ GameObject:
   - component: {fileID: 7584315142062021932}
   - component: {fileID: 64624319092290789}
   - component: {fileID: 624492791}
+  - component: {fileID: 902682268}
   m_Layer: 0
   m_Name: PlayerAudio
   m_TagString: Untagged
@@ -1355,6 +1396,29 @@ MonoBehaviour:
   _clambering: 0
   _swinging: 0
   _playRespawn: 0
+--- !u!164 &902682268
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049136087987816705}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: 0
+  m_RoomHF: 0
+  m_DecayTime: 1
+  m_DecayHFRatio: 0.5
+  m_ReflectionsLevel: -10000
+  m_ReverbLevel: 0
+  m_ReverbDelay: 0.04
+  m_Diffusion: 100
+  m_Density: 100
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 27
 --- !u!1 &7767566421915079963
 GameObject:
   m_ObjectHideFlags: 0

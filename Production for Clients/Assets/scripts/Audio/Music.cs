@@ -20,7 +20,7 @@ public class Music : MonoBehaviour
 
 
     [HideInInspector]
-    public bool canChangeTrack;
+    public bool canChangeTrack, _respawned;
     [HideInInspector]
     public IEnumerator _beatCounter;
     [HideInInspector]
@@ -149,10 +149,17 @@ public class Music : MonoBehaviour
         }
 
         _playTime += Time.fixedDeltaTime;
+        if (_respawned)
+        {
+            StopCoroutine(_beatCounter);
+            StartCoroutine(_beatCounter);
+            _respawned = false;
+        }
     }
 
     public IEnumerator BeatCounter()
     {
+
         if (_firstRun)
         {
             yield return new WaitForFixedUpdate();
@@ -165,6 +172,7 @@ public class Music : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(60 / AudioData.currentBPM * 4 - 0.02f);
         }
+        Debug.Log("Tick");
 
         if (_savedBPM == AudioData.currentBPM)
         {
